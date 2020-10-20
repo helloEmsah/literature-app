@@ -1,0 +1,84 @@
+# @name Register
+POST http://localhost:5000/api/v1/register
+Content-Type: application/json
+
+{
+  "fullName": "John Doe",
+  "email"   : "johnDoe@protonmail.com",
+  "password" : "thisisuser",
+  "gender": "Male",
+  "phone": "08123456784",
+  "address": "Jl Pegangsaan Timur no 56"
+}
+
+###
+
+# @name Login
+POST http://localhost:5000/api/v1/login
+Content-Type: application/json
+//Authorization: 
+
+{
+  "email"   : "admin@root.com",
+  "password" : "sayabukanusertetapisayaadalahadmin"
+}
+
+###  
+
+# @name getAllPaper
+GET http://localhost:5000/api/v1/paper
+Content-Type: application/json
+
+###
+
+# @name getPaper
+GET http://localhost:5000/api/v1/paper/1
+Content-Type: application/json
+
+###
+
+# @name addPaper
+POST http://localhost:5000/api/v1/paper
+Content-Type: application/json 
+//Authorization: 
+
+{
+	"title": "Paper 2",
+	"userId": 3,
+	"publication": "August 2020",
+	"page": 123,
+	"author": "Prinz Eugen",
+	"isbn": 15423122451,
+	"file": "test.file",
+	"thumbnail": "test.jpg"
+}
+
+###
+
+# # @name editPaper
+# PATCH  http://localhost:5000/api/v1/book/4
+# Content-Type: application/json 
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjAyNDg4NTUyfQ.YWsOeikkf3-fvwTKRw5OhNLLi4SbzVxZlbd7Zl7WnMA
+
+# {
+# 	"title": "How to Install RAM",
+# 	"author": "Pink Guy",
+# 	"publication": "May 2020",
+# 	"categoryId": 5,
+# 	"userId": 4,
+# 	"page": "250",
+# 	"isbn": 123456789,
+# 	"about": "Lorem Ipsum, this is just a dummy. There's nothing to see here, really.",
+# 	"file": "theDominator.epub",
+# 	"thumbnail": "howToInstalRAM.jpg",
+# 	"status": "Waiting"
+# }
+
+###
+
+# @name deletePaper
+DELETE  http://localhost:5000/api/v1/paper/6
+Content-Type: application/json 
+//Authorization: 
+
+###
