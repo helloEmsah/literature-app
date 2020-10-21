@@ -16,7 +16,7 @@ function Spinner() {
           left: "50%",
         }}
         size={50}
-        color={"#16332D"}
+        color={"#f3f3f3"}
         loading={true}
       />
     </div>

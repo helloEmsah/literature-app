@@ -204,3 +204,84 @@
   border-radius: 2px;
   margin-left: 10px;
 }
+
+/* PROFILE */
+
+#profilePage {
+  padding-left: 75px;
+  padding-right: 20px;
+}
+
+/* USER INFO */
+
+#userInfo {
+  overflow-x: hidden;
+}
+
+#userInfo .profileTitle {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 36px;
+  text-align: left;
+  vertical-align: top;
+}
+
+#userInfo .profileBackground {
+  background-color: #252525;
+  border-radius: 10px;
+}
+
+#userInfo .profileArea {
+  padding: 10px;
+}
+
+#userInfo .profileIcon {
+  margin-bottom: 35px;
+  width: 35px;
+  height: 35px;
+  color: #af2e1c;
+  display: flex;
+  flex-direction: column;
+}
+
+#userInfo .profileName {
+  position: relative;
+  right: 125px;
+  font-size: 14px;
+  font-weight: 800;
+
+  color: #ffffff;
+}
+
+#userInfo .profileDesc {
+  position: relative;
+  right: 125px;
+  bottom: 10px;
+  font-size: 12px;
+  color: #8a8c90;
+}
+
+#userInfo .pictureContainer {
+  float: right;
+  width: 200px;
+  height: 200px;
+}
+
+#userInfo .pictureImage {
+  width: 100%;
+  height: 100%;
+}
+
+#userInfo .btn {
+  float: right;
+  margin-top: 20px;
+  background-color: #af2e1c;
+}
+
+/* USER LITERATURE */
+
+#userLiterature .title {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 36px;
+}
