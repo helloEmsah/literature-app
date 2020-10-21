@@ -4,6 +4,13 @@
   font-family: "Poppins", sans-serif;
 }
 
+#Route {
+  color: #ffffff;
+  background-color: #161616;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
 /* LANDING PAGE */
 
 #landingIcon {
@@ -140,4 +147,60 @@
 #header ul .active,
 #header ul a:hover {
   color: #af2e1c;
+}
+
+/* HOME */
+
+/* #homePage {
+  height: 100vh;
+} */
+
+/* PARENT */
+
+/* HEADER */
+/* #header {
+  color: #ffffff;
+  background-color: #161616;
+} */
+
+/* SEARCH BAR */
+
+/* 
+#searchBar {
+  display: block;
+  text-align: center;
+} */
+
+#searchBar .form-group {
+  position: relative;
+  left: 350px;
+}
+
+#searchBar .form-control {
+  width: 600px;
+  height: 40px;
+  color: #f3f3f3;
+  background-color: #444444;
+  border-color: #f3f3f3;
+}
+
+#searchBar .form-control::placeholder {
+  color: #f3f3f3;
+}
+
+#searchBar .searchBarImageContainer {
+  margin-left: 75px;
+}
+
+#searchBar .searchbarImage {
+  width: 100%;
+  height: 100%;
+}
+
+#searchBar .searchIcon {
+  width: 40px;
+  height: 40px;
+  background-color: #af2e1c;
+  border-radius: 2px;
+  margin-left: 10px;
 }

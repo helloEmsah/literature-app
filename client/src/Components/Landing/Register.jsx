@@ -75,7 +75,7 @@ function Register() {
         Sign Up
       </Button>
 
-      <Modal id="signUpModal" show={show} onHide={handleClose}>
+      <Modal id="signUpModal" show={show} onHide={handleClose} centered>
         <Modal.Body>
           <p>Sign Up</p>
           <Form

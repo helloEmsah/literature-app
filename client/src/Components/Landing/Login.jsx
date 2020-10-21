@@ -77,7 +77,7 @@ function Login() {
         Sign In
       </Button>
 
-      <Modal id="signInModal" show={show} onHide={handleClose}>
+      <Modal id="signInModal" show={show} onHide={handleClose} centered>
         <Modal.Body>
           <p>Sign In</p>
           <Form

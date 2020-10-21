@@ -1,11 +1,18 @@
 import React from "react";
+import { Container, Row } from "react-bootstrap";
 import SearchBar from "../Components/Home/SearchBar";
 
 function Home() {
   return (
-    <div>
-      <SearchBar />
-    </div>
+    <>
+      <Container fluid id="homePage">
+        <br />
+        <br />
+        <br />
+        <br />
+        <SearchBar />
+      </Container>
+    </>
   );
 }
 
