@@ -221,7 +221,7 @@
 #userInfo .profileTitle {
   font-family: "Times New Roman", Times, serif;
   font-weight: bold;
-  font-size: 36px;
+  font-size: 30px;
   text-align: left;
   vertical-align: top;
 }
@@ -283,5 +283,27 @@
 #userLiterature .title {
   font-family: Georgia, "Times New Roman", Times, serif;
   font-weight: bold;
-  font-size: 36px;
+  font-size: 30px;
+}
+
+/* Add Form */
+#addForm h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+#addForm .form-control {
+  background-color: #444444;
+  color: #f3f3f3;
+  border-color: #f3f3f3;
+}
+
+#addForm .form-control::placeholder {
+  color: #f3f3f3;
+}
+
+#addForm .btn {
+  background-color: #ee4622;
+  border-radius: 5px;
 }

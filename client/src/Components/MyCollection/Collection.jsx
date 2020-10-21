@@ -6,7 +6,7 @@ import Spinner from "../Utilities/Spinner";
 import { useQuery, useMutation } from "react-query";
 import { API } from "../../Config/api";
 
-function MyLibrary() {
+function Collection() {
   const { id } = useParams();
   const history = useHistory();
   const [paperId, setPaperId] = useState("");
@@ -71,4 +71,4 @@ function MyLibrary() {
   );
 }
 
-export default MyLibrary;
+export default Collection;

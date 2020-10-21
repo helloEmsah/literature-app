@@ -6,11 +6,30 @@ import {
   Form,
   Modal,
 } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 import { TiDocumentAdd } from "react-icons/ti";
 import { useQuery, useMutation } from "react-query";
 import { API } from "../../Config/api";
+import Spinner from "../Utilities/Spinner";
+
+const schema = yup.object().shape({
+  title: yup.string().required(),
+  publication: yup.date().required(),
+  page: yup.string().required(),
+  isbn: yup.string().required(),
+  author: yup.string().required(),
+});
 
 function AddForm() {
+  const { addLiterature, handleSubmit, errors } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const onSubmit = (data) => console.log(data);
+  console.log(errors);
+
   const [addBookModal, setAddBookModal] = useState(false);
 
   const userStateId = localStorage.getItem("id");
@@ -100,22 +119,13 @@ function AddForm() {
   });
 
   return isLoading || !literatureData ? (
-    <h1>Loading...</h1>
+    <Spinner />
   ) : error ? (
     <h1>Your error: {error.message}</h1>
   ) : (
     <>
-      <Container fluid>
-        <h1
-          style={{
-            fontFamily: "Times New Roman",
-            fontWeight: "bold",
-            fontSize: 30,
-            lineHeight: "37px",
-          }}
-        >
-          Add Literature
-        </h1>
+      <Container id="addForm">
+        <h1>Add Literature</h1>
         <Form
           onSubmit={(e) => {
             e.preventDefault();
@@ -123,6 +133,7 @@ function AddForm() {
             refetch();
           }}
         >
+          <br />
           <Form.Group>
             <Form.Control
               type="text"
@@ -217,7 +228,8 @@ function AddForm() {
             </DropdownButton>
 
             <Button type="submit" onClick={() => setAddBookModal(true)}>
-              Submit Book <TiDocumentAdd />
+              Add Literature
+              <TiDocumentAdd />
             </Button>
           </div>
         </Form>
