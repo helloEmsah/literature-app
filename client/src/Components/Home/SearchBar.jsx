@@ -6,7 +6,7 @@ function SearchBar() {
   return (
     <>
       <img src={Icon} alt="" />
-      <h1 style={{ color: "red" }}>Search Bar</h1>
+      <h1 style={{ color: "red" }}>yellowTube</h1>
     </>
   );
 }

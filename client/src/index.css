@@ -1,19 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 * {
-  background-color: #161616;
-  color: #ffffff;
   font-family: "Poppins", sans-serif;
 }
 
 /* LANDING PAGE */
 
+#landingIcon {
+  margin-left: 52px;
+}
+
 #landingPage {
   overflow-x: hidden;
+
+  height: 100vh;
+  color: #ffffff;
+  background-color: #161616;
 }
 
 #landingPage .landingImageContainer {
-  width: 650px;
+  position: relative;
+  bottom: 30px;
+  width: 600px;
   height: 500px;
 }
 
@@ -23,27 +31,97 @@
 }
 
 #landingPage .landingText {
+  top: 100px;
+  position: relative;
   margin-left: 50px;
 }
 
 #landingPage .boldText {
   font-family: "Times New Roman", Times, serif;
   font-weight: bold;
-  font-size: 90px;
+  font-size: 70px;
   line-height: 80px;
 }
 
 #landingPage .italic {
   font-family: "Times New Roman", Times, serif;
   font-weight: bold;
-  font-size: 90px;
+  font-size: 70px;
 }
 
 #landingPage .regularText {
-  font-size: 20px;
+  padding-right: 200px;
+  font-size: 18px;
   line-height: 33px;
 }
 
+/* Sign In Button & Modal */
+
+#signInButton {
+  background-color: #f9f9f9;
+  border-color: #f9f9f9;
+  color: #1f1f1f;
+  width: 180px;
+  margin-left: 25px;
+}
+
+#signInModal .modal-body {
+  background-color: #161616;
+}
+
+#signInModal p {
+  color: #ffffff;
+  font-weight: bolder;
+  font-size: 40px;
+}
+
+#signInModal .form-control {
+  background-color: #444444;
+  color: #f3f3f3;
+  border-color: #f3f3f3;
+}
+
+#signInModal .form-control::placeholder {
+  color: #f3f3f3;
+}
+
+#signInModal .btn {
+  background-color: #af2e1c;
+  border-color: #af2e1c;
+}
+
+/* Sign Up Button & Modal */
+
+#signUpButton {
+  background-color: #af2e1c;
+  border-color: #af2e1c;
+  width: 180px;
+}
+
+#signUpModal .modal-body {
+  background-color: #161616;
+}
+
+#signUpModal p {
+  color: #ffffff;
+  font-weight: bolder;
+  font-size: 40px;
+}
+
+#signUpModal .form-control {
+  background-color: #444444;
+  color: #f3f3f3;
+  border-color: #f3f3f3;
+}
+
+#signUpModal .form-control::placeholder {
+  color: #f3f3f3;
+}
+
+#signUpModal .btn {
+  background-color: #af2e1c;
+  border-color: #af2e1c;
+}
 /* HEADER */
 
 #header ul {

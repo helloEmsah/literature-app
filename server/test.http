@@ -44,10 +44,10 @@ Content-Type: application/json
 
 {
 	"title": "Paper 2",
-	"userId": 3,
+	"userId": 1,
 	"publication": "August 2020",
 	"page": 123,
-	"author": "Prinz Eugen",
+	"author": "Karl Donitz",
 	"isbn": 15423122451,
 	"file": "test.file",
 	"thumbnail": "test.jpg"

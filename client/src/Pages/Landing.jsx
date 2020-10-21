@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import TopNavigation from "../Components/Landing/TopNavigation";
+import LandingIcon from "../Components/Landing/LandingIcon";
 import Register from "../Components/Landing/Register";
 import Login from "../Components/Landing/Login";
 import LandingImage from "../Assets/Images/landingImage.svg";
@@ -9,7 +9,7 @@ function Landing() {
   return (
     <>
       <Container fluid id="landingPage">
-        <TopNavigation />
+        <LandingIcon />
         <Row>
           <Col lg={6}>
             <div className="landingText">
@@ -21,8 +21,9 @@ function Landing() {
                 Sign Up and receive unlimited access to all of your literature -
                 share your literature.
               </p>
+              <br />
               <Register />
-              {"     "}
+
               <Login />
             </div>
           </Col>

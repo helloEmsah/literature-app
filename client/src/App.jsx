@@ -7,11 +7,11 @@ import MyCollection from "./Pages/MyCollection";
 import AddLiterature from "./Pages/AddLiterature";
 import AdminLanding from "./Pages/AdminLanding";
 import Header from "./Components/Utilities/Header";
+import TestForm from "./Pages/TestForm";
 
 import { API, setAuthToken } from "./Config/api";
 import { GlobalContext } from "./Context/GlobalContext";
 
-import "./index.css";
 import { Container } from "react-bootstrap";
 
 if (localStorage.token) {
@@ -43,12 +43,14 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Landing} />
+        <Route exact path="/test" component={TestForm} />
         <Container fluid>
           <Header />
           <Route exact path="/home" component={Home} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/my-collection" component={MyCollection} />
           <Route exact path="/add-literature" component={AddLiterature} />
+
           <Route
             exact
             path="/admin-book-verification"
