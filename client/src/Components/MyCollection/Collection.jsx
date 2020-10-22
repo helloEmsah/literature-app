@@ -23,17 +23,8 @@ function Collection() {
   return isLoading || !paperData ? (
     <Spinner />
   ) : (
-    <Container>
-      <h1
-        style={{
-          fontFamily: "Times New Roman",
-          fontWeight: "bold",
-          fontSize: 30,
-          lineHeight: "37px",
-        }}
-      >
-        My Library
-      </h1>
+    <Container id="collection">
+      <p className="title-collection">My Collection</p>
       <Card style={{ border: "none" }}>
         <Card.Body>
           <Row>
@@ -43,11 +34,11 @@ function Collection() {
                   style={{ textDecoration: "none" }}
                   //   onClick={() => history.push(`/detailbook/${paper.id}`)}
                 >
-                  <Card border="dark" id="bookImageCard">
+                  <Card border="dark" className="imageCard">
                     <Card.Body style={{ padding: 0 }}>
-                      <div class="bookImageContainer">
+                      <div class="imageContainer">
                         <img
-                          className="bookImage"
+                          className="image"
                           src={paper.thumbnail}
                           alt=""
                           srcset=""
@@ -55,11 +46,13 @@ function Collection() {
                       </div>
                     </Card.Body>
                   </Card>
-                  <div id="bookCardDescription">
-                    <p style={{ color: "black" }} className="bookTitle">
-                      {paper.title}
+                  <br />
+                  <p className="title-paper">{paper.title}</p>
+                  <div className="description-paper">
+                    <p className="author-paper">{paper.author}</p>
+                    <p className="year-paper">
+                      {paper.publication.split(" ")[1]}
                     </p>
-                    <p className="bookAuthor">{paper.author}</p>
                   </div>
                 </Link>
               </Col>

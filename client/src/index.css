@@ -307,3 +307,59 @@
   background-color: #ee4622;
   border-radius: 5px;
 }
+
+/* COLLECTION */
+
+#collection .title-collection {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+#collection .imageContainer {
+  width: 180px;
+  height: 250px;
+}
+
+#collection .image {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+#collection .card-body {
+  padding-left: 0px;
+
+  background-color: #161616;
+}
+
+#collection .imageCard {
+  width: 180px;
+  height: 250px;
+}
+
+#collection .description-paper {
+  margin-right: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#collection .title-paper {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 28px;
+  margin-right: 70px;
+}
+
+#collection .author-paper {
+  font-size: 16px;
+  color: #929292;
+}
+
+#collection .year-paper {
+  font-size: 16px;
+  color: #929292;
+}
