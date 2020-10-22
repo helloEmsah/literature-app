@@ -4,6 +4,13 @@
   font-family: "Poppins", sans-serif;
 }
 
+#Route {
+  color: #ffffff;
+  background-color: #161616;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
 /* LANDING PAGE */
 
 #landingIcon {
@@ -140,4 +147,276 @@
 #header ul .active,
 #header ul a:hover {
   color: #af2e1c;
+}
+
+/* HOME */
+
+/* #homePage {
+  height: 100vh;
+} */
+
+/* PARENT */
+
+/* HEADER */
+/* #header {
+  color: #ffffff;
+  background-color: #161616;
+} */
+
+/* SEARCH BAR */
+
+/* 
+#searchBar {
+  display: block;
+  text-align: center;
+} */
+
+#searchBar .form-group {
+  position: relative;
+  left: 350px;
+}
+
+#searchBar .form-control {
+  width: 600px;
+  height: 40px;
+  color: #f3f3f3;
+  background-color: #444444;
+  border-color: #f3f3f3;
+}
+
+#searchBar .form-control::placeholder {
+  color: #f3f3f3;
+}
+
+#searchBar .searchBarImageContainer {
+  margin-left: 75px;
+}
+
+#searchBar .searchbarImage {
+  width: 100%;
+  height: 100%;
+}
+
+#searchBar .searchIcon {
+  width: 40px;
+  height: 40px;
+  background-color: #af2e1c;
+  border-radius: 2px;
+  margin-left: 10px;
+}
+
+/* PROFILE */
+
+#profilePage {
+  padding-left: 75px;
+  padding-right: 20px;
+}
+
+/* USER INFO */
+
+#userInfo {
+  overflow-x: hidden;
+}
+
+#userInfo .profileTitle {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 30px;
+  text-align: left;
+  vertical-align: top;
+}
+
+#userInfo .profileBackground {
+  background-color: #252525;
+  border-radius: 10px;
+}
+
+#userInfo .profileArea {
+  padding: 10px;
+}
+
+#userInfo .profileIcon {
+  margin-bottom: 35px;
+  width: 35px;
+  height: 35px;
+  color: #af2e1c;
+  display: flex;
+  flex-direction: column;
+}
+
+#userInfo .profileName {
+  position: relative;
+  right: 125px;
+  font-size: 14px;
+  font-weight: 800;
+
+  color: #ffffff;
+}
+
+#userInfo .profileDesc {
+  position: relative;
+  right: 125px;
+  bottom: 10px;
+  font-size: 12px;
+  color: #8a8c90;
+}
+
+#userInfo .pictureContainer {
+  float: right;
+  width: 200px;
+  height: 200px;
+}
+
+#userInfo .pictureImage {
+  width: 100%;
+  height: 100%;
+}
+
+#userInfo .btn {
+  float: right;
+  margin-top: 20px;
+  background-color: #af2e1c;
+}
+
+/* USER LITERATURE */
+
+#userLiterature .title {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+/* Add Form */
+#addForm h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+#addForm .form-control {
+  background-color: #444444;
+  color: #f3f3f3;
+  border-color: #f3f3f3;
+}
+
+#addForm .form-control::placeholder {
+  color: #f3f3f3;
+}
+
+#addForm .btn {
+  background-color: #ee4622;
+  border-radius: 5px;
+}
+
+/* COLLECTION */
+
+#collection .title-collection {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+#collection .imageContainer {
+  width: 180px;
+  height: 250px;
+}
+
+#collection .image {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+#collection .card-body {
+  padding-left: 0px;
+
+  background-color: #161616;
+}
+
+#collection .imageCard {
+  width: 180px;
+  height: 250px;
+}
+
+#collection .description-paper {
+  margin-right: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#collection .title-paper {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 28px;
+  margin-right: 70px;
+}
+
+#collection .author-paper {
+  font-size: 16px;
+  color: #929292;
+}
+
+#collection .year-paper {
+  font-size: 16px;
+  color: #929292;
+}
+
+/* SEARCH LITERATURE */
+
+#search-literature .searchBar {
+  position: relative;
+  top: 30px;
+}
+
+#search-literature .form-control {
+  margin-left: 65px;
+  width: 600px;
+  height: 40px;
+  color: #f3f3f3;
+  background-color: #444444;
+  border-color: #f3f3f3;
+}
+
+#search-literature .form-control::placeholder {
+  color: #f3f3f3;
+}
+
+#search-literature .searchIcon {
+  position: relative;
+  right: 5px;
+  color: #f3f3f3;
+  width: 30px;
+  height: 30px;
+  float: left;
+}
+
+#search-literature .btn {
+  background-color: #af2e1c;
+  border-color: #af2e1c;
+  width: 43px;
+  height: 43px;
+  margin-left: 10px;
+  margin-bottom: 50px;
+  border-radius: 5px;
+}
+
+#search-literature .left-component {
+  position: relative;
+  left: 65px;
+}
+
+#search-literature .filter-label {
+  color: #af2e1c;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+#search-literature .filter-btn {
+  background-color: #444444;
+  color: #f3f3f3;
+  border-color: #f3f3f3;
+  border-radius: 2px;
 }

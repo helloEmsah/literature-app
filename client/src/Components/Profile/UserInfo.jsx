@@ -1,12 +1,12 @@
 import React from "react";
-import { Container, Col, Row, DropdownButton } from "react-bootstrap";
+import { Container, Col, Row, DropdownButton, Button } from "react-bootstrap";
 import { MdEmail, MdLocationOn } from "react-icons/md";
 import { FaTransgender, FaPhoneAlt } from "react-icons/fa";
 import { useQuery } from "react-query";
 import { API } from "../../Config/api";
 import Spinner from "../Utilities/Spinner";
 
-function ProfileUser() {
+function UserInfo() {
   const id = localStorage.getItem("id");
 
   const { isLoading, error, data: profileData } = useQuery("getUserById", () =>
@@ -18,18 +18,18 @@ function ProfileUser() {
   ) : error ? (
     <h1>Your Error : {error.message}</h1>
   ) : (
-    <div id="profileWrapper">
+    <div id="userInfo">
       <h1 className="profileTitle">Profile</h1>
       <div className="profileBackground">
-        <Container fluid className="profileArea">
+        <Container className="profileArea">
           <Row>
-            <Col lg={1}>
+            <Col lg={2}>
               <MdEmail className="profileIcon" />
               <FaTransgender className="profileIcon" />
               <FaPhoneAlt className="profileIcon" />
               <MdLocationOn className="profileIcon" />
             </Col>
-            <Col lg={7}>
+            <Col lg={6}>
               <p className="profileName">{profileData.data.data.email}</p>
               <p className="profileDesc">Email</p>
               <p className="profileName">{profileData.data.data.gender}</p>
@@ -40,19 +40,20 @@ function ProfileUser() {
               <p className="profileDesc">Address</p>
             </Col>
             <Col lg={4}>
-              <div className="profilePictureContainer">
+              <div className="pictureContainer">
                 <img
-                  className="profilePictureImage"
+                  className="pictureImage"
                   src={profileData.data.data.picture}
                   alt=""
                 />
               </div>
               <br />
-              <DropdownButton variant="danger" title="Upload Profile Image">
+              <Button variant="danger">Change Profile Picture</Button>
+              {/* <DropdownButton variant="danger" title="Upload Image">
                 <form action="/profile" method="post">
                   <input type="file" name="avatar" />
                 </form>
-              </DropdownButton>
+              </DropdownButton> */}
             </Col>
           </Row>
         </Container>
@@ -61,4 +62,4 @@ function ProfileUser() {
   );
 }
 
-export default ProfileUser;
+export default UserInfo;

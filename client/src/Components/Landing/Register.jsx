@@ -33,7 +33,14 @@ function Register() {
         },
       };
 
-      const body = JSON.stringify(formRegister);
+      const body = JSON.stringify({
+        email,
+        password,
+        fullName,
+        gender,
+        phone,
+        address,
+      });
 
       const res = await API.post("/register", body, config);
 
@@ -75,7 +82,7 @@ function Register() {
         Sign Up
       </Button>
 
-      <Modal id="signUpModal" show={show} onHide={handleClose}>
+      <Modal id="signUpModal" show={show} onHide={handleClose} centered>
         <Modal.Body>
           <p>Sign Up</p>
           <Form

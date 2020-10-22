@@ -1,10 +1,13 @@
 import React from "react";
-import ProfileUser from "../Components/Profile/Profile";
+import UserInfo from "../Components/Profile/UserInfo";
+import UserLiterature from "../Components/Profile/UserLiterature";
 
 function Profile() {
   return (
-    <div>
-      <ProfileUser />
+    <div id="profilePage">
+      <UserInfo />
+      <br />
+      <UserLiterature />
     </div>
   );
 }
