@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useQuery } from "react-query";
 import { Nav, Navbar } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
+import { GlobalContext } from "../../Context/GlobalContext";
+import Spinner from "./Spinner";
+import { API } from "../../Config/api";
 import topIcon from "../../Assets/Images/topIconImage.svg";
 
 function Header() {
-  return (
+  const [state, dispatch] = useContext(GlobalContext);
+  const id = localStorage.getItem("id");
+
+  const { isLoading, error, data: userData } = useQuery("getName", () =>
+    API.get(`/user/${id}`)
+  );
+
+  return isLoading || !userData ? (
+    <Spinner />
+  ) : error ? (
+    <h1>Your Error : {error.message}</h1>
+  ) : (
     <div id="header">
       <Navbar className="justify-content-between">
         <ul>
@@ -18,9 +33,19 @@ function Header() {
             <NavLink to="/add-literature">Add Literature</NavLink>
           </li>
           <li>
-            <NavLink to="/">Logout</NavLink>
+            <Link
+              to="/"
+              onClick={() =>
+                dispatch({
+                  type: "LOGOUT",
+                })
+              }
+            >
+              Logout
+            </Link>
           </li>
         </ul>
+
         <Link to="/home">
           <img src={topIcon} alt="" />
         </Link>

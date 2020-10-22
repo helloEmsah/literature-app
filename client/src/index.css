@@ -363,3 +363,60 @@
   font-size: 16px;
   color: #929292;
 }
+
+/* SEARCH LITERATURE */
+
+#search-literature .searchBar {
+  position: relative;
+  top: 30px;
+}
+
+#search-literature .form-control {
+  margin-left: 65px;
+  width: 600px;
+  height: 40px;
+  color: #f3f3f3;
+  background-color: #444444;
+  border-color: #f3f3f3;
+}
+
+#search-literature .form-control::placeholder {
+  color: #f3f3f3;
+}
+
+#search-literature .searchIcon {
+  position: relative;
+  right: 5px;
+  color: #f3f3f3;
+  width: 30px;
+  height: 30px;
+  float: left;
+}
+
+#search-literature .btn {
+  background-color: #af2e1c;
+  border-color: #af2e1c;
+  width: 43px;
+  height: 43px;
+  margin-left: 10px;
+  margin-bottom: 50px;
+  border-radius: 5px;
+}
+
+#search-literature .left-component {
+  position: relative;
+  left: 65px;
+}
+
+#search-literature .filter-label {
+  color: #af2e1c;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+#search-literature .filter-btn {
+  background-color: #444444;
+  color: #f3f3f3;
+  border-color: #f3f3f3;
+  border-radius: 2px;
+}

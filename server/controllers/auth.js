@@ -91,6 +91,7 @@ exports.Register = async (req, res) => {
     res.send({
       message: "Registration success!",
       data: {
+        id: user.id,
         email: user.email,
         token,
       },

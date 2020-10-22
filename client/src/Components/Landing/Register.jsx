@@ -33,7 +33,14 @@ function Register() {
         },
       };
 
-      const body = JSON.stringify(formRegister);
+      const body = JSON.stringify({
+        email,
+        password,
+        fullName,
+        gender,
+        phone,
+        address,
+      });
 
       const res = await API.post("/register", body, config);
 

@@ -5,6 +5,8 @@ import Home from "./Pages/Home";
 import Profile from "./Pages/Profile";
 import MyCollection from "./Pages/MyCollection";
 import AddLiterature from "./Pages/AddLiterature";
+import DetailLiterature from "./Pages/DetailLiterature";
+import Literature from "./Pages/Literature";
 import AdminLanding from "./Pages/AdminLanding";
 import Header from "./Components/Utilities/Header";
 import TestForm from "./Pages/TestForm";
@@ -46,6 +48,7 @@ function App() {
         <Route exact path="/test" component={TestForm} />
         <Container fluid id="Route">
           <Header />
+          <Route exact path="/literature" component={Literature} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/my-collection" component={MyCollection} />

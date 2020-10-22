@@ -12,7 +12,7 @@ function CardPaper() {
                 <Card>
                   <Card.Body>
                     <div className="imageContainer">
-                      <img className="image" src="" alt="" />
+                      <h1>Card Here</h1>
                     </div>
                   </Card.Body>
                 </Card>
