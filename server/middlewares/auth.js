@@ -40,7 +40,7 @@ exports.authAdmin = async (req, res, next) => {
     });
 
     if (user.role !== 1)
-      return res.status(400).send({ message: "You're not Admin, go away!" });
+      return res.status(400).send({ message: "You're unauthorized!" });
 
     next();
   } catch (error) {

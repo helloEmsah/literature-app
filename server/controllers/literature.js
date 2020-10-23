@@ -1,8 +1,10 @@
-const { Paper, User } = require("../models");
+const { Literature, User, sequelize } = require("../models");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 const joi = require("@hapi/joi");
 
-exports.getAllPaper = async (req, res) => {
+exports.getLiteratures = async (req, res) => {
   try {
     // const { page: pageQuery, limit: limitQuery } = req.query;
     // const page = pageQuery ? parseInt(pageQuery) - 1 : 0;
@@ -17,7 +19,7 @@ exports.getAllPaper = async (req, res) => {
     //   };
     // };
 
-    const paper = await Paper.findAll({
+    const literature = await Literature.findAll({
       include: [
         {
           model: User,
@@ -42,8 +44,8 @@ exports.getAllPaper = async (req, res) => {
     });
 
     return res.status(200).send({
-      message: "All existing paper has been loaded",
-      data: { paper },
+      message: "All existing literature has been loaded",
+      data: { literature },
     });
   } catch (error) {
     console.log(error);
@@ -55,9 +57,74 @@ exports.getAllPaper = async (req, res) => {
   }
 };
 
-exports.getPaper = async (req, res) => {
+exports.getLiteratureByTitle = async (req, res) => {
+  let title = req.query.title;
+  let publicationYear = req.query.publicationYear;
+
   try {
-    const paper = await Paper.findOne({
+    if (publicationYear) {
+      const literature = await Literature.findAll({
+        include: [
+          {
+            model: User,
+            as: "user",
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+          },
+        ],
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        where: {
+          title: {
+            [Op.like]: "%" + title + "%",
+          },
+          publication: {
+            [Op.like]: "%" + publicationYear + "%",
+          },
+        },
+      });
+
+      return res.status(200).send({
+        message: `Literature with ${title} and ${publicationYear} has been loaded successfully`,
+        data: { literature },
+      });
+    } else {
+      const literature = await Literature.findAll({
+        include: [
+          {
+            model: User,
+            as: "user",
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+            where: {
+              title: {
+                [Op.like]: "%" + title + "%",
+              },
+            },
+          },
+        ],
+      });
+      return res.status(200).send({
+        message: `Literature with ${title} has been loaded successfully`,
+        data: { literature },
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      error: {
+        message: "Internal Server Error",
+      },
+    });
+  }
+};
+
+exports.getLiterature = async (req, res) => {
+  try {
+    const literature = await Literature.findOne({
       include: [
         {
           model: User,
@@ -83,14 +150,14 @@ exports.getPaper = async (req, res) => {
         id: req.params.id,
       },
     });
-    if (paper) {
+    if (literature) {
       return res.status(200).send({
-        message: "Paper has been loaded",
-        data: { paper },
+        message: "literature has been loaded",
+        data: { literature },
       });
     } else {
       return res.status(404).send({
-        message: "Paper didn't exist",
+        message: "literature didn't exist",
       });
     }
   } catch (error) {
@@ -102,18 +169,24 @@ exports.getPaper = async (req, res) => {
   }
 };
 
-exports.addPaper = async (req, res) => {
+exports.addLiterature = async (req, res) => {
+  const [isAdmin] = req.user;
+  const { id } = req.user;
+
   try {
     const {
       title,
-      userId,
       publication,
+      userId,
       page,
-      author,
       isbn,
+      author,
+      status,
       file,
       thumbnail,
     } = req.body;
+
+    // const file = req.files["file"][0].filename;
 
     // const schema = joi.object({
     //   title: joi.string().min(3).required(),
@@ -133,15 +206,15 @@ exports.addPaper = async (req, res) => {
     //   });
     // }
 
-    const paper = await Paper.create({
+    const literature = await literature.create({
       ...req.body,
       userId,
     });
 
-    if (paper) {
-      const paperResult = await Paper.findOne({
+    if (literature) {
+      const literatureResult = await literature.findOne({
         where: {
-          id: paper.id,
+          id: literature.id,
         },
         include: [
           {
@@ -166,8 +239,8 @@ exports.addPaper = async (req, res) => {
         },
       });
       return res.status(200).send({
-        message: "Paper has been successfully added",
-        data: { paperResult },
+        message: "literature has been successfully added",
+        data: { literatureResult },
       });
     }
   } catch (error) {
@@ -246,29 +319,29 @@ exports.addPaper = async (req, res) => {
 //   }
 // };
 
-exports.deletePaper = async (req, res) => {
+exports.deleteLiterature = async (req, res) => {
   try {
-    const paper = await Paper.findOne({
+    const literature = await literature.findOne({
       where: {
         id: req.params.id,
       },
     });
 
-    if (paper) {
-      const deletePaper = await Paper.destroy({
+    if (literature) {
+      const deleteliterature = await literature.destroy({
         where: {
           id: req.params.id,
         },
       });
       return res.status(200).send({
         data: {
-          message: "Paper with corresponding id has been deleted",
+          message: "literature with corresponding id has been deleted",
           id: req.params.id,
         },
       });
     } else {
       return res.status(404).send({
-        message: "Paper didn't exists",
+        message: "literature didn't exists",
       });
     }
   } catch (error) {

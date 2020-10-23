@@ -20,25 +20,55 @@ Content-Type: application/json
 
 {
   "email"   : "admin@root.com",
-  "password" : "sayabukanusertetapisayaadalahadmin"
+  "password" : "thisisadmin"
 }
 
 ###  
 
-# @name getAllPaper
-GET http://localhost:5000/api/v1/paper
+# @name getUsers
+GET http://localhost:5000/api/v1/user
+Content-Type: application/json
+
+###  
+
+# @name getUser
+GET http://localhost:5000/api/v1/user/1
+Content-Type: application/json
+
+###  
+
+# @name updateUser
+GET http://localhost:5000/api/v1/user
+Content-Type: application/json
+
+###  
+
+# @name deleteUser
+DELETE  http://localhost:5000/api/v1/user/:id
 Content-Type: application/json
 
 ###
 
-# @name getPaper
-GET http://localhost:5000/api/v1/paper/1
+# @name getLiteratures
+GET http://localhost:5000/api/v1/literatures
 Content-Type: application/json
 
 ###
 
-# @name addPaper
-POST http://localhost:5000/api/v1/paper
+# @name getLiterature
+GET http://localhost:5000/api/v1/literature/:id
+Content-Type: application/json
+
+###  
+
+# @name searchLiterature
+GET http://localhost:5000/api/v1/literature
+Content-Type: application/json
+
+###
+
+# @name addLiterature
+POST http://localhost:5000/api/v1/literature
 Content-Type: application/json 
 //Authorization: 
 
@@ -76,9 +106,11 @@ Content-Type: application/json
 
 ###
 
-# @name deletePaper
-DELETE  http://localhost:5000/api/v1/paper/6
+# @name deleteLiterature
+DELETE  http://localhost:5000/api/v1/literature/:id
 Content-Type: application/json 
 //Authorization: 
 
 ###
+
+### ADD COLLECTION ROUTE

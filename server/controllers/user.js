@@ -1,6 +1,6 @@
-const { User } = require("../models");
+const { User, Literature } = require("../models");
 
-exports.getAllUser = async (req, res) => {
+exports.getUsers = async (req, res) => {
   try {
     const user = await User.findAll({
       attributes: {
@@ -53,6 +53,42 @@ exports.getUser = async (req, res) => {
   }
 };
 
+exports.getUserLiterature = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const literature = await Literature.findAll({
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        },
+      ],
+
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+      where: {
+        userId: id,
+      },
+    });
+
+    return res.status(200).send({
+      message: `Literature with user id ${id} has been loaded successfully`,
+      data: { literature },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      error: {
+        message: "Internal Server Error",
+      },
+    });
+  }
+};
+
 exports.deleteUser = async (req, res) => {
   try {
     const user = await User.findOne({
@@ -87,49 +123,38 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.uploadProfileImg = async (req, res) => {
+exports.uploadPicture = async (req, res) => {
   try {
-    const user = await User.findOne({
-      where: {
-        id: req.user.id,
-      },
-    });
-
-    if (!user) {
-      res.status(404).send({ error: { message: "User not found" } });
-    }
-    const updateProfile = await User.update(
-      {
-        profile: req.file.filename,
-      },
+    const { id } = req.user;
+    await User.update(
+      { picture: req.file.filename },
       {
         where: {
           id,
         },
       }
     );
-
-    if (!updateProfile)
-      return res.status(400).send({
-        message: "Please try again",
-      });
-
-    const userResult = await User.findOne({
+    const user = await User.findOne({
+      include: {
+        model: Literature,
+        as: "literatures",
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      },
       where: {
         id,
       },
-
       attributes: {
         exclude: ["createdAt", "updatedAt"],
       },
     });
-
-    res.send({
-      message: "Successfully Upload Profile Image",
-      data: userResult,
+    return res.status(200).send({
+      message: `Avatar has been updated`,
+      data: { user },
     });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     return res.status(500).send({
       error: {
         message: "Internal Server Error",

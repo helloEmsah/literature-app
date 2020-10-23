@@ -7,7 +7,7 @@ module.exports = {
         fullName: "Admin",
         email: "admin@root.com",
         password:
-          "$2b$10$RR2yhWsfZulXlL.KIlsKTOMipKt2ZAcxdd/VPAtYdGAgumD0eGPPi",
+          "$2b$10$UK1BnRkDTYbomsipbmGzLe7FaG3EqdJXgaOS3YibZn4Jrear6HUzS",
         phone: "08123456789",
         address: "Jl Pegangsaan Timur no 56 Jakarta",
         gender: "Male",
