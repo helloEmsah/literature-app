@@ -1,10 +1,7 @@
 "use strict";
-
-const { sequelize } = require("../models");
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Literatures", {
+    await queryInterface.createTable("Literature", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -57,6 +54,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Literatures");
+    await queryInterface.dropTable("Literature");
   },
 };

@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "fullName": "John Doe",
-  "email"   : "johndoe@post2.com",
+  "email"   : "johndoe@root.com",
   "password" : "thisisuser",
   "gender": "Male",
   "phone": "08123456784",
@@ -25,14 +25,20 @@ Content-Type: application/json
 
 ###  
 
-# @name getUsers
-GET http://localhost:5000/api/v1/user
+# @name getProfiles
+GET http://localhost:5000/api/v1/profile
 Content-Type: application/json
 
 ###  
 
-# @name getUser
-GET http://localhost:5000/api/v1/user/1
+# @name getProfile
+GET http://localhost:5000/api/v1/profile/1
+Content-Type: application/json
+
+###  
+
+# @name getProfileLiterature
+GET http://localhost:5000/api/v1/profile/2/literature
 Content-Type: application/json
 
 ###  
@@ -56,14 +62,16 @@ Content-Type: application/json
 ###
 
 # @name getLiterature
-GET http://localhost:5000/api/v1/literature/:id
+GET http://localhost:5000/api/v1/literature/1
 Content-Type: application/json
 
 ###  
 
 # @name searchLiterature
-GET http://localhost:5000/api/v1/literature
+GET http://localhost:5000/api/v1/literature?title=lit&public_year=2012
 Content-Type: application/json
+
+
 
 ###
 
@@ -113,4 +121,6 @@ Content-Type: application/json
 
 ###
 
-### ADD COLLECTION ROUTE
+# @name getCollection
+GET http://localhost:5000/api/v1/collection
+Content-Type: application/json

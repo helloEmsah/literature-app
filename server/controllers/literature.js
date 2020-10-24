@@ -1,7 +1,6 @@
-const { Literature, User, sequelize } = require("../models");
+const { Literature, User } = require("../models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-
 const joi = require("@hapi/joi");
 
 exports.getLiteratures = async (req, res) => {
@@ -57,37 +56,44 @@ exports.getLiteratures = async (req, res) => {
   }
 };
 
-exports.getLiteratureByTitle = async (req, res) => {
+exports.searchLiterature = async (req, res) => {
   let title = req.query.title;
-  let publicationYear = req.query.publicationYear;
+  let public_year = req.query.public_year;
 
   try {
-    if (publicationYear) {
+    if (public_year) {
       const literature = await Literature.findAll({
         include: [
           {
             model: User,
             as: "user",
             attributes: {
-              exclude: ["createdAt", "updatedAt"],
+              exclude: [
+                "password",
+                "gender",
+                "picture",
+                "isAdmin",
+                "createdAt",
+                "updatedAt",
+              ],
             },
           },
         ],
         attributes: {
-          exclude: ["createdAt", "updatedAt"],
+          exclude: ["userId", "thumbnail", "status", "createdAt", "updatedAt"],
         },
         where: {
           title: {
             [Op.like]: "%" + title + "%",
           },
           publication: {
-            [Op.like]: "%" + publicationYear + "%",
+            [Op.like]: "%" + public_year + "%",
           },
         },
       });
 
       return res.status(200).send({
-        message: `Literature with ${title} and ${publicationYear} has been loaded successfully`,
+        message: `Search literature with corresponding title: ${title}, year: ${public_year}, is success`,
         data: { literature },
       });
     } else {
@@ -97,15 +103,25 @@ exports.getLiteratureByTitle = async (req, res) => {
             model: User,
             as: "user",
             attributes: {
-              exclude: ["createdAt", "updatedAt"],
-            },
-            where: {
-              title: {
-                [Op.like]: "%" + title + "%",
-              },
+              exclude: [
+                "password",
+                "gender",
+                "picture",
+                "isAdmin",
+                "createdAt",
+                "updatedAt",
+              ],
             },
           },
         ],
+        attributes: {
+          exclude: ["userId", "thumbnail", "status", "createdAt", "updatedAt"],
+        },
+        where: {
+          title: {
+            [Op.like]: "%" + title + "%",
+          },
+        },
       });
       return res.status(200).send({
         message: `Literature with ${title} has been loaded successfully`,
@@ -152,12 +168,12 @@ exports.getLiterature = async (req, res) => {
     });
     if (literature) {
       return res.status(200).send({
-        message: "literature has been loaded",
+        message: "Literature has been loaded",
         data: { literature },
       });
     } else {
       return res.status(404).send({
-        message: "literature didn't exist",
+        message: "Literature didn't exist",
       });
     }
   } catch (error) {
@@ -335,13 +351,13 @@ exports.deleteLiterature = async (req, res) => {
       });
       return res.status(200).send({
         data: {
-          message: "literature with corresponding id has been deleted",
+          message: "Literature with corresponding id has been deleted",
           id: req.params.id,
         },
       });
     } else {
       return res.status(404).send({
-        message: "literature didn't exists",
+        message: "Literature didn't exists",
       });
     }
   } catch (error) {

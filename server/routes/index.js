@@ -11,39 +11,41 @@ const {
   getUser,
   getUserLiterature,
   deleteUser,
-  uploadPicture,
+  uploadProfile,
 } = require("../controllers/user");
 
 const {
   getLiteratures,
   getLiterature,
-  getLiteratureByTitle,
+  searchLiterature,
   addLiterature,
   deleteLiterature,
 } = require("../controllers/literature");
 
-// IMPORT COLLECTION CONTROLLER
+const { myCollection } = require("../controllers/collection");
 
 // REGISTER & LOGIN ROUTE
 router.post("/register", Register);
 router.post("/login", Login);
 router.get("/auth", authentication, checkAuth);
 
-// USER ROUTE
-router.get("/user", getUsers);
-router.get("/user/:id", getUser);
-router.delete("/user/:id", deleteUser);
-router.post("/picture", uploadImage("profilePicture"), uploadPicture);
+// PROFILE ROUTE
+router.get("/profile", getUsers);
+router.get("/profile/:id", getUser);
+router.get("/profile/:id/literature", getUserLiterature);
+router.delete("/profile/:id", deleteUser);
+router.patch("/profile/avatar", uploadImage("image"), uploadProfile);
 
 // LITERATURE ROUTE
 router.get("/literatures", getLiteratures);
-router.get("/literature", getLiteratureByTitle);
+router.get("/literature", searchLiterature);
 router.get("/literature/:id", getLiterature);
 
 // FIX THIS ROUTE LATER
 router.post("/literature", addLiterature);
-// FIX THIS ROUTE LATER
 
 router.delete("/literature/:id", deleteLiterature);
+
+router.get("/collection/:id", myCollection);
 
 module.exports = router;

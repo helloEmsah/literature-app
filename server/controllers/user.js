@@ -62,13 +62,21 @@ exports.getUserLiterature = async (req, res) => {
           model: User,
           as: "user",
           attributes: {
-            exclude: ["createdAt", "updatedAt"],
+            exclude: [
+              "password",
+              "gender",
+              "picture",
+              "isAdmin",
+              ,
+              "createdAt",
+              "updatedAt",
+            ],
           },
         },
       ],
 
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: ["userId", "thumbnail", "status", "createdAt", "updatedAt"],
       },
       where: {
         userId: id,
@@ -123,11 +131,11 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.uploadPicture = async (req, res) => {
+exports.uploadProfile = async (req, res) => {
   try {
     const { id } = req.user;
     await User.update(
-      { picture: req.file.filename },
+      { photoProfile: req.file.filename },
       {
         where: {
           id,
@@ -139,26 +147,81 @@ exports.uploadPicture = async (req, res) => {
         model: Literature,
         as: "literatures",
         attributes: {
-          exclude: ["createdAt", "updatedAt"],
+          exclude: [
+            "CategoryId",
+            "UserId",
+            "id_user",
+            "publication",
+            "id_category",
+            "pages",
+            "aboutBook",
+            "createdAt",
+            "updatedAt",
+          ],
         },
       },
       where: {
         id,
       },
+      order: [["id", "ASC"]],
       attributes: {
         exclude: ["createdAt", "updatedAt"],
       },
     });
-    return res.status(200).send({
-      message: `Avatar has been updated`,
-      data: { user },
+    res.send({
+      message: `Photo picture success updated`,
+      data: {
+        user,
+      },
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).send({
+    res.status(500).send({
       error: {
-        message: "Internal Server Error",
+        message: "Server ERROR",
       },
     });
   }
 };
+//{
+//   try {
+//     const { id } = req.params;
+
+//     await User.update(
+//       { picture: req.file.filename },
+//       {
+//         where: {
+//           id,
+//         },
+//       }
+//     );
+
+//     const result = await User.findOne({
+//       include: {
+//         model: Literature,
+//         as: "literature",
+//         attributes: {
+//           exclude: ["createdAt", "updatedAt"],
+//         },
+//       },
+//       where: {
+//         id,
+//       },
+//       attributes: {
+//         exclude: ["createdAt", "updatedAt"],
+//       },
+//     });
+
+//     return res.status(200).send({
+//       message: `Avatar has been updated`,
+//       data: { result },
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(500).send({
+//       error: {
+//         message: "Internal Server Error",
+//       },
+//     });
+//   }
+// };
