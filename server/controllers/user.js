@@ -133,9 +133,9 @@ exports.deleteUser = async (req, res) => {
 
 exports.uploadProfile = async (req, res) => {
   try {
-    const { id } = req.user;
+    const id = req.params.id;
     await User.update(
-      { photoProfile: req.file.filename },
+      { picture: req.file.filename },
       {
         where: {
           id,
@@ -143,33 +143,24 @@ exports.uploadProfile = async (req, res) => {
       }
     );
     const user = await User.findOne({
-      include: {
-        model: Literature,
-        as: "literatures",
-        attributes: {
-          exclude: [
-            "CategoryId",
-            "UserId",
-            "id_user",
-            "publication",
-            "id_category",
-            "pages",
-            "aboutBook",
-            "createdAt",
-            "updatedAt",
-          ],
-        },
-      },
       where: {
         id,
       },
-      order: [["id", "ASC"]],
+
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: [
+          "password",
+          "phone",
+          "address",
+          "gender",
+          "isAdmin",
+          "createdAt",
+          "updatedAt",
+        ],
       },
     });
     res.send({
-      message: `Photo picture success updated`,
+      message: "Profile Picture has changed",
       data: {
         user,
       },
@@ -178,50 +169,8 @@ exports.uploadProfile = async (req, res) => {
     console.log(err);
     res.status(500).send({
       error: {
-        message: "Server ERROR",
+        message: "Internal Server Error",
       },
     });
   }
 };
-//{
-//   try {
-//     const { id } = req.params;
-
-//     await User.update(
-//       { picture: req.file.filename },
-//       {
-//         where: {
-//           id,
-//         },
-//       }
-//     );
-
-//     const result = await User.findOne({
-//       include: {
-//         model: Literature,
-//         as: "literature",
-//         attributes: {
-//           exclude: ["createdAt", "updatedAt"],
-//         },
-//       },
-//       where: {
-//         id,
-//       },
-//       attributes: {
-//         exclude: ["createdAt", "updatedAt"],
-//       },
-//     });
-
-//     return res.status(200).send({
-//       message: `Avatar has been updated`,
-//       data: { result },
-//     });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).send({
-//       error: {
-//         message: "Internal Server Error",
-//       },
-//     });
-//   }
-// };

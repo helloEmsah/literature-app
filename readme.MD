@@ -1,4 +1,4 @@
-Log: 13:30 25/10/2020
+Log: 15:20 25/10/2020
 
 # TODO
 
@@ -12,7 +12,6 @@ Log: 13:30 25/10/2020
 
 ## BACKEND
 
-- Create Collection controller and route
 - Fix Literature controller and route (especially addLiterature)
 - Fix Multer
 - Do as needed

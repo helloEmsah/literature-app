@@ -186,81 +186,36 @@ exports.getLiterature = async (req, res) => {
 };
 
 exports.addLiterature = async (req, res) => {
-  const [isAdmin] = req.user;
-  const { id } = req.user;
-
   try {
-    const {
-      title,
-      publication,
-      userId,
-      page,
-      isbn,
-      author,
-      status,
-      file,
-      thumbnail,
-    } = req.body;
-
-    // const file = req.files["file"][0].filename;
-
-    // const schema = joi.object({
-    //   title: joi.string().min(3).required(),
-    //   author: joi.string().min(3).required(),
-    //   publication: joi.string().min(3).required(),
-    //   categoryId: joi.required(),
-    //   page: joi.number(),
-    //   isbn: joi.number(),
-    //   about: joi.string().required(),
-    // });
-    // const { error } = schema.validate(req.body);
-    // if (error) {
-    //   return res.status(400).send({
-    //     error: {
-    //       message: error.details[0].message,
-    //     },
-    //   });
-    // }
-
-    const literature = await literature.create({
+    const { id } = await Literature.create({
       ...req.body,
-      userId,
+      userId: req.user.id,
+      file: req.file.filename,
     });
 
-    if (literature) {
-      const literatureResult = await literature.findOne({
-        where: {
-          id: literature.id,
-        },
-        include: [
-          {
-            model: User,
-            as: "user",
-            attributes: {
-              exclude: [
-                "createdAt",
-                "updatedAt",
-                "password",
-                "phone",
-                "address",
-                "gender",
-                "picture",
-                "isAdmin",
-              ],
-            },
+    const literature = await Literature.findOne({
+      where: {
+        id,
+      },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
           },
-        ],
-        attributes: {
-          exclude: ["createdAt", "updatedAt", "userId", "UserId"],
         },
-      });
-      return res.status(200).send({
-        message: "literature has been successfully added",
-        data: { literatureResult },
-      });
-    }
+      ],
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    return res.status(200).send({
+      message: "Literature has been added successfully",
+      data: { literature },
+    });
   } catch (error) {
-    console.log(error);
     return res.status(500).send({
       error: {
         message: "Internal Server Error",

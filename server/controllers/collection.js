@@ -1,6 +1,6 @@
 const { Literature, Collection, User } = require("../models");
 
-exports.myCollection = async (req, res) => {
+exports.getCollection = async (req, res) => {
   try {
     const { id } = req.params;
     const collection = await Collection.findAll({
@@ -26,8 +26,8 @@ exports.myCollection = async (req, res) => {
         exclude: ["createdAt", "updatedAt"],
       },
     });
-    res.send({
-      message: `Collection has been loaded successfully`,
+    res.status(200).send({
+      message: "Collection has been loaded successfully",
       data: {
         collection,
       },
@@ -60,6 +60,40 @@ exports.addCollection = async (req, res) => {
 
     return res.status(200).send({
       message: "Collection has been added succressfully",
+      data: {
+        id,
+        title,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      error: {
+        message: "Internal Server Error",
+      },
+    });
+  }
+};
+
+exports.deleteCollection = async (req, res) => {
+  try {
+    const { literatureId } = req.params;
+    const userId = req.user.id;
+    await Collection.destroy({
+      where: {
+        userId,
+        literatureId,
+      },
+    });
+
+    const { id, title } = await Literature.findOne({
+      where: {
+        id: literatureId,
+      },
+    });
+
+    return res.status(200).send({
+      message: "Collection has been remove",
       data: {
         id,
         title,

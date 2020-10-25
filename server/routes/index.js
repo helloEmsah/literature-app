@@ -4,6 +4,8 @@ const { authentication, authAdmin } = require("../middlewares/auth");
 
 const { uploadImage } = require("../middlewares/uploadImage");
 
+const { uploadPDF } = require("../middlewares/uploadPDF");
+
 const { Register, Login, checkAuth } = require("../controllers/auth");
 
 const {
@@ -22,7 +24,11 @@ const {
   deleteLiterature,
 } = require("../controllers/literature");
 
-const { myCollection } = require("../controllers/collection");
+const {
+  getCollection,
+  addCollection,
+  deleteCollection,
+} = require("../controllers/collection");
 
 // REGISTER & LOGIN ROUTE
 router.post("/register", Register);
@@ -34,18 +40,18 @@ router.get("/profile", getUsers);
 router.get("/profile/:id", getUser);
 router.get("/profile/:id/literature", getUserLiterature);
 router.delete("/profile/:id", deleteUser);
-router.patch("/profile/avatar", uploadImage("image"), uploadProfile);
+router.patch("/profile/:id", uploadImage("picture"), uploadProfile);
 
 // LITERATURE ROUTE
 router.get("/literatures", getLiteratures);
 router.get("/literature", searchLiterature);
 router.get("/literature/:id", getLiterature);
-
-// FIX THIS ROUTE LATER
-router.post("/literature", addLiterature);
-
+router.post("/literature", uploadPDF("file"), addLiterature);
 router.delete("/literature/:id", deleteLiterature);
 
-router.get("/collection/:id", myCollection);
+// COLLECTION ROUTE
+router.get("/collection/:id", getCollection);
+router.post("/collection/:literatureId", addCollection);
+router.delete("/collection/:literatureId", deleteCollection);
 
 module.exports = router;

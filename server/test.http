@@ -3,10 +3,10 @@ POST http://localhost:5000/api/v1/register
 Content-Type: application/json
 
 {
-  "fullName": "John Doe",
-  "email"   : "johndoe@root.com",
+  "fullName": "Jane Doe",
+  "email"   : "janedoe@root.com",
   "password" : "thisisuser",
-  "gender": "Male",
+  "gender": "Female",
   "phone": "08123456784",
   "address": "Jl Pegangsaan Timur no 56"
 }
@@ -19,8 +19,8 @@ Content-Type: application/json
 //Authorization: 
 
 {
-  "email"   : "admin@root.com",
-  "password" : "thisisadmin"
+  "email"   : "janedoe@root.com",
+  "password" : "thisisuser"
 }
 
 ###  
@@ -81,8 +81,8 @@ Content-Type: application/json
 //Authorization: 
 
 {
-	"title": "Paper 2",
-	"userId": 1,
+	"title": "Somehow Releated",
+	"userId": 2,
 	"publication": "August 2020",
 	"page": 123,
 	"author": "Karl Donitz",
@@ -122,5 +122,5 @@ Content-Type: application/json
 ###
 
 # @name getCollection
-GET http://localhost:5000/api/v1/collection
+GET http://localhost:5000/api/v1/collection/1
 Content-Type: application/json
