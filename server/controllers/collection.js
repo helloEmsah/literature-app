@@ -4,6 +4,9 @@ exports.myCollection = async (req, res) => {
   try {
     const { id } = req.params;
     const collection = await Collection.findAll({
+      where: {
+        userId: id,
+      },
       include: {
         model: Literature,
         as: "literature",
@@ -15,37 +18,58 @@ exports.myCollection = async (req, res) => {
           },
         },
         attributes: {
-          exclude: [
-            "id_category",
-            "userId",
-            "createdAt",
-            "updatedAt",
-            "publication",
-            "pages",
-            "ISBN",
-            "aboutBook",
-            "file",
-          ],
+          exclude: ["createdAt", "updatedAt"],
         },
       },
-      where: {
-        userId: id,
-      },
+
       attributes: {
-        exclude: ["literatureId", "userId", "createdAt", "updatedAt"],
+        exclude: ["createdAt", "updatedAt"],
       },
     });
     res.send({
-      message: `Your collection has been successfully loaded`,
+      message: `Collection has been loaded successfully`,
       data: {
-        collections: collection,
+        collection,
       },
     });
   } catch (err) {
     console.log(err);
     res.status(500).send({
       error: {
-        message: "Server ERROR",
+        message: "Internal Server Error",
+      },
+    });
+  }
+};
+
+exports.addCollection = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { literatureId } = req.params;
+
+    await Collection.create({
+      userId,
+      literatureId,
+    });
+
+    const { id, title } = await Literature.findOne({
+      where: {
+        id: literatureId,
+      },
+    });
+
+    return res.status(200).send({
+      message: "Collection has been added succressfully",
+      data: {
+        id,
+        title,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      error: {
+        message: "Internal Server Error",
       },
     });
   }
