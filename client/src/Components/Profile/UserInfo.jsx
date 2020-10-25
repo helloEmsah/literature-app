@@ -1,17 +1,34 @@
-import React from "react";
-import { Container, Col, Row, DropdownButton, Button } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import {
+  Container,
+  Col,
+  Row,
+  DropdownButton,
+  Button,
+  Modal,
+} from "react-bootstrap";
 import { MdEmail, MdLocationOn } from "react-icons/md";
 import { FaTransgender, FaPhoneAlt } from "react-icons/fa";
 import { useQuery } from "react-query";
 import { API } from "../../Config/api";
+import UploadImage from "./UploadImage";
 import Spinner from "../Utilities/Spinner";
+import { GlobalContext } from "../../Context/GlobalContext";
 
 function UserInfo() {
+  const [showModal, setShowModal] = useState(false);
   const id = localStorage.getItem("id");
+  const [state, dispatch] = useContext(GlobalContext);
 
-  const { isLoading, error, data: profileData } = useQuery("getUserById", () =>
-    API.get(`/user/${id}`)
-  );
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+
+  const {
+    isLoading,
+    error,
+    data: profileData,
+    refetch,
+  } = useQuery("getUserById", () => API.get(`/user/${id}`));
 
   return isLoading || !profileData ? (
     <Spinner />
@@ -48,12 +65,10 @@ function UserInfo() {
                 />
               </div>
               <br />
-              <Button variant="danger">Change Profile Picture</Button>
-              {/* <DropdownButton variant="danger" title="Upload Image">
-                <form action="/profile" method="post">
-                  <input type="file" name="avatar" />
-                </form>
-              </DropdownButton> */}
+              <Button onClick={handleShow}>Test</Button>
+              <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <UploadImage refetch={() => refetch()} />
+              </Modal>
             </Col>
           </Row>
         </Container>

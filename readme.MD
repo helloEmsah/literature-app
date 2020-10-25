@@ -1,4 +1,4 @@
-Log: 15:20 25/10/2020
+Log: 21:50 25/10/2020
 
 # TODO
 
@@ -9,9 +9,10 @@ Log: 15:20 25/10/2020
 - Fix every functional
 - Fix every UI
 - Do as needed
+- Multer stil bugged
 
 ## BACKEND
 
 - Fix Literature controller and route (especially addLiterature)
-- Fix Multer
+- Fix Multer (still bug)
 - Do as needed

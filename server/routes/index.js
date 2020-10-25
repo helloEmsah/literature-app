@@ -36,11 +36,11 @@ router.post("/login", Login);
 router.get("/auth", authentication, checkAuth);
 
 // PROFILE ROUTE
-router.get("/profile", getUsers);
-router.get("/profile/:id", getUser);
-router.get("/profile/:id/literature", getUserLiterature);
-router.delete("/profile/:id", deleteUser);
-router.patch("/profile/:id", uploadImage("picture"), uploadProfile);
+router.get("/user", getUsers);
+router.get("/user/:id", getUser);
+router.get("/user/:id/literature", getUserLiterature);
+router.delete("/user/:id", deleteUser);
+router.patch("/user/:id", uploadImage("picture"), uploadProfile);
 
 // LITERATURE ROUTE
 router.get("/literatures", getLiteratures);
