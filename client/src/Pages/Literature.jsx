@@ -1,53 +1,54 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { API } from "../Config/api";
 import { BiSearch } from "react-icons/bi";
 import Spinner from "../Components/Utilities/Spinner";
 import Collection from "../Components/MyCollection/Collection";
-function Literature() {
-  const location = useLocation();
+import ListLiterature from "../Components/Literature/ListLiterature";
 
-  //   const [query, setQuery] = useState(location.state.query);
+const Literature = (props) => {
+  const location = useLocation();
+  const [query, setQuery] = useState(location.state.query);
   const [isLoading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
   let year = "";
 
-  //   useEffect(() => {
-  //     const fetchData = async (year) => {
-  //       try {
-  //         setLoading(true);
-  //         const res = await API.get(
-  //           `/literature?title=${query}&public_year=${year}`
-  //         );
-  //         setResult(res.data.data.literatures);
-  //         setLoading(false);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     };
-  //     fetchData("");
-  //   }, [query]);
+  useEffect(() => {
+    const fetchData = async (year) => {
+      try {
+        setLoading(true);
+        const res = await API.get(
+          `/literature?title=${query}&public_year=${year}`
+        );
+        setResult(res.data.data.literature);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData("");
+  }, [query]);
 
-  //   const fetchData = async (year) => {
-  //     try {
-  //       setLoading(true);
-  //       const res = await API.get(
-  //         `/literature?title=${query}&public_year=${year}`
-  //       );
-  //       console.log(res.data.data.literatures);
-  //       setResult(res.data.data.literatures);
-  //       setLoading(false);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
+  const fetchData = async (year) => {
+    try {
+      setLoading(true);
+      const res = await API.get(
+        `/literature?title=${query}&public_year=${year}`
+      );
+      console.log(res.data.data.literature);
+      setResult(res.data.data.literature);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  //   const handleSubmit = () => {
-  //     //console.log(query);
-  //     //refetch();
-  //     fetchData("");
-  //   };
+  const handleSubmit = () => {
+    //console.log(query);
+    //refetch();
+    fetchData("");
+  };
 
   console.log(year);
 
@@ -57,12 +58,19 @@ function Literature() {
         <Row>
           <Col lg={12}>
             <div className="searchBar">
-              <Form>
+              <Form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSubmit();
+                }}
+              >
                 <Form.Group>
                   <div className="d-flex">
                     <Form.Control
                       type="text"
                       placeholder="Search for literature"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
                     />
                     <Button className="btn" type="submit">
                       <BiSearch className="searchIcon" />
@@ -89,13 +97,14 @@ function Literature() {
             {isLoading ? (
               <Spinner />
             ) : (
-              <Collection loading={isLoading} paperData={result} />
+              // <Collection loading={isLoading} literatureData={result} />
+              <ListLiterature />
             )}
           </Col>
         </Row>
       </Container>
     </>
   );
-}
+};
 
 export default Literature;

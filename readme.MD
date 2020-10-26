@@ -1,4 +1,4 @@
-Log: 21:50 25/10/2020
+Log: 22:00 26/10/2020
 
 # TODO
 
@@ -8,11 +8,10 @@ Log: 21:50 25/10/2020
 - Implement upload File
 - Fix every functional
 - Fix every UI
+- Multer for upload PDF
 - Do as needed
-- Multer stil bugged
 
 ## BACKEND
 
-- Fix Literature controller and route (especially addLiterature)
-- Fix Multer (still bug)
+- Fix Multer for upload PDF
 - Do as needed

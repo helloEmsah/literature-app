@@ -29,20 +29,30 @@ function Collection() {
               <Col lg={3}>
                 <Link
                   style={{ textDecoration: "none" }}
-                  //   onClick={() => history.push(`/detailbook/${paper.id}`)}
+                  onClick={() =>
+                    history.push(`/detail-literature/${collection.id}`)
+                  }
                 >
                   <Card border="dark" className="imageCard">
                     <Card.Body style={{ padding: 0 }}>
                       <div class="imageContainer">
-                        <img className="image" src="" alt="" srcset="" />
+                        <img
+                          className="image"
+                          src={collection.literature.thumbnail}
+                          alt=""
+                        />
                       </div>
                     </Card.Body>
                   </Card>
                   <br />
-                  <p className="title-paper"></p>
+                  <p className="title-paper">{collection.literature.title}</p>
                   <div className="description-paper">
-                    <p className="author-paper"></p>
-                    <p className="year-paper">{collection}</p>
+                    <p className="author-paper">
+                      {collection.literature.author}
+                    </p>
+                    <p className="year-paper">
+                      {collection.literature.publication.split(" ")[1]}
+                    </p>
                   </div>
                 </Link>
               </Col>

@@ -122,5 +122,5 @@ Content-Type: application/json
 ###
 
 # @name getCollection
-GET http://localhost:5000/api/v1/collection/1
+GET http://localhost:5000/api/v1/collection/2
 Content-Type: application/json

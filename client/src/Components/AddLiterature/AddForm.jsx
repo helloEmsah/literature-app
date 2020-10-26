@@ -9,7 +9,6 @@ import {
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
 import { TiDocumentAdd } from "react-icons/ti";
 import { useQuery, useMutation } from "react-query";
 import { API } from "../../Config/api";
@@ -36,13 +35,11 @@ function AddForm() {
 
   const [formData, setFormData] = useState({
     userId: `${userStateId}`,
-
     title: "",
     author: "",
     publication: "",
     page: "",
     isbn: "",
-
     file: "",
     status: "Waiting",
     thumbnail: "",
@@ -50,13 +47,11 @@ function AddForm() {
 
   const {
     userId,
-
     title,
     author,
     publication,
     page,
     isbn,
-
     file,
     status,
     thumbnail,
@@ -71,7 +66,7 @@ function AddForm() {
     error,
     data: literatureData,
     refetch,
-  } = useQuery("getLiterature", () => API.get("/paper"));
+  } = useQuery("getLiterature", () => API.get("/literature"));
 
   const [addBook] = useMutation(async () => {
     try {
@@ -83,29 +78,25 @@ function AddForm() {
 
       const body = JSON.stringify({
         userId,
-
         title,
         author,
         publication,
         page,
         isbn,
-
         file,
         status,
         thumbnail,
       });
 
-      const res = await API.post("/paper", body, config);
+      const res = await API.post("/literature", body, config);
 
       setFormData({
         userId: `${userStateId}`,
-
         title: "",
         author: "",
         publication: "",
         page: "",
         isbn: "",
-
         file: "",
         status: "Waiting",
         thumbnail: "",

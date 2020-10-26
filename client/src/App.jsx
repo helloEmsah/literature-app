@@ -49,10 +49,16 @@ function App() {
         <Container fluid id="Route">
           <Header />
           <Route exact path="/literature" component={Literature} />
+          <Route exact path="/literature/:title/:year" component={Literature} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/my-collection" component={MyCollection} />
           <Route exact path="/add-literature" component={AddLiterature} />
+          <Route
+            exact
+            path="/detail-literature/:id"
+            component={DetailLiterature}
+          />
 
           <Route
             exact

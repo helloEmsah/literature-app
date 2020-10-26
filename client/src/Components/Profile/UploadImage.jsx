@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useMutation } from "react-query";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { GlobalContext } from "../../Context/GlobalContext";
 import { API } from "../../Config/api";
 
@@ -46,16 +47,16 @@ const UploadImage = (props) => {
   };
 
   return (
-    <div>
-      <div className="row">
-        <div className="col-8 d-flex justify-content-center flex-column">
-          <form
+    <Container>
+      <Row>
+        <Col lg={8} className="d-flex justify-content-center flex-column">
+          <Form
             onSubmit={(e) => {
               e.preventDefault();
               uploadImage();
             }}
           >
-            <div className="form-group">
+            <Form.Group>
               <div className="custom-file">
                 <input
                   type="file"
@@ -72,25 +73,25 @@ const UploadImage = (props) => {
                   {image ? fileData() : "Choose File"}
                 </label>
               </div>
-            </div>
-            <button
-              className="btn btn-no"
+            </Form.Group>
+            <Button
+              className="btn"
               type="submit"
               style={{ backgroundColor: "#AF2E1C", color: "#ffffff" }}
             >
               Submit
-            </button>
-          </form>
+            </Button>
+          </Form>
           <small>{success}</small>
-        </div>
-        <div className="col-4 d-flex justify-content-center align-items-center flex-column">
-          <small id="passwordHelp" className="text-danger">
-            Preview
-          </small>
-          <img height="100" width="100" src={preview} alt="" />
-        </div>
-      </div>
-    </div>
+        </Col>
+        <Col
+          lg={4}
+          className=" d-flex justify-content-center align-items-center flex-column"
+        >
+          <img height="150" width="150" src={preview} alt="" />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

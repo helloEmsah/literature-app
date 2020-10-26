@@ -10,7 +10,7 @@ import {
 import { MdEmail, MdLocationOn } from "react-icons/md";
 import { FaTransgender, FaPhoneAlt } from "react-icons/fa";
 import { useQuery } from "react-query";
-import { API } from "../../Config/api";
+import { API, urlAsset } from "../../Config/api";
 import UploadImage from "./UploadImage";
 import Spinner from "../Utilities/Spinner";
 import { GlobalContext } from "../../Context/GlobalContext";
@@ -60,13 +60,17 @@ function UserInfo() {
               <div className="pictureContainer">
                 <img
                   className="pictureImage"
-                  src={profileData.data.data.picture}
+                  src={urlAsset.img + profileData.data.data.picture}
                   alt=""
                 />
+                <Button onClick={handleShow}>Change Picture</Button>
               </div>
               <br />
-              <Button onClick={handleShow}>Test</Button>
-              <Modal show={showModal} onHide={() => setShowModal(false)}>
+              <Modal
+                centered
+                show={showModal}
+                onHide={() => setShowModal(false)}
+              >
                 <UploadImage refetch={() => refetch()} />
               </Modal>
             </Col>
