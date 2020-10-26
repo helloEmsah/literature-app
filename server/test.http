@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "fullName": "Jane Doe",
-  "email"   : "janedoe@root.com",
+  "email"   : "janedoe2@root.com",
   "password" : "thisisuser",
   "gender": "Female",
   "phone": "08123456784",
@@ -26,25 +26,19 @@ Content-Type: application/json
 ###  
 
 # @name getProfiles
-GET http://localhost:5000/api/v1/profile
+GET http://localhost:5000/api/v1/user
 Content-Type: application/json
 
 ###  
 
 # @name getProfile
-GET http://localhost:5000/api/v1/profile/1
+GET http://localhost:5000/api/v1/user/1
 Content-Type: application/json
 
 ###  
 
 # @name getProfileLiterature
-GET http://localhost:5000/api/v1/profile/2/literature
-Content-Type: application/json
-
-###  
-
-# @name updateUser
-GET http://localhost:5000/api/v1/user
+GET http://localhost:5000/api/v1/user/2/literature
 Content-Type: application/json
 
 ###  
@@ -68,7 +62,7 @@ Content-Type: application/json
 ###  
 
 # @name searchLiterature
-GET http://localhost:5000/api/v1/literature?title=lit&public_year=2012
+GET http://localhost:5000/api/v1/literature?title=somehow
 Content-Type: application/json
 
 
@@ -82,7 +76,7 @@ Content-Type: application/json
 
 {
 	"title": "Somehow Releated",
-	"userId": 2,
+	"userId": 1,
 	"publication": "August 2020",
 	"page": 123,
 	"author": "Karl Donitz",

@@ -341,7 +341,6 @@
 
 #collection .card-body {
   padding-left: 0px;
-
   background-color: #161616;
 }
 
@@ -431,4 +430,110 @@
   color: #f3f3f3;
   border-color: #f3f3f3;
   border-radius: 2px;
+}
+
+/* DETAIL LITERATURE */
+
+#detail-literature .image-container {
+  width: 380px;
+  height: 500px;
+  border-radius: 10px;
+}
+
+#detail-literature .image {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+#detail-literature .information {
+  display: flex;
+  flex-direction: column;
+}
+
+#detail-literature .title {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 36px;
+  font-weight: 800;
+}
+
+#detail-literature .author {
+  margin-top: 10px;
+  font-size: 20px;
+  color: #929292;
+  line-height: 24px;
+}
+
+#detail-literature .bold-text {
+  position: relative;
+  top: 50px;
+  font-weight: 800;
+  font-size: 20px;
+  color: #ffffff;
+  line-height: 29px;
+}
+
+#detail-literature .regular-text {
+  position: relative;
+  top: 50px;
+  font-size: 16px;
+  color: #929292;
+  line-height: 18px;
+}
+
+#detail-literature .btn {
+  background-color: #af2e1c;
+  border-color: #af2e1c;
+  color: #ffffff;
+}
+
+/* LIST LITERATURE */
+
+#listLiterature .literature-container {
+  width: 180px;
+  height: 250px;
+}
+
+#listLiterature .image {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+#listLiterature .card-body {
+  padding-left: 0px;
+  background-color: #161616;
+}
+
+#listLiterature .imageCard {
+  width: 180px;
+  height: 250px;
+}
+
+#listLiterature .description {
+  justify-content: space-between;
+}
+
+#listLiterature .title {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+#listLiterature .author {
+  font-size: 16px;
+  color: #929292;
+}
+
+#listLiterature .year {
+  font-size: 16px;
+  color: #929292;
+  margin-right: 50px;
+}
+
+#listLiterature .subtext-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

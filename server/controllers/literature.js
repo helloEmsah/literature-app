@@ -5,19 +5,6 @@ const joi = require("@hapi/joi");
 
 exports.getLiteratures = async (req, res) => {
   try {
-    // const { page: pageQuery, limit: limitQuery } = req.query;
-    // const page = pageQuery ? parseInt(pageQuery) - 1 : 0;
-    // const pageSize = limitQuery ? parseInt(limitQuery) : 10;
-    // const paginate = ({ page, pageSize }) => {
-    //   const offset = page * pageSize;
-    //   const limit = pageSize;
-
-    //   return {
-    //     offset,
-    //     limit,
-    //   };
-    // };
-
     const literature = await Literature.findAll({
       include: [
         {
@@ -38,7 +25,7 @@ exports.getLiteratures = async (req, res) => {
         },
       ],
       attributes: {
-        exclude: ["createdAt", "updatedAt", "userId", "UserId"],
+        exclude: ["createdAt", "updatedAt"],
       },
     });
 
@@ -160,7 +147,7 @@ exports.getLiterature = async (req, res) => {
         },
       ],
       attributes: {
-        exclude: ["createdAt", "updatedAt", "userId", "UserId"],
+        exclude: ["createdAt", "updatedAt"],
       },
       where: {
         id: req.params.id,
@@ -177,6 +164,7 @@ exports.getLiterature = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res.status(500).send({
       error: {
         message: "Internal Server Error",
@@ -187,35 +175,56 @@ exports.getLiterature = async (req, res) => {
 
 exports.addLiterature = async (req, res) => {
   try {
-    const { id } = await Literature.create({
+    const {
+      title,
+      author,
+      publication,
+      userId,
+      page,
+      isbn,
+      file,
+      thumbnail,
+    } = req.body;
+
+    const literature = await Literature.create({
       ...req.body,
-      userId: req.user.id,
-      file: req.file.filename,
+      userId,
     });
 
-    const literature = await Literature.findOne({
-      where: {
-        id,
-      },
-      include: [
-        {
-          model: User,
-          as: "user",
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
+    if (literature) {
+      const literatureResult = await Literature.findOne({
+        where: {
+          id: literature.id,
         },
-      ],
-      attributes: {
-        exclude: ["createdAt", "updatedAt"],
-      },
-    });
-
-    return res.status(200).send({
-      message: "Literature has been added successfully",
-      data: { literature },
-    });
+        include: [
+          {
+            model: User,
+            as: "user",
+            attributes: {
+              exclude: [
+                "createdAt",
+                "updatedAt",
+                "password",
+                "phone",
+                "address",
+                "gender",
+                "picture",
+                "isAdmin",
+              ],
+            },
+          },
+        ],
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      });
+      return res.status(200).send({
+        message: "Literature has been added successfully",
+        data: { literatureResult },
+      });
+    }
   } catch (error) {
+    console.log(error);
     return res.status(500).send({
       error: {
         message: "Internal Server Error",

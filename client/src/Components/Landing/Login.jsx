@@ -56,7 +56,7 @@ function Login() {
       }
 
       if (email === "admin@root.com") {
-        history.push("/admin-book-verification");
+        history.push("/admin");
       } else {
         history.push("/home");
       }

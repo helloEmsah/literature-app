@@ -14,7 +14,16 @@ exports.getCollection = async (req, res) => {
           model: User,
           as: "user",
           attributes: {
-            exclude: ["createdAt", "updatedAt", "password"],
+            exclude: [
+              "createdAt",
+              "updatedAt",
+              "password",
+              "phone",
+              "address",
+              "gender",
+              "picture",
+              "isAdmin",
+            ],
           },
         },
         attributes: {

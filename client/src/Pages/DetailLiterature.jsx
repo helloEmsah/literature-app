@@ -1,20 +1,25 @@
 import React, { useState, useContext } from "react";
 import { Button, Modal, Container, Row, Col } from "react-bootstrap";
 import { useParams, useHistory, Link } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import { API } from "../Config/api";
 import { BiCloudDownload } from "react-icons/bi";
-import GlobalContext from "../Context/GlobalContext";
+import { FaRegBookmark } from "react-icons/fa";
+import { GlobalContext } from "../Context/GlobalContext";
 import Spinner from "../Components/Utilities/Spinner";
 
 const DetailLiterature = () => {
+  const [state, dispatch] = useContext(GlobalContext);
   const [show, setShow] = useState(false);
+  const [bookmark, setBookmark] = useState(false);
   const [add, setAdd] = useState(false);
+  const [message, setMessage] = useState("");
   const history = useHistory();
+  const userId = localStorage.getItem("id");
 
   const [literatureId, setLiteratureId] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [addId, setAddId] = useState(null);
+
+  const [bookmarkId, setBookmarkId] = useState(null);
 
   const { id } = useParams();
   const {
@@ -23,6 +28,43 @@ const DetailLiterature = () => {
     data: detailLiterature,
     refetch,
   } = useQuery("getDetail", () => API.get(`/literature/${id}`));
+
+  function checkBookmark() {
+    const bookmark = detailLiterature.data.data.collection.some(
+      (bookmark) =>
+        detailLiterature.data.data.id === bookmark.LiteratureId &&
+        userId === bookmark.userId
+    );
+    console.log(bookmark);
+    return bookmark;
+  }
+
+  const [addBookmark] = useMutation(async (literatureId) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const body = JSON.stringify({ literatureId: literatureId });
+      const res = await API.post("/collection/", body, config);
+      setMessage(res.data.message);
+    } catch (error) {
+      console.log(error);
+      setMessage(error.response.data.error.message);
+    }
+  });
+
+  const [deleteBookmark] = useMutation(async () => {
+    try {
+      const res = await API.delete(`/collection/${literatureId}`);
+      refetch();
+    } catch (error) {
+      refetch();
+      console.log(error);
+    }
+  });
 
   return isLoading || !detailLiterature ? (
     <Spinner />
@@ -35,20 +77,21 @@ const DetailLiterature = () => {
           <Row>
             <Col lg={5}>
               <div className="image-container">
-                <div className="image">
-                  <img
-                    src={detailLiterature.data.data.literature.thumbnail}
-                    alt=""
-                  />
-                </div>
+                <img
+                  className="image"
+                  src={detailLiterature.data.data.literature.thumbnail}
+                  alt=""
+                />
               </div>
             </Col>
-            <Col lg={7}>
+            <Col lg={5}>
               <div className="information">
                 <h1 className="title">
                   {detailLiterature.data.data.literature.title}
                 </h1>
-                <h2>{detailLiterature.data.data.literature.author}</h2>
+                <h2 className="author">
+                  {detailLiterature.data.data.literature.author}
+                </h2>
                 <p className="bold-text">Publication Date</p>
                 <p className="regular-text">
                   {detailLiterature.data.data.literature.publication}
@@ -62,15 +105,36 @@ const DetailLiterature = () => {
                   {detailLiterature.data.data.literature.isbn}
                 </p>
                 <div>
+                  <br />
+                  <br />
+                  <br />
                   <Link target="_blank">
                     <Button>
-                      Download
-                      <BiCloudDownload />
+                      Download{" "}
+                      <BiCloudDownload style={{ width: 25, height: 25 }} />
                     </Button>
                   </Link>
                 </div>
               </div>
             </Col>
+            {detailLiterature.data.data.literature.id != userId ? (
+              <Col lg={2}>
+                {checkBookmark() === true ? (
+                  <Button style={{ width: 200, float: "right" }}>
+                    Add to Collection <FaRegBookmark />
+                  </Button>
+                ) : (
+                  <Button style={{ width: 200, float: "right" }}>
+                    Add to Collection <FaRegBookmark />
+                  </Button>
+                )}
+              </Col>
+            ) : (
+              " "
+            )}
+            {/* <Button style={{ width: 200, float: "right" }}>
+                Add to Collection <FaRegBookmark />
+              </Button> */}
           </Row>
         </Container>
       </div>

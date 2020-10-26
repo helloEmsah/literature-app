@@ -1,5 +1,13 @@
 import React, { useEffect, useContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Container } from "react-bootstrap";
+
+import { API, setAuthToken } from "./Config/api";
+import { GlobalContext } from "./Context/GlobalContext";
+
+import PrivateRoute from "./Components/Routes/PrivateRoute";
+import AdminRoute from "./Components/Routes/AdminRoute";
+
 import Landing from "./Pages/Landing";
 import Home from "./Pages/Home";
 import Profile from "./Pages/Profile";
@@ -10,11 +18,6 @@ import Literature from "./Pages/Literature";
 import AdminLanding from "./Pages/AdminLanding";
 import Header from "./Components/Utilities/Header";
 import TestForm from "./Pages/TestForm";
-
-import { API, setAuthToken } from "./Config/api";
-import { GlobalContext } from "./Context/GlobalContext";
-
-import { Container } from "react-bootstrap";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -48,23 +51,27 @@ function App() {
         <Route exact path="/test" component={TestForm} />
         <Container fluid id="Route">
           <Header />
-          <Route exact path="/literature" component={Literature} />
-          <Route exact path="/literature/:title/:year" component={Literature} />
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/profile" component={Profile} />
-          <Route exact path="/my-collection" component={MyCollection} />
-          <Route exact path="/add-literature" component={AddLiterature} />
-          <Route
+          <PrivateRoute exact path="/literature" component={Literature} />
+          <PrivateRoute
+            exact
+            path="/literature/:title/:year"
+            component={Literature}
+          />
+          <PrivateRoute exact path="/home" component={Home} />
+          <PrivateRoute exact path="/profile" component={Profile} />
+          <PrivateRoute exact path="/my-collection" component={MyCollection} />
+          <PrivateRoute
+            exact
+            path="/add-literature"
+            component={AddLiterature}
+          />
+          <PrivateRoute
             exact
             path="/detail-literature/:id"
             component={DetailLiterature}
           />
 
-          <Route
-            exact
-            path="/admin-book-verification"
-            component={AdminLanding}
-          />
+          <Route exact path="/admin" component={AdminLanding} />
         </Container>
       </Switch>
     </Router>

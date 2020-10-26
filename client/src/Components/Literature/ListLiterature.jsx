@@ -26,32 +26,46 @@ const ListLiterature = () => {
     error,
     data: literatureData,
     refetch,
-  } = useQuery("getLiterature", () => API.get(`/literatures/${literatureId}`));
+  } = useQuery("getLiterature", () => API.get(`/literatures`));
 
   const [reload] = useMutation(async () => {
     refetch();
   });
 
-  return (
-    <Container>
-      <Card>
+  return isLoading || !literatureData ? (
+    <Spinner />
+  ) : (
+    <Container id="listLiterature">
+      <Card style={{ border: "none" }}>
         <Card.Body>
           <Row>
             {literatureData.data.data.literature.map((literature) => (
-              <Col>
-                <Link>
-                  <Card>
-                    <Card.Body>
+              <Col style={{ marginTop: 30 }} lg={3}>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  // onClick={() =>
+                  //   history.push(`/detail-literature/${collection.id}`)
+                  // }
+                >
+                  <Card border="dark" className="imageCard">
+                    <Card.Body style={{ padding: 0 }}>
                       <div className="literature-container">
-                        <img src={literature.tumbnail} alt="" />
+                        <img
+                          className="image"
+                          src={literature.thumbnail}
+                          alt=""
+                        />
                       </div>
                     </Card.Body>
                   </Card>
-                  <div id="bookCardDescription">
-                    <p style={{ color: "black" }} className="bookTitle">
-                      {literature.title}
-                    </p>
-                    <p className="bookAuthor">{literature.author}</p>
+                  <div className="description">
+                    <p className="title">{literature.title}</p>
+                    <div className="subtext-wrapper">
+                      <p className="author">{literature.author}</p>
+                      <p className="year">
+                        {literature.publication.split(" ")[1]}
+                      </p>
+                    </div>
                   </div>
                 </Link>
               </Col>

@@ -6,29 +6,12 @@ import {
   Form,
   Modal,
 } from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { TiDocumentAdd } from "react-icons/ti";
 import { useQuery, useMutation } from "react-query";
 import { API } from "../../Config/api";
 import Spinner from "../Utilities/Spinner";
 
-const schema = yup.object().shape({
-  title: yup.string().required(),
-  publication: yup.date().required(),
-  page: yup.string().required(),
-  isbn: yup.string().required(),
-  author: yup.string().required(),
-});
-
 function AddForm() {
-  const { addLiterature, handleSubmit, errors } = useForm({
-    resolver: yupResolver(schema),
-  });
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
-
   const [addBookModal, setAddBookModal] = useState(false);
 
   const userStateId = localStorage.getItem("id");
@@ -61,14 +44,7 @@ function AddForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const {
-    isLoading,
-    error,
-    data: literatureData,
-    refetch,
-  } = useQuery("getLiterature", () => API.get("/literature"));
-
-  const [addBook] = useMutation(async () => {
+  const [addLiterature] = useMutation(async () => {
     try {
       const config = {
         headers: {
@@ -109,19 +85,14 @@ function AddForm() {
     }
   });
 
-  return isLoading || !literatureData ? (
-    <Spinner />
-  ) : error ? (
-    <h1>Your error: {error.message}</h1>
-  ) : (
+  return (
     <>
       <Container id="addForm">
         <h1>Add Literature</h1>
         <Form
           onSubmit={(e) => {
             e.preventDefault();
-            addBook();
-            refetch();
+            addLiterature();
           }}
         >
           <br />
@@ -175,6 +146,7 @@ function AddForm() {
 
           <Form.Group>
             <Form.Control
+              name="file"
               type="text"
               placeholder="File"
               name="file"
@@ -212,11 +184,17 @@ function AddForm() {
             />
           </Form.Group>
           <div className="d-flex justify-content-between">
-            <DropdownButton variant="secondary" title="Add Book">
+            {/* <DropdownButton variant="secondary" title="Add Book">
               <form action="/addbook" method="post">
-                <input type="file" name="bookFile" />
+                <input
+                  type="file"
+                  name="file"
+                  onChange={(e) => {
+                    setFieldValue("file", e.target.files[0]);
+                  }}
+                />
               </form>
-            </DropdownButton>
+            </DropdownButton> */}
 
             <Button type="submit" onClick={() => setAddBookModal(true)}>
               Add Literature
@@ -225,6 +203,7 @@ function AddForm() {
           </div>
         </Form>
         <Modal
+          centered
           size="lg"
           show={addBookModal}
           onHide={() => setAddBookModal(false)}
