@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import GlobalContextProvider, { GlobalContext } from "./Context/GlobalContext";
+import {GlobalContextProvider} from "./Context/GlobalContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 

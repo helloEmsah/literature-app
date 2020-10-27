@@ -538,3 +538,11 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+#not-found {
+  width: 100vw;
+  height: 100vh;
+  background-color: #161616;
+  color: white; 
+  align-items: center;
+}

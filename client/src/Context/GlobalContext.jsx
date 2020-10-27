@@ -43,7 +43,7 @@ const reducer = (state, action) => {
   }
 };
 
-const GlobalContextProvider = (props) => {
+export const GlobalContextProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
@@ -53,4 +53,3 @@ const GlobalContextProvider = (props) => {
   );
 };
 
-export default GlobalContextProvider;

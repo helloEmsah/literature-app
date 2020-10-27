@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { GlobalContext } from "../../Context/GlobalContext";
+import Spinner from "../Utilities/Spinner";
 
 const AdminRoute = ({ component: Component, ...rest }) => {
   const [state] = useContext(GlobalContext);
@@ -9,7 +10,9 @@ const AdminRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        state.isLogin && state.user.isAdmin === 1 ? (
+        state.loading ? (
+          <Spinner />
+        ) :  (localStorage.getItem("id") === 1 ) ? (
           <Component {...props} />
         ) : (
           <Redirect to="/home" />

@@ -17,6 +17,7 @@ import DetailLiterature from "./Pages/DetailLiterature";
 import Literature from "./Pages/Literature";
 import AdminLanding from "./Pages/AdminLanding";
 import Header from "./Components/Utilities/Header";
+import NotFound from "./Pages/NotFound";
 import TestForm from "./Pages/TestForm";
 
 if (localStorage.token) {

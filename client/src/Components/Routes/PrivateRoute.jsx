@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { GlobalContext } from "../../Context/GlobalContext";
+import Spinner from "../Utilities/Spinner";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const [state] = useContext(GlobalContext);
@@ -9,7 +10,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        state.isLogin ? <Component {...props} /> : <Redirect to="/" />
+        state.loading ? (
+          <Spinner />
+        ) : state.isLogin ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/" />
+        )
       }
     />
   );
