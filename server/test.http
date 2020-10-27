@@ -3,10 +3,10 @@ POST http://localhost:5000/api/v1/register
 Content-Type: application/json
 
 {
-  "fullName": "Jane Doe",
-  "email"   : "janedoe2@root.com",
+  "fullName": "Operation Axis",
+  "email"   : "operationAxis@root.com",
   "password" : "thisisuser",
-  "gender": "Female",
+  "gender": "Male",
   "phone": "08123456784",
   "address": "Jl Pegangsaan Timur no 56"
 }
@@ -19,7 +19,7 @@ Content-Type: application/json
 //Authorization: 
 
 {
-  "email"   : "janedoe@root.com",
+  "email"   : "operationAxis@root.com",
   "password" : "thisisuser"
 }
 
@@ -32,7 +32,7 @@ Content-Type: application/json
 ###  
 
 # @name getProfile
-GET http://localhost:5000/api/v1/user/1
+GET http://localhost:5000/api/v1/user/6
 Content-Type: application/json
 
 ###  
@@ -56,13 +56,13 @@ Content-Type: application/json
 ###
 
 # @name getLiterature
-GET http://localhost:5000/api/v1/literature/1
+GET http://localhost:5000/api/v1/literature/3
 Content-Type: application/json
 
 ###  
 
 # @name searchLiterature
-GET http://localhost:5000/api/v1/literature?title=somehow
+GET http://localhost:5000/api/v1/literature?title=lit&public_year=2015
 Content-Type: application/json
 
 
@@ -75,11 +75,11 @@ Content-Type: application/json
 //Authorization: 
 
 {
-	"title": "Somehow Releated",
-	"userId": 1,
-	"publication": "August 2020",
-	"page": 123,
-	"author": "Karl Donitz",
+	"title": "Little Child",
+	"userId": 2,
+	"publication": "August 2015",
+	"page": 153,
+	"author": "Joseph Stallin",
 	"isbn": 15423122451,
 	"file": "test.file",
 	"thumbnail": "test.jpg"
@@ -116,5 +116,5 @@ Content-Type: application/json
 ###
 
 # @name getCollection
-GET http://localhost:5000/api/v1/collection/2
+GET http://localhost:5000/api/v1/collection/3
 Content-Type: application/json

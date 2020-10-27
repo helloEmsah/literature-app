@@ -26,7 +26,7 @@ const ListLiterature = () => {
     error,
     data: literatureData,
     refetch,
-  } = useQuery("getLiterature", () => API.get(`/literatures`));
+  } = useQuery("getLiterature", () => API.get(`/literature/${literatureId}`));
 
   const [reload] = useMutation(async () => {
     refetch();
@@ -43,9 +43,9 @@ const ListLiterature = () => {
               <Col style={{ marginTop: 30 }} lg={3}>
                 <Link
                   style={{ textDecoration: "none" }}
-                  // onClick={() =>
-                  //   history.push(`/detail-literature/${collection.id}`)
-                  // }
+                  onClick={() =>
+                    history.push(`/detail-literature/${literatureId}`)
+                  }
                 >
                   <Card border="dark" className="imageCard">
                     <Card.Body style={{ padding: 0 }}>

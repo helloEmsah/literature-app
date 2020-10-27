@@ -1,17 +1,25 @@
-Log: 04:45 27/10/2020
+Log: 22:50 27/10/2020
+// post-final-task-presentation
 
 # TODO
 
-## FRONTEND
+### FRONTEND
 
-- Implement upload Image
-- Implement upload File
-- Fix every functional
+- Implement multer for PDF
+- Functional Core!
 - Fix every UI
-- Multer for upload PDF
 - Do as needed
 
-## BACKEND
+### BACKEND
 
 - Fix Multer for upload PDF
+- Fix controller
 - Do as needed
+
+### Self-note
+
+Remember, 10 years ago...
+"Music doesn't suit me, I can't do this!"
+
+But look at you now! Pentatonic, Diatonic, Dorian, even all those audio stuffs...
+You did it! Now you'll make this happen again!

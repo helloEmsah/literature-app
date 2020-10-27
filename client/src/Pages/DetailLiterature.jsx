@@ -29,42 +29,42 @@ const DetailLiterature = () => {
     refetch,
   } = useQuery("getDetail", () => API.get(`/literature/${id}`));
 
-  function checkBookmark() {
-    const bookmark = detailLiterature.data.data.collection.some(
-      (bookmark) =>
-        detailLiterature.data.data.id === bookmark.LiteratureId &&
-        userId === bookmark.userId
-    );
-    console.log(bookmark);
-    return bookmark;
-  }
+  // function checkBookmark() {
+  //   const bookmark = detailLiterature.data.data.literature.some(
+  //     (bookmark) =>
+  //       detailLiterature.data.data.id === bookmark.LiteratureId &&
+  //       userId === bookmark.userId
+  //   );
+  //   console.log(bookmark);
+  //   return bookmark;
+  // }
 
-  const [addBookmark] = useMutation(async (literatureId) => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+  // const [addBookmark] = useMutation(async (literatureId) => {
+  //   try {
+  //     const config = {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     };
 
-      const body = JSON.stringify({ literatureId: literatureId });
-      const res = await API.post("/collection/", body, config);
-      setMessage(res.data.message);
-    } catch (error) {
-      console.log(error);
-      setMessage(error.response.data.error.message);
-    }
-  });
+  //     const body = JSON.stringify({ literatureId: literatureId });
+  //     const res = await API.post("/literature/", body, config);
+  //     setMessage(res.data.message);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setMessage(error.response.data.error.message);
+  //   }
+  // });
 
-  const [deleteBookmark] = useMutation(async () => {
-    try {
-      const res = await API.delete(`/collection/${literatureId}`);
-      refetch();
-    } catch (error) {
-      refetch();
-      console.log(error);
-    }
-  });
+  // const [deleteBookmark] = useMutation(async () => {
+  //   try {
+  //     const res = await API.delete(`/literature/${literatureId}`);
+  //     refetch();
+  //   } catch (error) {
+  //     refetch();
+  //     console.log(error);
+  //   }
+  // });
 
   return isLoading || !detailLiterature ? (
     <Spinner />
@@ -117,9 +117,8 @@ const DetailLiterature = () => {
                 </div>
               </div>
             </Col>
-            {detailLiterature.data.data.literature.id != userId ? (
-              <Col lg={2}>
-                {checkBookmark() === true ? (
+            <Col lg={2}>
+              {/* {checkBookmark() === true ? (
                   <Button style={{ width: 200, float: "right" }}>
                     Add to Collection <FaRegBookmark />
                   </Button>
@@ -127,11 +126,13 @@ const DetailLiterature = () => {
                   <Button style={{ width: 200, float: "right" }}>
                     Add to Collection <FaRegBookmark />
                   </Button>
-                )}
-              </Col>
-            ) : (
-              " "
-            )}
+
+                )} */}
+              <Button style={{ width: 200, float: "right" }}>
+                Add to Collection <FaRegBookmark />
+              </Button>
+            </Col>
+            )
             {/* <Button style={{ width: 200, float: "right" }}>
                 Add to Collection <FaRegBookmark />
               </Button> */}
