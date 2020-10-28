@@ -6,10 +6,14 @@ import { BiSearch } from "react-icons/bi";
 import Spinner from "../Components/Utilities/Spinner";
 import Collection from "../Components/MyCollection/Collection";
 import ListLiterature from "../Components/Literature/ListLiterature";
+import CardLiterature from "../Components/Literature/CardLiterature";
 
 const Literature = (props) => {
   const location = useLocation();
+
   const [query, setQuery] = useState(location.state.query);
+  const history = useHistory();
+
   const [isLoading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
   let year = "";
@@ -67,8 +71,9 @@ const Literature = (props) => {
                 <Form.Group>
                   <div className="d-flex">
                     <Form.Control
+                      name="literature"
                       type="text"
-                      placeholder="Search for literature"
+                      placeholder="Search"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                     />
@@ -98,7 +103,7 @@ const Literature = (props) => {
               <Spinner />
             ) : (
               // <Collection loading={isLoading} literatureData={result} />
-              <ListLiterature />
+              <CardLiterature loading={isLoading} dataLiterature={result} />
             )}
           </Col>
         </Row>

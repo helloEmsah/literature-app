@@ -6,49 +6,31 @@ import { BiSearch } from "react-icons/bi";
 
 function SearchBar() {
   const [query, setQuery] = useState("");
-
   const history = useHistory();
-
-  const [formData, setFormData] = useState({
-    search: "",
-  });
-
-  const { search } = FormData;
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSearch = () => {
-    history.push(`/literature/${search}`);
-  };
 
   return (
     <div id="searchBar">
-      <Form onSubmit={() => handleSearch()}>
+      <Form>
         <Form.Group>
           <div className="searchBarImageContainer">
             <img className="searchBarImage" src={Icon} alt="" />
           </div>
         </Form.Group>
         <br />
-
         <Form.Group>
           <div className="d-flex">
             <Form.Control
-              name="search"
+              name="literature"
               type="text"
               placeholder="Search for literature"
-              value={search}
+              value={query}
               onChange={(e) => setQuery(e.target.value)}
-              required
             />
             <Button
               className="btn"
-              type="submit"
               onClick={() =>
                 history.push({
-                  pathname: "/literature",
+                  pathname: "/literatures",
                   state: {
                     query: query,
                   },
