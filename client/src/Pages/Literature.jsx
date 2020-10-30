@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useQuery } from "react-query";
 import { API } from "../Config/api";
 import { BiSearch } from "react-icons/bi";
 import Spinner from "../Components/Utilities/Spinner";
@@ -27,12 +28,13 @@ const Literature = (props) => {
         );
         setResult(res.data.data.literature);
         setLoading(false);
-      } catch (err) {
-        console.log(err);
+        console.log(setResult);
+      } catch (error) {
+        console.log(error);
       }
     };
     fetchData("");
-  }, [query]);
+  }, []);
 
   const fetchData = async (year) => {
     try {
@@ -43,8 +45,8 @@ const Literature = (props) => {
       console.log(res.data.data.literature);
       setResult(res.data.data.literature);
       setLoading(false);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -90,11 +92,20 @@ const Literature = (props) => {
           <Col lg={2}>
             <div className="left-component">
               <p className="filter-label">Filter</p>
-              <select className="filter-btn">
+              <select
+                className="filter-btn"
+                onChange={(e) => {
+                  e.preventDefault();
+                  fetchData(e.target.value);
+                }}
+              >
                 <option value="">All Time</option>
                 <option value="2020">2020</option>
                 <option value="2019">2019</option>
                 <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
               </select>
             </div>
           </Col>

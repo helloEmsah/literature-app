@@ -53,7 +53,6 @@ function App() {
         <Container fluid id="Route">
           <Header />
           <PrivateRoute exact path="/literatures" component={Literature} />
-
           <PrivateRoute exact path="/home" component={Home} />
           <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute exact path="/my-collection" component={MyCollection} />

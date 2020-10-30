@@ -1,62 +1,54 @@
 import React, { useContext, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
 import { Card, Col, Row, Container } from "react-bootstrap";
-import GlobalContext from "../../Context/GlobalContext";
+import { GlobalContext } from "../../Context/GlobalContext";
 import Spinner from "../Utilities/Spinner";
 import { useQuery, useMutation } from "react-query";
 import { API } from "../../Config/api";
+import ListLiterature from "../Literature/ListLiterature";
 
 function Collection() {
+  const [state, dispatch] = useContext(GlobalContext);
   const history = useHistory();
-  const id = localStorage.getItem("id");
+  const userId = localStorage.getItem("id");
 
   const {
     isLoading,
     error,
     data: collectionData,
     refetch,
-  } = useQuery("getCollection", () => API.get(`/collection/${id}`));
+  } = useQuery("getCollection", () => API.get(`/collection/${userId}`));
 
-  return isLoading || !collectionData ? (
-    <Spinner />
-  ) : (
+  return (
     <Container id="collection">
       <p className="title-collection">My Collection</p>
       <Card style={{ border: "none" }}>
         <Card.Body>
           <Row>
-            {collectionData.data.data.collection.map((collection) => (
-              <Col lg={3}>
-                <Link
-                  style={{ textDecoration: "none" }}
-                  onClick={() =>
-                    history.push(`/detail-literature/${collection.id}`)
-                  }
-                >
-                  <Card border="dark" className="imageCard">
-                    <Card.Body style={{ padding: 0 }}>
-                      <div class="imageContainer">
-                        <img
-                          className="image"
-                          src={collection.literature.thumbnail}
-                          alt=""
-                        />
-                      </div>
-                    </Card.Body>
-                  </Card>
-                  <br />
-                  <p className="title-paper">{collection.literature.title}</p>
-                  <div className="description-paper">
-                    <p className="author-paper">
-                      {collection.literature.author}
-                    </p>
-                    <p className="year-paper">
-                      {collection.literature.publication.split(" ")[1]}
-                    </p>
-                  </div>
-                </Link>
-              </Col>
-            ))}
+            {isLoading ? (
+              <Spinner />
+            ) : collectionData.data.data.collection.toString() === "" ? (
+              <div
+                className="alert ml-auto mr-auto w-100 text-center mt-5 text-white"
+                role="alert"
+              >
+                <h3>No Literatures Found</h3>
+              </div>
+            ) : (
+              collectionData.data.data.collection.map((literature, index) => {
+                return literature.status === "Approve" ? (
+                  <ListLiterature
+                    isactive
+                    key={index}
+                    index={literature.id}
+                    thumbnail={literature.literatures.thumbnail}
+                    title={literature.title}
+                    author={literature.author}
+                    year={literature.publication.split(" ")[1]}
+                  />
+                ) : null;
+              })
+            )}
           </Row>
         </Card.Body>
       </Card>

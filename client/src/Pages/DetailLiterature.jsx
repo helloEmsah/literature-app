@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Button, Modal, Container, Row, Col } from "react-bootstrap";
 import { useParams, useHistory, Link } from "react-router-dom";
 import { useQuery, useMutation } from "react-query";
-import { API } from "../Config/api";
+import { API, urlAsset } from "../Config/api";
 import { BiCloudDownload } from "react-icons/bi";
 import { FaRegBookmark } from "react-icons/fa";
 import { GlobalContext } from "../Context/GlobalContext";
@@ -108,7 +108,15 @@ const DetailLiterature = () => {
                   <br />
                   <br />
                   <br />
-                  <Link target="_blank">
+                  <Link
+                    // to={
+                    //   urlAsset.pdf + detailLiterature.data.data.literature.file
+                    // }
+                    target="_blank"
+                    download={
+                      urlAsset.pdf + detailLiterature.data.data.literature.file
+                    }
+                  >
                     <Button>
                       Download{" "}
                       <BiCloudDownload style={{ width: 25, height: 25 }} />
@@ -132,7 +140,7 @@ const DetailLiterature = () => {
                 Add to Collection <FaRegBookmark />
               </Button>
             </Col>
-            )
+
             {/* <Button style={{ width: 200, float: "right" }}>
                 Add to Collection <FaRegBookmark />
               </Button> */}

@@ -26,9 +26,7 @@ const ListLiterature = ({
             <Col style={{ marginTop: 30 }} lg={3}>
               <Link
                 style={{ textDecoration: "none" }}
-                // onClick={() =>
-                //   history.push(`/detail-literature/${literatureId}`)
-                // }
+                onClick={() => history.push(`/detail-literature/${index}`)}
               >
                 <Card border="dark" className="imageCard">
                   <Card.Body style={{ padding: 0 }}>

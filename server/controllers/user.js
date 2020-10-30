@@ -67,7 +67,6 @@ exports.getUserLiterature = async (req, res) => {
               "gender",
               "picture",
               "isAdmin",
-              ,
               "createdAt",
               "updatedAt",
             ],
@@ -76,7 +75,7 @@ exports.getUserLiterature = async (req, res) => {
       ],
 
       attributes: {
-        exclude: ["userId", "thumbnail", "status", "createdAt", "updatedAt"],
+        exclude: ["userId", "status", "createdAt", "updatedAt"],
       },
       where: {
         userId: id,

@@ -16,17 +16,17 @@ const CardLiterature = (props) => {
         </div>
       ) : (
         props.dataLiterature.map((literature, index) => {
-          console.log(literature.literatures);
+          console.log(literature);
           if (pathname === "profile") {
-            return literature.status !== "Canceled" ? (
+            return literature.status !== "Waiting" ? (
               <ListLiterature
                 isactive={literature.status === "Waiting" ? false : true}
                 key={index}
                 index={literature.id}
-                image={literature.thumbnail}
+                thumbnail={literature.thumbnail}
                 title={literature.title}
                 author={literature.author}
-                year={literature.publication_date.split("-")[0]}
+                year={literature.publication.split(" ")[1]}
               />
             ) : null;
           } else if (pathname === "literatures") {
@@ -35,24 +35,22 @@ const CardLiterature = (props) => {
                 isactive
                 key={index}
                 index={literature.id}
-                image={literature.thumbnail}
+                thumbnail={literature.thumbnail}
                 title={literature.title}
                 author={literature.author}
-                year={literature.publication_date.split("-")[0]}
+                year={literature.publication.split(" ")[1]}
               />
             ) : null;
           } else {
-            return literature.literatures.status === "Approved" ? (
+            return literature.literature.status === "Approved" ? (
               <ListLiterature
                 isactive
                 key={index}
-                index={literature.literatures.id}
-                image={literature.literatures.thumbnail}
-                title={literature.literatures.title}
-                author={literature.literatures.author}
-                year={literature.literatures.publication_date.split("-")[0]}
-                myown={props.isMeAuthor}
-                handleRemove={props.handleRemove()}
+                index={literature.id}
+                thumbnail={literature.thumbnail}
+                title={literature.title}
+                author={literature.author}
+                year={literature.publication.split("-")[0]}
               />
             ) : null;
           }

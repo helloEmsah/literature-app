@@ -56,13 +56,13 @@ Content-Type: application/json
 ###
 
 # @name getLiterature
-GET http://localhost:5000/api/v1/literature/3
+GET http://localhost:5000/api/v1/literature/2
 Content-Type: application/json
 
 ###  
 
 # @name searchLiterature
-GET http://localhost:5000/api/v1/literature?title=lit&public_year=2015
+GET http://localhost:5000/api/v1/literature?title=lit
 Content-Type: application/json
 
 
@@ -116,5 +116,5 @@ Content-Type: application/json
 ###
 
 # @name getCollection
-GET http://localhost:5000/api/v1/collection/3
+GET http://localhost:5000/api/v1/collection/2
 Content-Type: application/json
