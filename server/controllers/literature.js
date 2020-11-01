@@ -175,20 +175,12 @@ exports.getLiterature = async (req, res) => {
 
 exports.addLiterature = async (req, res) => {
   try {
-    const {
-      title,
-      author,
-      publication,
-      userId,
-      page,
-      isbn,
-      file,
-      thumbnail,
-    } = req.body;
+    const { title, author, publication, userId, page, isbn } = req.body;
 
     const literature = await Literature.create({
       ...req.body,
       userId,
+      file: req.file.filename,
     });
 
     if (literature) {

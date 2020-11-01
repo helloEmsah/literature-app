@@ -51,8 +51,8 @@ const Literature = (props) => {
   };
 
   const handleSubmit = () => {
-    //console.log(query);
-    //refetch();
+    // console.log(query);
+    // refetch();
     fetchData("");
   };
 

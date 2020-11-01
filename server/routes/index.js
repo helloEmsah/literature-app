@@ -46,7 +46,7 @@ router.patch("/user/:id", uploadImage("picture"), uploadProfile);
 router.get("/literatures", getLiteratures);
 router.get("/literature", searchLiterature);
 router.get("/literature/:id", getLiterature);
-router.post("/literature", addLiterature);
+router.post("/literature", uploadPDF("file"), addLiterature);
 router.delete("/literature/:id", deleteLiterature);
 
 // COLLECTION ROUTE

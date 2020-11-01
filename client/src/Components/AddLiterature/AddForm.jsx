@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Button,
   Container,
@@ -10,14 +10,26 @@ import { TiDocumentAdd } from "react-icons/ti";
 import { useQuery, useMutation } from "react-query";
 import { API } from "../../Config/api";
 import Spinner from "../Utilities/Spinner";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { GlobalContext } from "../../Context/GlobalContext";
 
-function AddForm() {
-  const [addBookModal, setAddBookModal] = useState(false);
+function AddForm({ type }) {
+  const [state, dispatch] = useContext(GlobalContext);
+  const [show, setShow] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [loading, setLoading] = useState(false);
 
   const userStateId = localStorage.getItem("id");
 
+  // Modal Handle
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
   const [formData, setFormData] = useState({
-    userId: `${userStateId}`,
     title: "",
     author: "",
     publication: "",
@@ -28,73 +40,71 @@ function AddForm() {
     thumbnail: "",
   });
 
-  const {
-    userId,
-    title,
-    author,
-    publication,
-    page,
-    isbn,
-    file,
-    status,
-    thumbnail,
-  } = formData;
+  const [fileName, setFileName] = useState("");
+
+  const { title, author, publication, page, isbn, file, thumbnail } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const [addLiterature] = useMutation(async () => {
+    setShowErrorAlert(false);
+
+    const formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("publication", publication);
+    formData.append("page", page);
+    formData.append("author", author);
+    formData.append("isbn", isbn);
+    formData.append("thumbnail", thumbnail);
+    formData.append("file", file);
+    formData.append(
+      "status",
+      state.user.isAdmin === 1 ? "Approved" : "Waiting"
+    );
+
     try {
+      setLoading(true);
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       };
 
-      const body = JSON.stringify({
-        userId,
-        title,
-        author,
-        publication,
-        page,
-        isbn,
-        file,
-        status,
-        thumbnail,
-      });
-
-      const res = await API.post("/literature", body, config);
-
+      const { data } = await API.post("/literature", formData, config);
+      setLoading(false);
+      setShowSuccessAlert(true);
       setFormData({
-        userId: `${userStateId}`,
         title: "",
         author: "",
         publication: "",
         page: "",
         isbn: "",
         file: "",
-        status: "Waiting",
-        thumbnail: "",
       });
-
-      setAddBookModal(true);
-      return res;
+      setShowErrorAlert(false);
     } catch (error) {
+      console.log(error.response.data.message);
       console.log(error);
+      setErrorMessage(error.response.data.message);
+      setShowErrorAlert(true);
     }
+    setLoading(false);
   });
+
+  const handleSubmit = (e) => {
+    setLoading(false);
+    e.preventDefault();
+    addLiterature();
+  };
 
   return (
     <>
       <Container id="addForm">
         <h1>Add Literature</h1>
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault();
-            addLiterature();
-          }}
-        >
+        <Form onsubmit={(e) => handleSubmit(e)}>
           <br />
           <Form.Group>
             <Form.Control
@@ -103,6 +113,7 @@ function AddForm() {
               name="title"
               value={title}
               onChange={(e) => handleChange(e)}
+              required
             />
           </Form.Group>
           <Form.Group>
@@ -112,9 +123,9 @@ function AddForm() {
               name="publication"
               value={publication}
               onChange={(e) => handleChange(e)}
+              required
             />
           </Form.Group>
-
           <Form.Group>
             <Form.Control
               type="text"
@@ -122,6 +133,7 @@ function AddForm() {
               name="page"
               value={page}
               onChange={(e) => handleChange(e)}
+              required
             />
           </Form.Group>
           <Form.Group>
@@ -131,6 +143,7 @@ function AddForm() {
               name="isbn"
               value={isbn}
               onChange={(e) => handleChange(e)}
+              required
             />
           </Form.Group>
 
@@ -141,72 +154,55 @@ function AddForm() {
               name="author"
               value={author}
               onChange={(e) => handleChange(e)}
+              required
+            />
+          </Form.Group>
+          <Form.Group>
+            <div
+              className="form-control"
+              onClick={() => document.getElementsByName("file")[0].click()}
+              style={{ width: "max-content", cursor: "pointer" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {file ? file.name : "Attach File"}
+                <TiDocumentAdd size="20px" className="ml-1" />
+              </div>
+            </div>
+            <Form.File
+              name="file"
+              accept=".pdf"
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  file: !e.target.files[0] ? file : e.target.files[0],
+                });
+              }}
+              style={{ display: "none" }}
             />
           </Form.Group>
 
-          <Form.Group>
-            <Form.Control
-              name="file"
-              type="text"
-              placeholder="File"
-              name="file"
-              value={file}
-              onChange={(e) => handleChange(e)}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Control
-              type="text"
-              placeholder="Thumbnail"
-              name="thumbnail"
-              value={thumbnail}
-              onChange={(e) => handleChange(e)}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Control
-              type="text"
-              placeholder="userIdl"
-              name="userId"
-              value={userId}
-              onChange={(e) => handleChange(e)}
-              hidden
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Control
-              type="text"
-              placeholder="status"
-              name="status"
-              value={status}
-              onChange={(e) => handleChange(e)}
-              hidden
-            />
-          </Form.Group>
           <div className="d-flex justify-content-between">
-            {/* <DropdownButton variant="secondary" title="Add Book">
-              <form action="/addbook" method="post">
-                <input
-                  type="file"
-                  name="file"
-                  onChange={(e) => {
-                    setFieldValue("file", e.target.files[0]);
-                  }}
-                />
-              </form>
-            </DropdownButton> */}
-
-            <Button type="submit" onClick={() => setAddBookModal(true)}>
-              Add Literature
-              <TiDocumentAdd />
+            <Button type="submit">
+              {loading ? (
+                <h1>Loading...</h1>
+              ) : (
+                <>
+                  Add Literature <TiDocumentAdd />
+                </>
+              )}
             </Button>
           </div>
         </Form>
         <Modal
           centered
           size="lg"
-          show={addBookModal}
-          onHide={() => setAddBookModal(false)}
+          show={showSuccessAlert}
+          onHide={() => setShowSuccessAlert(false)}
         >
           <Modal.Body>
             <div

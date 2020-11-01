@@ -6,7 +6,7 @@ function AddLiterature() {
   return (
     <>
       <Container>
-        <AddForm />
+        <AddForm type="user" />
       </Container>
     </>
   );
