@@ -114,7 +114,11 @@ const Literature = (props) => {
               <Spinner />
             ) : (
               // <Collection loading={isLoading} literatureData={result} />
-              <CardLiterature loading={isLoading} dataLiterature={result} />
+              <CardLiterature
+                loading={isLoading}
+                dataLiterature={result}
+                isMeAuthor={false}
+              />
             )}
           </Col>
         </Row>

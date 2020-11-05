@@ -1,8 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import ListLiterature from "./ListLiterature";
 
 const CardLiterature = (props) => {
   const pathname = window.location.pathname.split("/")[1];
+
   return (
     <div className="row">
       {props.loading ? (
@@ -18,7 +20,7 @@ const CardLiterature = (props) => {
         props.dataLiterature.map((literature, index) => {
           console.log(literature);
           if (pathname === "profile") {
-            return literature.status !== "Waiting" ? (
+            return literature.status !== "Canceled" ? (
               <ListLiterature
                 isactive={literature.status === "Waiting" ? false : true}
                 key={index}
@@ -51,6 +53,8 @@ const CardLiterature = (props) => {
                 title={literature.title}
                 author={literature.author}
                 year={literature.publication.split("-")[0]}
+                myown={props.isMeAuthor}
+                handleRemove={props.handleRemove()}
               />
             ) : null;
           }

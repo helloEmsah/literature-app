@@ -20,6 +20,8 @@ import Header from "./Components/Utilities/Header";
 import NotFound from "./Pages/NotFound";
 import TestForm from "./Pages/TestForm";
 
+import SearchPage from "./Pages/SearchPage";
+
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -56,6 +58,14 @@ function App() {
           <PrivateRoute exact path="/home" component={Home} />
           <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute exact path="/my-collection" component={MyCollection} />
+
+          <PrivateRoute exact path="/search/:title" component={SearchPage} />
+          <PrivateRoute
+            exact
+            path="/search/:title/:year"
+            component={SearchPage}
+          />
+
           <PrivateRoute
             exact
             path="/add-literature"
