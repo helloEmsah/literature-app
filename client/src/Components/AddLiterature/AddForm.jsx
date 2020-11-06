@@ -10,8 +10,6 @@ import { TiDocumentAdd } from "react-icons/ti";
 import { useQuery, useMutation } from "react-query";
 import { API } from "../../Config/api";
 import Spinner from "../Utilities/Spinner";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import { GlobalContext } from "../../Context/GlobalContext";
 
 function AddForm({ type }) {

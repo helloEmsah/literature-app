@@ -48,13 +48,13 @@ function SearchPage() {
 
   const { isLoading, error, data: bookData, refetch } = useQuery(
     "getBooks",
-    () => API.get(`/literature/${title}`)
+    () => API.get(`/approved-literature/${title}/${year}`)
   );
 
-  //   const { data: yearData } = useQuery("getYear", () => API.get(`/year`));
+  const { data: yearData } = useQuery("getYear", () => API.get(`/year`));
 
   const [reLoad] = useMutation(async () => {
-    history.push(`/search/${title}`);
+    history.push(`/search/${title}/${year}`);
     refetch();
   });
 
@@ -163,7 +163,7 @@ function SearchPage() {
             </Dropdown>
           </div>
           <div className="col col-md-9" style={{ paddingRight: "0" }}>
-            {bookData.data.data.all.map((book) => (
+            {bookData.data.data.approvedLiterature.map((book) => (
               <div className="col col-md-3" style={{ display: "inline-block" }}>
                 <Link
                   style={{ textDecoration: "none" }}

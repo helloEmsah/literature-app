@@ -125,6 +125,136 @@ exports.searchLiterature = async (req, res) => {
   }
 };
 
+exports.getLiteratureByTitle = async (req, res) => {
+  try {
+    const { title } = req.params;
+    const Op = Sequelize.Op;
+    const approvedLiterature = await Literature.findAll({
+      order: [["publication", "DESC"]],
+      where: {
+        status: "Approved",
+        title: {
+          [Op.like]: "%" + title + "%",
+        },
+      },
+      attributes: {
+        exclude: ["createdAt", "updatedAt", , "userId", "UserId"],
+      },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        },
+      ],
+    });
+
+    res.send({
+      message: "Response Successfuly Loaded",
+      data: { approvedLiterature },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      error: {
+        message: "Server ERROR",
+      },
+    });
+  }
+};
+
+exports.readYear = async (req, res) => {
+  try {
+    const { title } = req.params;
+    const Op = Sequelize.Op;
+    const aprovedBooks = await Books.findAll({
+      order: [["publication", "DESC"]],
+      where: {
+        status: "Aproved",
+      },
+      group: ["publication"],
+      attributes: {
+        exclude: [
+          "createdAt",
+          "updatedAt",
+          ,
+          "userId",
+          "categoryId",
+          "UserId",
+          "CategoryId",
+        ],
+      },
+      include: [
+        {
+          model: User,
+          as: "bookUser",
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        },
+      ],
+    });
+
+    res.send({
+      message: "Response Successfuly Loaded",
+      data: { all: aprovedBooks },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      error: {
+        message: "Server ERROR",
+      },
+    });
+  }
+};
+
+exports.getLiteratureByTitleAndYear = async (req, res) => {
+  try {
+    let { title, pub } = req.params;
+
+    const Op = Sequelize.Op;
+    const approvedLiterature = await Literature.findAll({
+      order: [["publication", "DESC"]],
+      where: {
+        status: "Approved",
+        title: {
+          [Op.like]: "%" + title + "%",
+        },
+        publication: {
+          [Op.gt]: pub + "/01/01",
+        },
+      },
+      attributes: {
+        exclude: ["createdAt", "updatedAt", , "userId", "UserId"],
+      },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        },
+      ],
+    });
+
+    res.send({
+      message: "Response Successfuly Loaded",
+      data: { approvedLiterature },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      error: {
+        message: "Server ERROR",
+      },
+    });
+  }
+};
+
 exports.getLiterature = async (req, res) => {
   try {
     const literature = await Literature.findOne({

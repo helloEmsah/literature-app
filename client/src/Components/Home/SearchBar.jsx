@@ -20,7 +20,7 @@ function SearchBar() {
   };
 
   function handleSearch() {
-    history.push(`/search/${search}`);
+    history.push(`/search-literatures/${search}`);
   }
 
   return (

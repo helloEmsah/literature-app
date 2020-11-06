@@ -61,6 +61,18 @@ Content-Type: application/json
 
 ###  
 
+# @name getLiterature
+GET http://localhost:5000/api/v1/approved-literature/new
+Content-Type: application/json
+
+###  
+
+# @name getLiteratureByYear
+GET http://localhost:5000/api/v1/approved-literature/lit/2015
+Content-Type: application/json
+
+###  
+
 # @name searchLiterature
 GET http://localhost:5000/api/v1/literature?title=lit
 Content-Type: application/json

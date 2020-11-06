@@ -22,6 +22,9 @@ const {
   searchLiterature,
   addLiterature,
   deleteLiterature,
+  getLiteratureByTitle,
+  getLiteratureByTitleAndYear,
+  readYear,
 } = require("../controllers/literature");
 
 const {
@@ -45,6 +48,10 @@ router.patch("/user/:id", uploadImage("picture"), uploadProfile);
 // LITERATURE ROUTE
 router.get("/literatures", getLiteratures);
 router.get("/literature", searchLiterature);
+router.get("/literature/:id", getLiterature);
+router.get("/approved-literature/:title", getLiteratureByTitle);
+router.get("/year", readYear);
+router.get("/approved-literature/:title/:pub", getLiteratureByTitleAndYear);
 router.get("/literature/:id", getLiterature);
 router.post("/literature", uploadPDF("file"), addLiterature);
 router.delete("/literature/:id", deleteLiterature);
