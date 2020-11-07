@@ -1,16 +1,16 @@
-const { User, Literature } = require("../models");
+const { user, literature } = require("../models");
 
 exports.getUsers = async (req, res) => {
   try {
-    const user = await User.findAll({
+    const getUsers = await user.findAll({
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: ["createdAt", "updatedAt", "password"],
       },
     });
 
     return res.status(200).send({
       message: "All existing user has been loaded successfully!",
-      data: { user },
+      data: getUsers,
     });
   } catch (error) {
     console.log(error);
@@ -25,18 +25,18 @@ exports.getUsers = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findOne({
+    const getUser = await user.findOne({
       where: {
         id,
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: ["createdAt", "updatedAt", "password"],
       },
     });
-    if (user) {
+    if (getUser) {
       return res.status(200).send({
-        message: "User with corresponding id has been loaded",
-        data: user,
+        message: `User with id ${id} has been loaded`,
+        data: getUser,
       });
     } else {
       return res.status(404).send({
@@ -56,10 +56,10 @@ exports.getUser = async (req, res) => {
 exports.getUserLiterature = async (req, res) => {
   const { id } = req.params;
   try {
-    const literature = await Literature.findAll({
+    const getLiterature = await literature.findAll({
       include: [
         {
-          model: User,
+          model: user,
           as: "user",
           attributes: {
             exclude: [
@@ -84,7 +84,7 @@ exports.getUserLiterature = async (req, res) => {
 
     return res.status(200).send({
       message: `Literature with user id ${id} has been loaded successfully`,
-      data: { literature },
+      data: getLiterature,
     });
   } catch (error) {
     console.log(error);
@@ -130,42 +130,45 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.uploadProfile = async (req, res) => {
+exports.updateUser = async (req, res) => {
   try {
     const id = req.params.id;
-    await User.update(
-      { picture: req.file.filename },
+    const [userUpdated] = await user.update(
+      {
+        ...req.body,
+        picture: req.file.filename,
+      },
       {
         where: {
           id,
         },
       }
     );
-    const user = await User.findOne({
+
+    if (!userUpdated) {
+      return res.status(404).send({
+        message: "User didn't exist",
+      });
+    }
+
+    const data = await user.findOne({
       where: {
         id,
       },
 
       attributes: {
-        exclude: [
-          "password",
-          "phone",
-          "address",
-          "gender",
-          "isAdmin",
-          "createdAt",
-          "updatedAt",
-        ],
+        exclude: ["password", "createdAt", "updatedAt"],
       },
     });
     res.send({
-      message: "Profile Picture has changed",
+      message: "User has been updated",
       data: {
-        user,
+        data,
+        path: req.file.path,
       },
     });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     res.status(500).send({
       error: {
         message: "Internal Server Error",

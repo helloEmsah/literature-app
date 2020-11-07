@@ -13,7 +13,7 @@ const {
   getUser,
   getUserLiterature,
   deleteUser,
-  uploadProfile,
+  updateUser,
 } = require("../controllers/user");
 
 const {
@@ -42,8 +42,8 @@ router.get("/auth", authentication, checkAuth);
 router.get("/user", getUsers);
 router.get("/user/:id", getUser);
 router.get("/user/:id/literature", getUserLiterature);
+router.patch("/user/:id", uploadImage("picture"), updateUser);
 router.delete("/user/:id", deleteUser);
-router.patch("/user/:id", uploadImage("picture"), uploadProfile);
 
 // LITERATURE ROUTE
 router.get("/literatures", getLiteratures);

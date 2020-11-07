@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { User } = require("../models");
+const { user } = require("../models");
 const secretKey = process.env.SECRET_KEY;
 
 exports.authentication = (req, res, next) => {
@@ -33,13 +33,13 @@ exports.authentication = (req, res, next) => {
 
 exports.authAdmin = async (req, res, next) => {
   try {
-    const user = await User.findOne({
+    const data = await user.findOne({
       where: {
-        id: req.user.id,
+        id: req.data.id,
       },
     });
 
-    if (user.role !== 1)
+    if (data.role !== "admin")
       return res.status(400).send({ message: "You're unauthorized!" });
 
     next();

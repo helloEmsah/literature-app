@@ -1,4 +1,4 @@
-const { User } = require("../models/");
+const { user } = require("../models/");
 
 const bcrypt = require("bcrypt");
 
@@ -11,7 +11,7 @@ const secretKey = process.env.SECRET_KEY;
 
 exports.checkAuth = async (req, res) => {
   try {
-    const user = await User.findOne({
+    const data = await user.findOne({
       where: {
         id: req.user.id,
       },
@@ -22,7 +22,7 @@ exports.checkAuth = async (req, res) => {
 
     res.send({
       message: "User Valid",
-      data: user,
+      data: data,
     });
   } catch (error) {
     console.log(error);
@@ -55,7 +55,7 @@ exports.Register = async (req, res) => {
       });
     }
 
-    const checkEmail = await User.findOne({
+    const checkEmail = await user.findOne({
       where: {
         email,
       },
@@ -72,18 +72,16 @@ exports.Register = async (req, res) => {
     const salt = 10;
     const hashed = await bcrypt.hash(password, salt);
 
-    const user = await User.create({
-      fullName,
-      email,
+    const newUser = await user.create({
+      ...req.body,
       password: hashed,
-      gender,
-      phone,
-      address,
+      picture: "default-avatar.png",
+      role: "user",
     });
 
     const token = jwt.sign(
       {
-        id: user.id,
+        id: newUser.id,
       },
       secretKey
     );
@@ -91,8 +89,7 @@ exports.Register = async (req, res) => {
     res.send({
       message: "Registration success!",
       data: {
-        id: user.id,
-        email: user.email,
+        email,
         token,
       },
     });
@@ -125,13 +122,13 @@ exports.Login = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({
+    const userLogin = await user.findOne({
       where: {
         email,
       },
     });
 
-    if (!user) {
+    if (!userLogin) {
       return res.status(400).send({
         error: {
           message: "Email or Password incorrect",
@@ -139,7 +136,7 @@ exports.Login = async (req, res) => {
       });
     }
 
-    const validate = await bcrypt.compare(password, user.password);
+    const validate = await bcrypt.compare(password, userLogin.password);
 
     if (!validate) {
       return res.status(400).send({
@@ -151,7 +148,7 @@ exports.Login = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: user.id,
+        id: userLogin.id,
       },
       secretKey
     );
@@ -159,8 +156,7 @@ exports.Login = async (req, res) => {
     res.send({
       message: "Login success",
       data: {
-        id: user.id,
-        email: user.email,
+        email,
         token,
       },
     });

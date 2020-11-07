@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Literature", {
+    await queryInterface.createTable("literatures", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,7 +15,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "Users",
+          model: "users",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -41,7 +41,6 @@ module.exports = {
       },
       status: {
         type: Sequelize.STRING,
-        defaultValue: "Waiting",
       },
       createdAt: {
         allowNull: false,
@@ -54,6 +53,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Literature");
+    await queryInterface.dropTable("literatures");
   },
 };

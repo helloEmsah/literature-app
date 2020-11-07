@@ -1,14 +1,14 @@
-const { Literature, User } = require("../models");
+const { literature, user } = require("../models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const joi = require("@hapi/joi");
 
 exports.getLiteratures = async (req, res) => {
   try {
-    const literature = await Literature.findAll({
+    const getLiterature = await literature.findAll({
       include: [
         {
-          model: User,
+          model: user,
           as: "user",
           attributes: {
             exclude: [
@@ -31,7 +31,7 @@ exports.getLiteratures = async (req, res) => {
 
     return res.status(200).send({
       message: "All existing literature has been loaded",
-      data: { literature },
+      data: getLiterature,
     });
   } catch (error) {
     console.log(error);

@@ -3,8 +3,8 @@ POST http://localhost:5000/api/v1/register
 Content-Type: application/json
 
 {
-  "fullName": "Operation Axis",
-  "email"   : "operationAxis@root.com",
+  "fullName": "New User",
+  "email"   : "user1@root.com",
   "password" : "thisisuser",
   "gender": "Male",
   "phone": "08123456784",
@@ -19,29 +19,33 @@ Content-Type: application/json
 //Authorization: 
 
 {
-  "email"   : "operationAxis@root.com",
+  "email"   : "user1@root.com",
   "password" : "thisisuser"
 }
 
 ###  
 
-# @name getProfiles
+# @name getUsers
 GET http://localhost:5000/api/v1/user
 Content-Type: application/json
 
 ###  
 
-# @name getProfile
-GET http://localhost:5000/api/v1/user/6
+# @name getUser
+GET http://localhost:5000/api/v1/user/2
 Content-Type: application/json
 
 ###  
 
-# @name getProfileLiterature
+# @name getUserLiterature
 GET http://localhost:5000/api/v1/user/2/literature
 Content-Type: application/json
 
-###  
+### ##########################
+
+### MULTIFORM DATA RIGHT HERE 
+
+### ##########################
 
 # @name deleteUser
 DELETE  http://localhost:5000/api/v1/user/:id
