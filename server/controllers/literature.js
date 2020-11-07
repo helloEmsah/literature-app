@@ -1,14 +1,14 @@
-const { literature, user } = require("../models");
+const { literatures, users } = require("../models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const joi = require("@hapi/joi");
 
 exports.getLiteratures = async (req, res) => {
   try {
-    const getLiterature = await literature.findAll({
+    const literature = await literatures.findAll({
       include: [
         {
-          model: user,
+          model: users,
           as: "user",
           attributes: {
             exclude: [
@@ -19,20 +19,69 @@ exports.getLiteratures = async (req, res) => {
               "address",
               "gender",
               "picture",
-              "isAdmin",
+              "role",
             ],
           },
         },
       ],
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: ["userId", "thumbnail","createdAt", "updatedAt"],
       },
     });
 
     return res.status(200).send({
       message: "All existing literature has been loaded",
-      data: getLiterature,
+      data: {literature},
     });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      error: {
+        message: "Internal Server Error",
+      },
+    });
+  }
+};
+
+exports.getLiterature = async (req, res) => {
+  try {
+    const {id} = req.params
+    const literature = await literatures.findOne({
+      include: [
+        {
+          model: users,
+          as: "user",
+          attributes: {
+            exclude: [
+              "createdAt",
+              "updatedAt",
+              "password",
+              "phone",
+              "address",
+              "gender",
+              "picture",
+              "role",
+            ],
+          },
+        },
+      ],
+      attributes: {
+        exclude: ["userId", "thumbnail", "createdAt", "updatedAt"],
+      },
+      where: {
+        id,
+      },
+    });
+    if (literature) {
+      return res.status(200).send({
+        message: `Literature with id ${id} has been loaded successfully!`,
+        data: {literature} ,
+      });
+    } else {
+      return res.status(404).send({
+        message: "Literature didn't exist",
+      });
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -52,7 +101,7 @@ exports.searchLiterature = async (req, res) => {
       const literature = await Literature.findAll({
         include: [
           {
-            model: User,
+            model: users,
             as: "user",
             attributes: {
               exclude: [
@@ -87,7 +136,7 @@ exports.searchLiterature = async (req, res) => {
       const literature = await Literature.findAll({
         include: [
           {
-            model: User,
+            model: users,
             as: "user",
             attributes: {
               exclude: [
@@ -129,8 +178,7 @@ exports.getLiteratureByTitle = async (req, res) => {
   try {
     const { title } = req.params;
     const Op = Sequelize.Op;
-    const approvedLiterature = await Literature.findAll({
-      order: [["publication", "DESC"]],
+    const literature = await literatures.findAll({
       where: {
         status: "Approved",
         title: {
@@ -138,28 +186,28 @@ exports.getLiteratureByTitle = async (req, res) => {
         },
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt", , "userId", "UserId"],
+        exclude: ["userId", "thumbnail", "createdAt", "updatedAt"],
       },
       include: [
         {
-          model: User,
+          model: users,
           as: "user",
           attributes: {
-            exclude: ["createdAt", "updatedAt"],
+            exclude: ["password", "phone", "address", "gender", "picture", "role" ,"createdAt", "updatedAt"],
           },
         },
       ],
     });
 
     res.send({
-      message: "Response Successfuly Loaded",
-      data: { approvedLiterature },
+      message: `Search literature with key: ${title} success!`,
+      data: {literature},
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       error: {
-        message: "Server ERROR",
+        message: "Internal Server Error",
       },
     });
   }
@@ -172,7 +220,7 @@ exports.readYear = async (req, res) => {
     const aprovedBooks = await Books.findAll({
       order: [["publication", "DESC"]],
       where: {
-        status: "Aproved",
+        status: "Approved",
       },
       group: ["publication"],
       attributes: {
@@ -188,7 +236,7 @@ exports.readYear = async (req, res) => {
       },
       include: [
         {
-          model: User,
+          model: users,
           as: "bookUser",
           attributes: {
             exclude: ["createdAt", "updatedAt"],
@@ -205,7 +253,7 @@ exports.readYear = async (req, res) => {
     console.log(err);
     res.status(500).send({
       error: {
-        message: "Server ERROR",
+        message: "Internal Server Error",
       },
     });
   }
@@ -216,7 +264,7 @@ exports.getLiteratureByTitleAndYear = async (req, res) => {
     let { title, pub } = req.params;
 
     const Op = Sequelize.Op;
-    const approvedLiterature = await Literature.findAll({
+    const literature = await literatures.findAll({
       order: [["publication", "DESC"]],
       where: {
         status: "Approved",
@@ -228,11 +276,11 @@ exports.getLiteratureByTitleAndYear = async (req, res) => {
         },
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt", , "userId", "UserId"],
+        exclude: ["createdAt", "updatedAt"],
       },
       include: [
         {
-          model: User,
+          model: users,
           as: "user",
           attributes: {
             exclude: ["createdAt", "updatedAt"],
@@ -243,65 +291,19 @@ exports.getLiteratureByTitleAndYear = async (req, res) => {
 
     res.send({
       message: "Response Successfuly Loaded",
-      data: { approvedLiterature },
+      data:  {literature} ,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      error: {
-        message: "Server ERROR",
-      },
-    });
-  }
-};
-
-exports.getLiterature = async (req, res) => {
-  try {
-    const literature = await Literature.findOne({
-      include: [
-        {
-          model: User,
-          as: "user",
-          attributes: {
-            exclude: [
-              "createdAt",
-              "updatedAt",
-              "password",
-              "phone",
-              "address",
-              "gender",
-              "picture",
-              "isAdmin",
-            ],
-          },
-        },
-      ],
-      attributes: {
-        exclude: ["createdAt", "updatedAt"],
-      },
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (literature) {
-      return res.status(200).send({
-        message: "Literature has been loaded",
-        data: { literature },
-      });
-    } else {
-      return res.status(404).send({
-        message: "Literature didn't exist",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
       error: {
         message: "Internal Server Error",
       },
     });
   }
 };
+
+
 
 exports.addLiterature = async (req, res) => {
   try {

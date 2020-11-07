@@ -1,16 +1,16 @@
-const { user, literature } = require("../models");
+const { users, literatures } = require("../models");
 
 exports.getUsers = async (req, res) => {
   try {
-    const getUsers = await user.findAll({
+    const user = await users.findAll({
       attributes: {
-        exclude: ["createdAt", "updatedAt", "password"],
+        exclude: ["createdAt", "updatedAt", "password", "role"],
       },
     });
 
     return res.status(200).send({
-      message: "All existing user has been loaded successfully!",
-      data: getUsers,
+      message: "All users has been loaded successfully!",
+      data: {user},
     });
   } catch (error) {
     console.log(error);
@@ -25,18 +25,18 @@ exports.getUsers = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const getUser = await user.findOne({
+    const user = await users.findOne({
       where: {
         id,
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "password"],
+        exclude: ["createdAt", "updatedAt", "password", "role"],
       },
     });
-    if (getUser) {
+    if (user) {
       return res.status(200).send({
-        message: `User with id ${id} has been loaded`,
-        data: getUser,
+        message: `User with id ${id} has been loaded successfully`,
+        data: user,
       });
     } else {
       return res.status(404).send({
@@ -56,17 +56,19 @@ exports.getUser = async (req, res) => {
 exports.getUserLiterature = async (req, res) => {
   const { id } = req.params;
   try {
-    const getLiterature = await literature.findAll({
+    const getLiterature = await literatures.findAll({
       include: [
         {
-          model: user,
+          model: users,
           as: "user",
           attributes: {
             exclude: [
               "password",
               "gender",
               "picture",
-              "isAdmin",
+              "role",
+              "phone",
+              "address",
               "createdAt",
               "updatedAt",
             ],
@@ -75,7 +77,7 @@ exports.getUserLiterature = async (req, res) => {
       ],
 
       attributes: {
-        exclude: ["userId", "status", "createdAt", "updatedAt"],
+        exclude: ["userId", "thumbnail", "createdAt", "updatedAt"],
       },
       where: {
         userId: id,
@@ -83,7 +85,7 @@ exports.getUserLiterature = async (req, res) => {
     });
 
     return res.status(200).send({
-      message: `Literature with user id ${id} has been loaded successfully`,
+      message: `Literature belongs to user id ${id} has been loaded successfully`,
       data: getLiterature,
     });
   } catch (error) {
@@ -98,13 +100,13 @@ exports.getUserLiterature = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    const user = await User.findOne({
+    const user = await users.findOne({
       where: {
         id: req.params.id,
       },
     });
     if (user) {
-      const deleteUser = await user.destroy({
+      const deleteUser = await users.destroy({
         where: {
           id: req.params.id,
         },
@@ -133,7 +135,7 @@ exports.deleteUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const id = req.params.id;
-    const [userUpdated] = await user.update(
+    const [userUpdated] = await users.update(
       {
         ...req.body,
         picture: req.file.filename,
@@ -151,7 +153,7 @@ exports.updateUser = async (req, res) => {
       });
     }
 
-    const data = await user.findOne({
+    const data = await users.findOne({
       where: {
         id,
       },

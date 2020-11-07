@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { user } = require("../models");
+const { users } = require("../models");
 const secretKey = process.env.SECRET_KEY;
 
 exports.authentication = (req, res, next) => {
@@ -11,7 +11,7 @@ exports.authentication = (req, res, next) => {
   ) {
     return res.status(400).send({
       error: {
-        message: "Access Denied",
+        message: "Access Denied. Please Login.",
       },
     });
   }
@@ -33,17 +33,18 @@ exports.authentication = (req, res, next) => {
 
 exports.authAdmin = async (req, res, next) => {
   try {
-    const data = await user.findOne({
+    const user = await users.findOne({
       where: {
-        id: req.data.id,
+        id: req.user.id,
       },
     });
 
-    if (data.role !== "admin")
+    if (user.role !== "admin")
       return res.status(400).send({ message: "You're unauthorized!" });
 
     next();
   } catch (error) {
+    console.log(error)
     res.status(400).send({ message: "Invalid token" });
   }
 };

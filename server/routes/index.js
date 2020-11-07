@@ -39,26 +39,26 @@ router.post("/login", Login);
 router.get("/auth", authentication, checkAuth);
 
 // PROFILE ROUTE
-router.get("/user", getUsers);
-router.get("/user/:id", getUser);
-router.get("/user/:id/literature", getUserLiterature);
-router.patch("/user/:id", uploadImage("picture"), updateUser);
-router.delete("/user/:id", deleteUser);
+router.get("/user", authentication, getUsers);
+router.get("/user/:id", authentication, getUser);
+router.get("/user/:id/literature", authentication, getUserLiterature);
+router.patch("/user/:id", authentication, uploadImage("picture"), updateUser);
+router.delete("/user/:id", authentication, authAdmin, deleteUser);
 
 // LITERATURE ROUTE
-router.get("/literatures", getLiteratures);
-router.get("/literature", searchLiterature);
-router.get("/literature/:id", getLiterature);
-router.get("/approved-literature/:title", getLiteratureByTitle);
-router.get("/year", readYear);
-router.get("/approved-literature/:title/:pub", getLiteratureByTitleAndYear);
-router.get("/literature/:id", getLiterature);
-router.post("/literature", uploadPDF("file"), addLiterature);
-router.delete("/literature/:id", deleteLiterature);
+router.get("/literatures", authentication, getLiteratures);
+router.get("/literature", authentication, searchLiterature);
+router.get("/literature/:id", authentication, getLiterature);
+router.get("/approved-literature/:title", authentication, getLiteratureByTitle);
+router.get("/year", authentication, readYear);
+router.get("/approved-literature/:title/:pub", authentication, getLiteratureByTitleAndYear);
+router.get("/literature/:id", authentication, getLiterature);
+router.post("/literature", authentication, uploadPDF("file"), addLiterature);
+router.delete("/literature/:id", authentication, authAdmin, deleteLiterature);
 
 // COLLECTION ROUTE
-router.get("/collection/:id", getCollection);
-router.post("/collection/:literatureId", addCollection);
-router.delete("/collection/:literatureId", deleteCollection);
+router.get("/collection/:id", authentication, getCollection);
+router.post("/collection/:literatureId", authentication, addCollection);
+router.delete("/remove-collection/:literatureId", authentication, deleteCollection);
 
 module.exports = router;

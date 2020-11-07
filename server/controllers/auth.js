@@ -1,4 +1,4 @@
-const { user } = require("../models/");
+const { users } = require("../models/");
 
 const bcrypt = require("bcrypt");
 
@@ -11,7 +11,7 @@ const secretKey = process.env.SECRET_KEY;
 
 exports.checkAuth = async (req, res) => {
   try {
-    const data = await user.findOne({
+    const user = await users.findOne({
       where: {
         id: req.user.id,
       },
@@ -22,7 +22,7 @@ exports.checkAuth = async (req, res) => {
 
     res.send({
       message: "User Valid",
-      data: data,
+      data: user,
     });
   } catch (error) {
     console.log(error);
@@ -55,7 +55,7 @@ exports.Register = async (req, res) => {
       });
     }
 
-    const checkEmail = await user.findOne({
+    const checkEmail = await users.findOne({
       where: {
         email,
       },
@@ -72,7 +72,7 @@ exports.Register = async (req, res) => {
     const salt = 10;
     const hashed = await bcrypt.hash(password, salt);
 
-    const newUser = await user.create({
+    const user = await users.create({
       ...req.body,
       password: hashed,
       picture: "default-avatar.png",
@@ -81,7 +81,7 @@ exports.Register = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: newUser.id,
+        id: user.id,
       },
       secretKey
     );
@@ -89,6 +89,7 @@ exports.Register = async (req, res) => {
     res.send({
       message: "Registration success!",
       data: {
+        id: user.id,
         email,
         token,
       },
@@ -122,13 +123,13 @@ exports.Login = async (req, res) => {
       });
     }
 
-    const userLogin = await user.findOne({
+    const user = await users.findOne({
       where: {
         email,
       },
     });
 
-    if (!userLogin) {
+    if (!user) {
       return res.status(400).send({
         error: {
           message: "Email or Password incorrect",
@@ -136,7 +137,7 @@ exports.Login = async (req, res) => {
       });
     }
 
-    const validate = await bcrypt.compare(password, userLogin.password);
+    const validate = await bcrypt.compare(password, user.password);
 
     if (!validate) {
       return res.status(400).send({
@@ -148,7 +149,7 @@ exports.Login = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: userLogin.id,
+        id: user.id,
       },
       secretKey
     );
@@ -156,6 +157,7 @@ exports.Login = async (req, res) => {
     res.send({
       message: "Login success",
       data: {
+        id: user.id,
         email,
         token,
       },

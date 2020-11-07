@@ -1,3 +1,11 @@
+// Admin Token
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjA0NzcyMTUxfQ.rmZTVbgxumoDb4bWK_fPDtTOT_-pTrZ8CcnI1QOP6jI
+
+// User Token
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
+
+##########################################
+
 # @name Register
 POST http://localhost:5000/api/v1/register
 Content-Type: application/json
@@ -19,7 +27,7 @@ Content-Type: application/json
 //Authorization: 
 
 {
-  "email"   : "user1@root.com",
+  "email"   : "user@root.com",
   "password" : "thisisuser"
 }
 
@@ -28,18 +36,21 @@ Content-Type: application/json
 # @name getUsers
 GET http://localhost:5000/api/v1/user
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjA0NzcyMTUxfQ.rmZTVbgxumoDb4bWK_fPDtTOT_-pTrZ8CcnI1QOP6jI
 
 ###  
 
 # @name getUser
-GET http://localhost:5000/api/v1/user/2
+GET http://localhost:5000/api/v1/user/1
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjA0NzcyMTUxfQ.rmZTVbgxumoDb4bWK_fPDtTOT_-pTrZ8CcnI1QOP6jI
 
 ###  
 
 # @name getUserLiterature
-GET http://localhost:5000/api/v1/user/2/literature
+GET http://localhost:5000/api/v1/user/1/literature
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
 
 ### ##########################
 
@@ -48,40 +59,37 @@ Content-Type: application/json
 ### ##########################
 
 # @name deleteUser
-DELETE  http://localhost:5000/api/v1/user/:id
+DELETE  http://localhost:5000/api/v1/user/6
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
 
 ###
 
 # @name getLiteratures
 GET http://localhost:5000/api/v1/literatures
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
 
 ###
 
 # @name getLiterature
-GET http://localhost:5000/api/v1/literature/2
+GET http://localhost:5000/api/v1/literature/7
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
 
 ###  
 
-# @name getLiterature
-GET http://localhost:5000/api/v1/approved-literature/new
+# @name searchLiteratureByTitle
+GET http://localhost:5000/api/v1/approved-literature/si
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
 
 ###  
 
 # @name getLiteratureByYear
-GET http://localhost:5000/api/v1/approved-literature/lit/2015
+GET http://localhost:5000/api/v1/approved-literature/si/2019
 Content-Type: application/json
-
-###  
-
-# @name searchLiterature
-GET http://localhost:5000/api/v1/literature?title=lit
-Content-Type: application/json
-
-
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
 
 ###
 
@@ -127,10 +135,30 @@ Content-Type: application/json
 # @name deleteLiterature
 DELETE  http://localhost:5000/api/v1/literature/:id
 Content-Type: application/json 
-//Authorization: 
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
+
 
 ###
 
 # @name getCollection
 GET http://localhost:5000/api/v1/collection/2
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
+
+
+###
+
+# @name addCollection
+POST  http://localhost:5000/api/v1/collection/2
+Content-Type: application/json
+{
+  "userId": 2,
+  "literatureId": 5,
+}
+
+###
+
+# @name deleteCollection
+DELETE  http://localhost:5000/api/v1/remove-collection/6
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc

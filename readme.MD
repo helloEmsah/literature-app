@@ -2,6 +2,7 @@
 
 ### FRONTEND
 
+- Integrate Frontend with Backend
 - Implement multer for PDF
 - Functional Core!
 - Fix every UI
@@ -10,5 +11,4 @@
 ### BACKEND
 
 - Fix Multer for upload PDF
-- Fix controller
 - Do as needed
