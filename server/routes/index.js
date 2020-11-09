@@ -12,8 +12,8 @@ const {
   getUsers,
   getUser,
   getUserLiterature,
-  deleteUser,
   updateUser,
+  deleteUser,
 } = require("../controllers/user");
 
 const {
@@ -24,7 +24,7 @@ const {
   deleteLiterature,
   getLiteratureByTitle,
   getLiteratureByTitleAndYear,
-  readYear,
+  getYear,
 } = require("../controllers/literature");
 
 const {
@@ -51,8 +51,12 @@ router.get("/literature", authentication, searchLiterature);
 router.get("/user-literature/:id", authentication, getUserLiterature);
 router.get("/literature/:id", authentication, getLiterature);
 router.get("/approved-literature/:title", authentication, getLiteratureByTitle);
-router.get("/year", authentication, readYear);
-router.get("/approved-literature/:title/:pub", authentication, getLiteratureByTitleAndYear);
+router.get("/year", authentication, getYear);
+router.get(
+  "/approved-literature/:title/:pub",
+  authentication,
+  getLiteratureByTitleAndYear
+);
 router.get("/literature/:id", authentication, getLiterature);
 router.post("/literature", authentication, uploadPDF("file"), addLiterature);
 router.delete("/literature/:id", authentication, authAdmin, deleteLiterature);
@@ -60,6 +64,10 @@ router.delete("/literature/:id", authentication, authAdmin, deleteLiterature);
 // COLLECTION ROUTE
 router.get("/collection/:id", authentication, getCollection);
 router.post("/collection", authentication, addCollection);
-router.delete("/remove-collection/:literatureId", authentication, deleteCollection);
+router.delete(
+  "/remove-collection/:literatureId",
+  authentication,
+  deleteCollection
+);
 
 module.exports = router;
