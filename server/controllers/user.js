@@ -1,16 +1,16 @@
-const { User, Literature } = require("../models");
+const { users, literatures } = require("../models");
 
 exports.getUsers = async (req, res) => {
   try {
-    const user = await User.findAll({
+    const user = await users.findAll({
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: ["createdAt", "updatedAt", "password", "role"],
       },
     });
 
     return res.status(200).send({
-      message: "All existing user has been loaded successfully!",
-      data: { user },
+      message: "All users has been loaded successfully!",
+      data: {user},
     });
   } catch (error) {
     console.log(error);
@@ -25,17 +25,17 @@ exports.getUsers = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findOne({
+    const user = await users.findOne({
       where: {
         id,
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt"],
+        exclude: ["createdAt", "updatedAt", "password", "role"],
       },
     });
     if (user) {
       return res.status(200).send({
-        message: "User with corresponding id has been loaded",
+        message: `User with id ${id} has been loaded successfully`,
         data: user,
       });
     } else {
@@ -56,17 +56,19 @@ exports.getUser = async (req, res) => {
 exports.getUserLiterature = async (req, res) => {
   const { id } = req.params;
   try {
-    const literature = await Literature.findAll({
+    const getLiterature = await literatures.findAll({
       include: [
         {
-          model: User,
+          model: users,
           as: "user",
           attributes: {
             exclude: [
               "password",
               "gender",
               "picture",
-              "isAdmin",
+              "role",
+              "phone",
+              "address",
               "createdAt",
               "updatedAt",
             ],
@@ -75,7 +77,7 @@ exports.getUserLiterature = async (req, res) => {
       ],
 
       attributes: {
-        exclude: ["userId", "status", "createdAt", "updatedAt"],
+        exclude: ["userId", "thumbnail", "createdAt", "updatedAt"],
       },
       where: {
         userId: id,
@@ -83,8 +85,8 @@ exports.getUserLiterature = async (req, res) => {
     });
 
     return res.status(200).send({
-      message: `Literature with user id ${id} has been loaded successfully`,
-      data: { literature },
+      message: `Literature belongs to user id ${id} has been loaded successfully`,
+      data: getLiterature,
     });
   } catch (error) {
     console.log(error);
@@ -98,13 +100,13 @@ exports.getUserLiterature = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    const user = await User.findOne({
+    const user = await users.findOne({
       where: {
         id: req.params.id,
       },
     });
     if (user) {
-      const deleteUser = await user.destroy({
+      const deleteUser = await users.destroy({
         where: {
           id: req.params.id,
         },
@@ -130,42 +132,45 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.uploadProfile = async (req, res) => {
+exports.updateUser = async (req, res) => {
   try {
     const id = req.params.id;
-    await User.update(
-      { picture: req.file.filename },
+    const [userUpdated] = await users.update(
+      {
+        ...req.body,
+        picture: req.file.filename,
+      },
       {
         where: {
           id,
         },
       }
     );
-    const user = await User.findOne({
+
+    if (!userUpdated) {
+      return res.status(404).send({
+        message: "User didn't exist",
+      });
+    }
+
+    const data = await users.findOne({
       where: {
         id,
       },
 
       attributes: {
-        exclude: [
-          "password",
-          "phone",
-          "address",
-          "gender",
-          "isAdmin",
-          "createdAt",
-          "updatedAt",
-        ],
+        exclude: ["password", "createdAt", "updatedAt"],
       },
     });
     res.send({
-      message: "Profile Picture has changed",
+      message: "User has been updated",
       data: {
-        user,
+        data,
+        path: req.file.path,
       },
     });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     res.status(500).send({
       error: {
         message: "Internal Server Error",

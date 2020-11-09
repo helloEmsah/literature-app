@@ -292,10 +292,80 @@
 
 /* USER LITERATURE */
 
-#userLiterature .title {
+#userLiterature .section-title {
   font-family: Georgia, "Times New Roman", Times, serif;
   font-weight: bold;
   font-size: 30px;
+}
+
+#userLiterature .image-container {
+  width: 180px;
+  height: 250px;
+}
+
+#userLiterature .image {
+  width: 100%;
+  height: 100%;
+}
+
+#userLiterature .waiting-info {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 101.5%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 45%;
+  margin-left: 20px;
+  color: #ffd600;
+}
+
+#userLiterature .cancel-info {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 101.5%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 45%;
+  margin-left: 60px;
+  /* or 18px */
+  color: #ee4622;
+}
+
+#userLiterature .description {
+  justify-content: space-between;
+}
+
+#userLiterature .title {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 120.5%;
+}
+
+#userLiterature .author {
+  font-size: 16px;
+  color: #929292;
+  line-height: 101.5%;
+}
+
+#userLiterature .publication {
+  display: inline-block;
+  text-align: right;
+  font-size: 16px;
+  color: #929292;
+  line-height: 101.5%;
+}
+
+#userLiterature .subtext-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-right: 90px;
 }
 
 /* Add Form */
@@ -323,13 +393,13 @@
 
 /* COLLECTION */
 
-#collection .title-collection {
+#collection .section-title {
   font-family: "Times New Roman", Times, serif;
   font-weight: bold;
   font-size: 30px;
 }
 
-#collection .imageContainer {
+#collection .image-container {
   width: 180px;
   height: 250px;
 }
@@ -340,40 +410,37 @@
   border-radius: 5px;
 }
 
-#collection .card-body {
-  padding-left: 0px;
-  background-color: #161616;
-}
-
-#collection .imageCard {
-  width: 180px;
-  height: 250px;
-}
-
-#collection .description-paper {
-  margin-right: 70px;
-  display: flex;
-  flex-direction: row;
+#collection .description {
   justify-content: space-between;
 }
 
-#collection .title-paper {
+#collection .title {
   font-family: "Times New Roman", Times, serif;
   font-size: 24px;
   font-weight: 700;
   color: #ffffff;
-  line-height: 28px;
-  margin-right: 70px;
+  line-height: 120.5%;
 }
 
-#collection .author-paper {
+#collection .author {
   font-size: 16px;
   color: #929292;
+  line-height: 101.5%;
 }
 
-#collection .year-paper {
+#collection .publication {
+  display: inline-block;
+  text-align: right;
   font-size: 16px;
   color: #929292;
+  line-height: 101.5%;
+}
+
+#collection .subtext-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-right: 90px;
 }
 
 /* SEARCH LITERATURE */

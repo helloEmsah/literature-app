@@ -72,7 +72,6 @@ function App() {
           <PrivateRoute exact path="/home" component={Home} />
           <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute exact path="/my-collection" component={MyCollection} />
-
           <PrivateRoute exact path="/search/:title" component={SearchPage} />
           <PrivateRoute
             exact
@@ -90,7 +89,6 @@ function App() {
             path="/detail-literature/:id"
             component={DetailLiterature}
           />
-
           <Route exact path="/admin" component={AdminLanding} />
         </Container>
       </Switch>

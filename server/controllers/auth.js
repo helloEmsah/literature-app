@@ -1,4 +1,4 @@
-const { User } = require("../models/");
+const { users } = require("../models/");
 
 const bcrypt = require("bcrypt");
 
@@ -11,7 +11,7 @@ const secretKey = process.env.SECRET_KEY;
 
 exports.checkAuth = async (req, res) => {
   try {
-    const user = await User.findOne({
+    const user = await users.findOne({
       where: {
         id: req.user.id,
       },
@@ -55,7 +55,7 @@ exports.Register = async (req, res) => {
       });
     }
 
-    const checkEmail = await User.findOne({
+    const checkEmail = await users.findOne({
       where: {
         email,
       },
@@ -72,13 +72,11 @@ exports.Register = async (req, res) => {
     const salt = 10;
     const hashed = await bcrypt.hash(password, salt);
 
-    const user = await User.create({
-      fullName,
-      email,
+    const user = await users.create({
+      ...req.body,
       password: hashed,
-      gender,
-      phone,
-      address,
+      picture: "default-avatar.png",
+      role: "user",
     });
 
     const token = jwt.sign(
@@ -92,7 +90,7 @@ exports.Register = async (req, res) => {
       message: "Registration success!",
       data: {
         id: user.id,
-        email: user.email,
+        email,
         token,
       },
     });
@@ -125,7 +123,7 @@ exports.Login = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({
+    const user = await users.findOne({
       where: {
         email,
       },
@@ -160,7 +158,7 @@ exports.Login = async (req, res) => {
       message: "Login success",
       data: {
         id: user.id,
-        email: user.email,
+        email,
         token,
       },
     });

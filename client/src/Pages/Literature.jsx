@@ -103,11 +103,11 @@ const Literature = (props) => {
     error,
     data: literatureData,
     refetch,
-  } = useQuery("getBooks", () =>
-    API.get(`/approved-literature/${title}/${year}`)
+  } = useQuery("getLiterature", () =>
+    API.get(`/approved-literature/${title}`)
   );
 
-  const { data: yearData } = useQuery("getYear", () => API.get(`/year`));
+  const { data: yearData } = useQuery('getYear', () => API.get(`/year`));
 
   const [reLoad] = useMutation(async () => {
     history.push(`/search-literature/${title}/${year}`);
@@ -180,12 +180,12 @@ const Literature = (props) => {
             ) : (
               // <Collection loading={isLoading} literatureData={result} />
               <div>
-                {literatureData.data.data.approvedLiterature.map((book) => (
+                {literatureData.data.data.literature.map((literature) => (
                   <div style={{ display: "inline-block", marginRight: "25px" }}>
                     <Link
                       style={{ textDecoration: "none", color: "white" }}
                       onClick={() =>
-                        history.push(`/detail-literature/${book.id}`)
+                        history.push(`/detail-literature/${literature.id}`)
                       }
                     >
                       <div>
@@ -195,13 +195,13 @@ const Literature = (props) => {
                             src={require("../Assets/Images/pdfCover.png")}
                           />
                         </div>
-                        <p className="txt-title">{book.title}</p>
+                        <p className="txt-title">{literature.title}</p>
                         <p className="txt-author">
                           <div
                             className="col col-md-8"
                             style={{ padding: "0", display: "inline-block" }}
                           >
-                            {book.author}
+                            {literature.author}
                           </div>
 
                           <div
@@ -212,7 +212,7 @@ const Literature = (props) => {
                               display: "inline-block",
                             }}
                           >
-                            {book.publication.split(" ")[1]}
+                            {literature.publication.split(" ")[1]}
                           </div>
                         </p>
                       </div>
