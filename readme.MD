@@ -6,6 +6,7 @@
 - Implement multer for PDF
 - Functional Core!
 - Fix every UI
+- Do minor fix
 - Do as needed
 
 ### BACKEND
