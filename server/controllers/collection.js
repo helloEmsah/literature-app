@@ -95,7 +95,7 @@ const { literatures, collections, users} = require("../models");
 exports.getCollection = async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await collections.findAll({
+    const collection = await collections.findAll({
       where: {
         userId: id,
       },
@@ -124,7 +124,7 @@ exports.getCollection = async (req, res) => {
 
     res.send({
       message: `User id ${id} collection has been loaded successfully!`,
-      data,
+      data: {collection},
     });
   } catch (error) {
     console.log(error);
