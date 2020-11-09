@@ -41,13 +41,14 @@ router.get("/auth", authentication, checkAuth);
 // PROFILE ROUTE
 router.get("/user", authentication, getUsers);
 router.get("/user/:id", authentication, getUser);
-router.get("/user/:id/literature", authentication, getUserLiterature);
+// router.get("/user/:id/literature", authentication, getUserLiterature);
 router.patch("/user/:id", authentication, uploadImage("picture"), updateUser);
 router.delete("/user/:id", authentication, authAdmin, deleteUser);
 
 // LITERATURE ROUTE
 router.get("/literatures", authentication, getLiteratures);
 router.get("/literature", authentication, searchLiterature);
+router.get("/user-literature/:id", authentication, getUserLiterature);
 router.get("/literature/:id", authentication, getLiterature);
 router.get("/approved-literature/:title", authentication, getLiteratureByTitle);
 router.get("/year", authentication, readYear);

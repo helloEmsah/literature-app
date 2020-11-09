@@ -5,30 +5,19 @@ import { GlobalContext } from "../Context/GlobalContext";
 import CardLiterature from "../Components/Literature/CardLiterature";
 import { API } from "../Config/api";
 import Spinner from "../Components/Utilities/Spinner";
+import UserLiterature from "../Components/Profile/UserLiterature";
 
 function Profile() {
   const [state, dispatch] = useContext(GlobalContext);
 
-  const userId = localStorage.getItem("id");
 
-  const { isLoading, data: literatureProfile } = useQuery("getUserBooks", () =>
-    API.get(`/user/${userId}/literature`)
-  );
-
-  console.log(literatureProfile);
+  
 
   return (
     <div id="profilePage">
       <UserInfo />
       <br />
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <CardLiterature
-          loading={isLoading}
-          dataLiterature={literatureProfile.data.data.literature}
-        />
-      )}
+      <UserLiterature />
     </div>
   );
 }

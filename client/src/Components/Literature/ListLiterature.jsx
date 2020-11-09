@@ -15,7 +15,7 @@ const ListLiterature = ({
   year,
   isactive,
   myown,
-  handleRemove,
+  handleRemove, props
 }) => {
   const history = useHistory();
   const style = {
