@@ -59,7 +59,7 @@ router.delete("/literature/:id", authentication, authAdmin, deleteLiterature);
 
 // COLLECTION ROUTE
 router.get("/collection/:id", authentication, getCollection);
-router.post("/collection/:literatureId", authentication, addCollection);
+router.post("/collection", authentication, addCollection);
 router.delete("/remove-collection/:literatureId", authentication, deleteCollection);
 
 module.exports = router;

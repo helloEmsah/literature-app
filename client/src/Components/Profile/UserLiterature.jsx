@@ -4,13 +4,15 @@ import { Container, Row, Col } from "react-bootstrap";
 import { GlobalContext } from "../../Context/GlobalContext";
 import { API } from "../../Config/api";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Spinner from "../../Components/Utilities/Spinner";
 
 function UserLiterature() {
   const [state, dispatch] = useContext(GlobalContext);
 
   const userId = localStorage.getItem("id");
+
+  const history = useHistory();
 
   const {
     isLoading,
@@ -35,7 +37,9 @@ function UserLiterature() {
               <Link
                 style={{ textDecoration: "none" }}
                 // Fix Link later
-                // onClick={() => history.push(`detail/${literatureId}`)}
+                onClick={() =>
+                  history.push(`detail-literature/${literature.id}`)
+                }
               >
                 {literature.status == "Approved" ? (
                   <div>
@@ -79,7 +83,7 @@ function UserLiterature() {
                       </div>
                     </div>
                   </div>
-                ) : (
+                ) : literature.status == "Cancelled" ? (
                   <div>
                     <div className="image-container">
                       <img
@@ -100,7 +104,7 @@ function UserLiterature() {
                       </div>
                     </div>
                   </div>
-                )}
+                ) : null}
               </Link>
             </Col>
           ))}

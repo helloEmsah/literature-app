@@ -9,16 +9,20 @@ import { GlobalContext } from "../Context/GlobalContext";
 import Spinner from "../Components/Utilities/Spinner";
 
 const DetailLiterature = () => {
+  const history = useHistory();
+
   const [state, dispatch] = useContext(GlobalContext);
-  const [show, setShow] = useState(false);
+
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const [bookmark, setBookmark] = useState(false);
+
   const [add, setAdd] = useState(false);
   const [message, setMessage] = useState("");
-  const history = useHistory();
-  const userId = localStorage.getItem("id");
 
+  const [userId, setUserId] = useState(null);
   const [literatureId, setLiteratureId] = useState(null);
-
   const [bookmarkId, setBookmarkId] = useState(null);
 
   const { id } = useParams();
@@ -33,13 +37,13 @@ const DetailLiterature = () => {
   //   const bookmark = detailLiterature.data.data.literature.some(
   //     (bookmark) =>
   //       detailLiterature.data.data.id === bookmark.LiteratureId &&
-  //       userId === bookmark.userId
+  //       state.user.id === bookmark.userId
   //   );
   //   console.log(bookmark);
   //   return bookmark;
   // }
 
-  // const [addBookmark] = useMutation(async (literatureId) => {
+  // const [addBookmark] = useMutation(async () => {
   //   try {
   //     const config = {
   //       headers: {
@@ -47,9 +51,13 @@ const DetailLiterature = () => {
   //       },
   //     };
 
-  //     const body = JSON.stringify({ literatureId: literatureId });
-  //     const res = await API.post("/literature/", body, config);
-  //     setMessage(res.data.message);
+  //     const body = JSON.stringify({
+  //       literatureId: `${literatureId}`,
+  //       userId: `${userId}`,
+  //     });
+  //     const res = await API.post("collection/", body, config);
+  //     refetch();
+  //     return res;
   //   } catch (error) {
   //     console.log(error);
   //     setMessage(error.response.data.error.message);
@@ -58,7 +66,7 @@ const DetailLiterature = () => {
 
   // const [deleteBookmark] = useMutation(async () => {
   //   try {
-  //     const res = await API.delete(`/literature/${literatureId}`);
+  //     const res = await API.delete(`/collection/${bookmarkId}`);
   //     refetch();
   //   } catch (error) {
   //     refetch();
@@ -79,7 +87,7 @@ const DetailLiterature = () => {
               <div className="image-container">
                 <img
                   className="image"
-                  src={detailLiterature.data.data.literature.thumbnail}
+                  src={require("../Assets/Images/pdfCover.png")}
                   alt=""
                 />
               </div>
@@ -108,15 +116,7 @@ const DetailLiterature = () => {
                   <br />
                   <br />
                   <br />
-                  <Link
-                    // to={
-                    //   urlAsset.pdf + detailLiterature.data.data.literature.file
-                    // }
-                    target="_blank"
-                    download={
-                      urlAsset.pdf + detailLiterature.data.data.literature.file
-                    }
-                  >
+                  <Link to={`../Assets/PDF/dummy.pdf`} target="_blank" download>
                     <Button>
                       Download{" "}
                       <BiCloudDownload style={{ width: 25, height: 25 }} />
@@ -127,23 +127,22 @@ const DetailLiterature = () => {
             </Col>
             <Col lg={2}>
               {/* {checkBookmark() === true ? (
-                  <Button style={{ width: 200, float: "right" }}>
-                    Add to Collection <FaRegBookmark />
-                  </Button>
-                ) : (
-                  <Button style={{ width: 200, float: "right" }}>
-                    Add to Collection <FaRegBookmark />
-                  </Button>
-
-                )} */}
+                <Button style={{ width: 200, float: "right" }}>
+                  Add to Collection <FaRegBookmark />
+                </Button>
+              ) : (
+                <Button style={{ width: 200, float: "right" }}>
+                  Add to Collection <FaRegBookmark />
+                </Button>
+              )} */}
               <Button style={{ width: 200, float: "right" }}>
                 Add to Collection <FaRegBookmark />
               </Button>
             </Col>
 
             {/* <Button style={{ width: 200, float: "right" }}>
-                Add to Collection <FaRegBookmark />
-              </Button> */}
+              Add to Collection <FaRegBookmark />
+            </Button> */}
           </Row>
         </Container>
       </div>

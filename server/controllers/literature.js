@@ -25,7 +25,7 @@ exports.getLiteratures = async (req, res) => {
         },
       ],
       attributes: {
-        exclude: ["userId", "thumbnail","createdAt", "updatedAt"],
+        exclude: ["userId", "createdAt", "updatedAt"],
       },
     });
 
@@ -66,7 +66,7 @@ exports.getLiterature = async (req, res) => {
         },
       ],
       attributes: {
-        exclude: ["userId", "thumbnail", "createdAt", "updatedAt"],
+        exclude: ["userId", "createdAt", "updatedAt"],
       },
       where: {
         id,
