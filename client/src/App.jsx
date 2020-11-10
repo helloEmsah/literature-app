@@ -47,7 +47,8 @@ function App() {
     loadUser();
   }, []);
 
-  console.log(state.user)
+  // Correct branch
+  console.log(state.user);
 
   return (
     <Router>
