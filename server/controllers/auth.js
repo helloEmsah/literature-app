@@ -158,7 +158,7 @@ exports.Login = async (req, res) => {
       message: "Login success",
       data: {
         id: user.id,
-        email,
+        email: user.email,
         token,
       },
     });
