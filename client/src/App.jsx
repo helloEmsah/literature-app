@@ -15,7 +15,7 @@ import MyCollection from "./Pages/MyCollection";
 import AddLiterature from "./Pages/AddLiterature";
 import DetailLiterature from "./Pages/DetailLiterature";
 import Literature from "./Pages/Literature";
-import Admin from "./Pages/Admin";
+import AdminLanding from "./Pages/AdminLanding";
 import Header from "./Components/Utilities/Header";
 import NotFound from "./Pages/NotFound";
 import TestForm from "./Pages/TestForm";
@@ -36,7 +36,7 @@ function App() {
 
         dispatch({
           type: "USER_LOADED",
-          payload: res.data.data,
+          payload: res.data.data.user,
         });
       } catch (error) {
         dispatch({
@@ -46,8 +46,6 @@ function App() {
     };
     loadUser();
   }, []);
-
-  console.log(state.user)
 
   return (
     <Router>
@@ -91,7 +89,7 @@ function App() {
             path="/detail-literature/:id"
             component={DetailLiterature}
           />
-          <AdminRoute exact path="/admin-dashboard" component={Admin} />
+          <AdminRoute exact path="/dashboard" component={AdminLanding} />
         </Container>
       </Switch>
     </Router>

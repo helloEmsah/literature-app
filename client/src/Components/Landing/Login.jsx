@@ -39,6 +39,7 @@ function Login() {
       });
 
       console.log(res);
+
       setAuthToken(res.data.data.token);
 
       try {
@@ -55,7 +56,7 @@ function Login() {
       }
 
       if (email === "admin@root.com") {
-        history.push("/admin-dashboard");
+        history.push("/dashboard");
       } else {
         history.push("/home");
       }

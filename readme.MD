@@ -1,1 +1,15 @@
-## There's no Easter Egg here...
+# TODO
+
+### FRONTEND
+
+- Integrate Frontend with Backend
+- Implement multer for PDF
+- Functional Core!
+- Fix every UI
+- Do minor fix
+- Do as needed
+
+### BACKEND
+
+- Fix Multer for upload PDF
+- Do as needed

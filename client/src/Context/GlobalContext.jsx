@@ -3,8 +3,7 @@ import React, { createContext, useReducer } from "react";
 export const GlobalContext = createContext();
 
 const initialState = {
-  isLogin: false,
-  isAdmin: false,
+  isLogin: false || localStorage.getItem("isLogin"),
   user: null,
   loading: true,
 };
@@ -12,12 +11,10 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "USER_LOADED":
-      let isAdmin = false;
-      if (action.payload === "admin") isAdmin = true;
       return {
         ...state,
         isLogin: true,
-        isAdmin,
+
         user: action.payload,
         loading: false,
       };
@@ -41,7 +38,7 @@ const reducer = (state, action) => {
     case "LOGOUT":
       localStorage.removeItem("token");
       localStorage.removeItem("id");
-      return { ...state, isLogin: false, isAdmin: false, user: null };
+      return { ...state, isLogin: false, user: null };
     default:
       throw new Error();
   }
