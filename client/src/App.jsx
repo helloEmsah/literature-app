@@ -36,7 +36,7 @@ function App() {
 
         dispatch({
           type: "USER_LOADED",
-          payload: res.data.data.user,
+          payload: res.data.data,
         });
       } catch (error) {
         dispatch({
@@ -92,7 +92,7 @@ function App() {
             path="/detail-literature/:id"
             component={DetailLiterature}
           />
-          <AdminRoute exact path="/dashboard" component={AdminLanding} />
+          <AdminRoute exact path="/admin-dashboard" component={AdminLanding} />
         </Container>
       </Switch>
     </Router>
