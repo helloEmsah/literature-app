@@ -4,13 +4,13 @@ exports.getUsers = async (req, res) => {
   try {
     const user = await users.findAll({
       attributes: {
-        exclude: ["createdAt", "updatedAt", "password", "role"],
+        exclude: ["createdAt", "updatedAt", "password"],
       },
     });
 
     return res.status(200).send({
       message: "All users has been loaded successfully!",
-      data: {user},
+      data: { user },
     });
   } catch (error) {
     console.log(error);
@@ -30,7 +30,7 @@ exports.getUser = async (req, res) => {
         id,
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "password", "role"],
+        exclude: ["createdAt", "updatedAt", "password"],
       },
     });
     if (user) {
@@ -66,7 +66,6 @@ exports.getUserLiterature = async (req, res) => {
               "password",
               "gender",
               "picture",
-              "role",
               "phone",
               "address",
               "createdAt",

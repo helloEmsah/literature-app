@@ -56,7 +56,7 @@ function Login() {
       }
 
       if (email === "admin@root.com") {
-        history.push("/admin");
+        history.push("/dashboard");
       } else {
         history.push("/home");
       }

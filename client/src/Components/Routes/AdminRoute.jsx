@@ -12,7 +12,7 @@ const AdminRoute = ({ component: Component, ...rest }) => {
       render={(props) =>
         state.loading ? (
           <Spinner />
-        ) :  (localStorage.getItem("id") === 1 ) ? (
+        ) : state.isLogin && state.user.role === "admin" ? (
           <Component {...props} />
         ) : (
           <Redirect to="/home" />

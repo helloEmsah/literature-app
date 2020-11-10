@@ -89,7 +89,7 @@ function App() {
             path="/detail-literature/:id"
             component={DetailLiterature}
           />
-          <Route exact path="/admin" component={AdminLanding} />
+          <AdminRoute exact path="/dashboard" component={AdminLanding} />
         </Container>
       </Switch>
     </Router>

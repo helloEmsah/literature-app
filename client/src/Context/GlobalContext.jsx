@@ -14,6 +14,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         isLogin: true,
+
         user: action.payload,
         loading: false,
       };
@@ -52,4 +53,3 @@ export const GlobalContextProvider = (props) => {
     </GlobalContext.Provider>
   );
 };
-
