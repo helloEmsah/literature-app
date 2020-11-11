@@ -11,10 +11,10 @@ POST http://localhost:5000/api/v1/register
 Content-Type: application/json
 
 {
-  "fullName": "New User",
-  "email"   : "user1@root.com",
+  "fullName": "Admiral Hipper",
+  "email"   : "admiralhipper@root.com",
   "password" : "thisisuser",
-  "gender": "Male",
+  "gender": "Female",
   "phone": "08123456784",
   "address": "Jl Pegangsaan Timur no 56"
 }
