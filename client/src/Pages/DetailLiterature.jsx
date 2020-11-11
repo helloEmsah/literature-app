@@ -7,6 +7,7 @@ import { BiCloudDownload } from "react-icons/bi";
 import { FaRegBookmark } from "react-icons/fa";
 import { GlobalContext } from "../Context/GlobalContext";
 import Spinner from "../Components/Utilities/Spinner";
+import Header from "../Components/Utilities/Header";
 
 const DetailLiterature = () => {
   const history = useHistory();
@@ -80,6 +81,7 @@ const DetailLiterature = () => {
     <h1>Your Error : {error.message}</h1>
   ) : (
     <>
+      <Header />
       <div id="detail-literature">
         <Container>
           <Row>

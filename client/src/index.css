@@ -551,6 +551,12 @@
 }
 
 /* DETAIL LITERATURE */
+#detail-literature {
+  color: #ffffff;
+  background-color: #161616;
+  height: 100vh;
+  overflow-x: hidden;
+}
 
 #detail-literature .image-container {
   width: 380px;
