@@ -36,9 +36,9 @@ function UserInfo() {
     <h1>Your Error : {error.message}</h1>
   ) : (
     <div id="userInfo">
-      <h1 className="profileTitle">Profile</h1>
-      <div className="profileBackground">
-        <Container className="profileArea">
+      <Container className="profileArea">
+        <h1 className="profileTitle">Profile</h1>
+        <div className="profileBackground">
           <Row>
             <Col lg={2}>
               <MdEmail className="profileIcon" />
@@ -75,8 +75,8 @@ function UserInfo() {
               </Modal>
             </Col>
           </Row>
-        </Container>
-      </div>
+        </div>
+      </Container>
     </div>
   );
 }

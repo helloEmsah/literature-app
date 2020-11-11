@@ -15,8 +15,9 @@ import MyCollection from "./Pages/MyCollection";
 import AddLiterature from "./Pages/AddLiterature";
 import DetailLiterature from "./Pages/DetailLiterature";
 import Literature from "./Pages/Literature";
-import AdminLanding from "./Pages/AdminLanding";
+import Admin from "./Pages/Admin";
 import Header from "./Components/Utilities/Header";
+import AdminHeader from "./Components/Utilities/AdminHeader";
 import NotFound from "./Pages/NotFound";
 import TestForm from "./Pages/TestForm";
 
@@ -36,7 +37,7 @@ function App() {
 
         dispatch({
           type: "USER_LOADED",
-          payload: res.data.data.user,
+          payload: res.data.data,
         });
       } catch (error) {
         dispatch({
@@ -47,50 +48,42 @@ function App() {
     loadUser();
   }, []);
 
+  console.log(state.user);
+
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/test" component={TestForm} />
-        <Container fluid id="Route">
-          <Header />
-          <PrivateRoute
-            exact
-            path="/search-literatures"
-            component={Literature}
-          />
-          <PrivateRoute
-            exact
-            path="/search-literatures/:title"
-            component={Literature}
-          />
-          <PrivateRoute
-            exact
-            path="/search-literatures/:title/:year"
-            component={Literature}
-          />
-          <PrivateRoute exact path="/home" component={Home} />
-          <PrivateRoute exact path="/profile" component={Profile} />
-          <PrivateRoute exact path="/my-collection" component={MyCollection} />
-          <PrivateRoute exact path="/search/:title" component={SearchPage} />
-          <PrivateRoute
-            exact
-            path="/search/:title/:year"
-            component={SearchPage}
-          />
 
-          <PrivateRoute
-            exact
-            path="/add-literature"
-            component={AddLiterature}
-          />
-          <PrivateRoute
-            exact
-            path="/detail-literature/:id"
-            component={DetailLiterature}
-          />
-          <AdminRoute exact path="/dashboard" component={AdminLanding} />
-        </Container>
+        <PrivateRoute exact path="/search-literatures" component={Literature} />
+        <PrivateRoute
+          exact
+          path="/search-literatures/:title"
+          component={Literature}
+        />
+        <PrivateRoute
+          exact
+          path="/search-literatures/:title/:year"
+          component={Literature}
+        />
+        <PrivateRoute exact path="/home" component={Home} />
+        <PrivateRoute exact path="/profile" component={Profile} />
+        <PrivateRoute exact path="/my-collection" component={MyCollection} />
+        <PrivateRoute exact path="/search/:title" component={SearchPage} />
+        <PrivateRoute
+          exact
+          path="/search/:title/:year"
+          component={SearchPage}
+        />
+
+        <PrivateRoute exact path="/add-literature" component={AddLiterature} />
+        <PrivateRoute
+          exact
+          path="/detail-literature/:id"
+          component={DetailLiterature}
+        />
+        <AdminRoute exact path="/admin-dashboard" component={Admin} />
       </Switch>
     </Router>
   );

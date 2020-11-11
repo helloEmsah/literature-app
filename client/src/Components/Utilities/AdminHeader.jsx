@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { useQuery } from "react-query";
-import { Nav, Navbar, Container } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { GlobalContext } from "../../Context/GlobalContext";
 import Spinner from "./Spinner";
 import { API } from "../../Config/api";
 import topIcon from "../../Assets/Images/topIconImage.svg";
 
-function Header() {
+function AdminHeader() {
   const [state, dispatch] = useContext(GlobalContext);
   const id = localStorage.getItem("id");
 
@@ -30,7 +30,7 @@ function Header() {
             <NavLink to="/my-collection">My Collection</NavLink>
           </li>
           <li>
-            <NavLink to="/add-literature">Add Literature</NavLink>
+            <NavLink to="/admin-dashboard">Dashboard</NavLink>
           </li>
           <li>
             <Link
@@ -45,6 +45,7 @@ function Header() {
             </Link>
           </li>
         </ul>
+
         <Link to="/home">
           <img src={topIcon} alt="" />
         </Link>
@@ -53,4 +54,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default AdminHeader;

@@ -131,6 +131,12 @@
 }
 /* HEADER */
 
+#header {
+  color: #ffffff;
+  background-color: #161616;
+  overflow-x: hidden;
+}
+
 #header ul {
   display: flex;
   list-style: none;
@@ -151,25 +157,12 @@
 
 /* HOME */
 
-/* #homePage {
-  height: 100vh;
-} */
-
-/* PARENT */
-
-/* HEADER */
-/* #header {
+#home {
   color: #ffffff;
   background-color: #161616;
-} */
-
-/* SEARCH BAR */
-
-/* 
-#searchBar {
-  display: block;
-  text-align: center;
-} */
+  height: 100vh;
+  overflow-x: hidden;
+}
 
 #searchBar .form-group {
   position: relative;
@@ -219,8 +212,10 @@
 /* PROFILE */
 
 #profilePage {
-  padding-left: 75px;
-  padding-right: 20px;
+  color: #ffffff;
+  background-color: #161616;
+  height: 100vh;
+  overflow-x: hidden;
 }
 
 /* USER INFO */
@@ -240,11 +235,12 @@
 #userInfo .profileBackground {
   background-color: #252525;
   border-radius: 10px;
+  padding: 30px 30px 0px 30px;
 }
 
-#userInfo .profileArea {
-  padding: 10px;
-}
+/* #userInfo .profileArea {
+  padding: 0px;
+} */
 
 #userInfo .profileIcon {
   margin-bottom: 35px;
@@ -623,4 +619,11 @@
   background-color: #161616;
   color: white;
   align-items: center;
+}
+
+#admin-page {
+  color: #ffffff;
+  background-color: #161616;
+  height: 100vh;
+  overflow-x: hidden;
 }

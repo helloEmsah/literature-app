@@ -1,11 +1,11 @@
 import React from "react";
 import { Table, Container, Button } from "react-bootstrap";
-
 import { API } from "../Config/api";
 import { useQuery, useMutation } from "react-query";
+import AdminHeader from "../Components/Utilities/AdminHeader";
 import Spinner from "../Components/Utilities/Spinner";
 
-function AdminPages() {
+function Admin() {
   const userStateId = localStorage.getItem("id");
 
   const {
@@ -62,9 +62,8 @@ function AdminPages() {
   ) : error ? (
     <h1>Your error: {error.message}</h1>
   ) : (
-    <div id="admingPagesWrapper">
-      <br />
-      <Container style={{ backgroundColor: "white" }}>
+    <div id="admin-page">
+      <Container fluid style={{ backgroundColor: "white" }}>
         <h3>
           <strong>Verification</strong>
         </h3>
@@ -149,4 +148,4 @@ function AdminPages() {
   );
 }
 
-export default AdminPages;
+export default Admin;
