@@ -364,7 +364,22 @@
   padding-right: 90px;
 }
 
+/* Add Literature */
+#addLiterature {
+  color: #ffffff;
+  background-color: #161616;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
 /* Add Form */
+#addForm {
+  color: #ffffff;
+  background-color: #161616;
+
+  overflow-x: hidden;
+}
+
 #addForm h1 {
   font-family: Georgia, "Times New Roman", Times, serif;
   font-weight: bold;

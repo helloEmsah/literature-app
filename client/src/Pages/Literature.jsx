@@ -9,6 +9,7 @@ import ListLiterature from "../Components/Literature/ListLiterature";
 import CardLiterature from "../Components/Literature/CardLiterature";
 import { GlobalContext } from "../Context/GlobalContext";
 import { useQuery, useMutation } from "react-query";
+import Header from "../Components/Utilities/Header";
 
 const Literature = (props) => {
   // const location = useLocation();
@@ -103,11 +104,9 @@ const Literature = (props) => {
     error,
     data: literatureData,
     refetch,
-  } = useQuery("getLiterature", () =>
-    API.get(`/approved-literature/${title}`)
-  );
+  } = useQuery("getLiterature", () => API.get(`/approved-literature/${title}`));
 
-  const { data: yearData } = useQuery('getYear', () => API.get(`/year`));
+  const { data: yearData } = useQuery("getYear", () => API.get(`/year`));
 
   const [reLoad] = useMutation(async () => {
     history.push(`/search-literature/${title}/${year}`);
@@ -125,6 +124,7 @@ const Literature = (props) => {
     <h1>error: {error.message}</h1>
   ) : (
     <>
+      <Header />
       <Container fluid id="search-literature">
         <Row>
           <Col lg={12}>
