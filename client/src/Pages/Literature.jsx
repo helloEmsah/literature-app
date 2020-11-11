@@ -189,32 +189,21 @@ const Literature = (props) => {
                       }
                     >
                       <div>
-                        <div className="imageContainer">
+                        <div className="image-container">
                           <img
                             className="image"
                             src={require("../Assets/Images/pdfCover.png")}
                           />
                         </div>
-                        <p className="txt-title">{literature.title}</p>
-                        <p className="txt-author">
-                          <div
-                            className="col col-md-8"
-                            style={{ padding: "0", display: "inline-block" }}
-                          >
-                            {literature.author}
+                        <div className="description">
+                          <p className="title">{literature.title}</p>
+                          <div className="subtext-wrapper">
+                            <p className="author">{literature.author}</p>
+                            <p className="publication">
+                              {literature.publication.split(" ")[1]}
+                            </p>
                           </div>
-
-                          <div
-                            className="col col-md-4"
-                            style={{
-                              textAlign: "right",
-                              padding: "0",
-                              display: "inline-block",
-                            }}
-                          >
-                            {literature.publication.split(" ")[1]}
-                          </div>
-                        </p>
+                        </div>
                       </div>
                     </Link>
                   </div>
