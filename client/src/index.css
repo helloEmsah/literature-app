@@ -708,8 +708,17 @@
 }
 
 #admin-page {
-  margin-top: auto;
+  margin: 20px;
   color: #ffffff;
-  background-color: #161616;
+  background-color: #ffffff;
   overflow-x: hidden;
+}
+
+#admin-page .bold-text {
+  font-weight: 800;
+  text-align: center;
+}
+
+#admin-page .regular-text {
+  text-align: justify;
 }

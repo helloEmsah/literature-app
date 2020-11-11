@@ -409,71 +409,57 @@ exports.addLiterature = async (req, res) => {
   }
 };
 
-// exports.updateBook = async (req, res) => {
-//   try {
-//     const book = await Book.update(req.body, {
-//       where: {
-//         id: req.params.id,
-//       },
-//     });
+exports.updateLiterature = async (req, res) => {
+  try {
+    const literature = await literatures.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
 
-//     if (book) {
-//       const updatedBook = await Book.findOne({
-//         where: {
-//           id: req.params.id,
-//         },
-//         include: [
-//           {
-//             model: Category,
-//             as: "category",
-//             attributes: {
-//               exclude: ["createdAt", "updatedAt"],
-//             },
-//           },
-//           {
-//             model: User,
-//             as: "user",
-//             attributes: {
-//               exclude: [
-//                 "createdAt",
-//                 "updatedAt",
-//                 "gender",
-//                 "picture",
-//                 "role",
-//                 "password",
-//               ],
-//             },
-//           },
-//         ],
-//         attributes: {
-//           exclude: [
-//             "createdAt",
-//             "updatedAt",
-//             "userId",
-//             "UserId",
-//             "categoryId",
-//             "CategoryId",
-//           ],
-//         },
-//       });
-//       return res.status(200).send({
-//         message: "Book has been updated",
-//         data: { updatedBook },
-//       });
-//     } else {
-//       return res.status(404).send({
-//         message: "Book didn't exists",
-//       });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).send({
-//       error: {
-//         message: "Internal Server Error",
-//       },
-//     });
-//   }
-// };
+    if (literature) {
+      const updatedLiterature = await literatures.findOne({
+        where: {
+          id: req.params.id,
+        },
+        include: [
+          {
+            model: users,
+            as: "user",
+            attributes: {
+              exclude: [
+                "createdAt",
+                "updatedAt",
+                "gender",
+                "picture",
+                "role",
+                "password",
+              ],
+            },
+          },
+        ],
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      });
+      return res.status(200).send({
+        message: `Literature has been successfully updated!`,
+        data: { updatedLiterature },
+      });
+    } else {
+      return res.status(404).send({
+        message: "Literature didn't exists",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      error: {
+        message: "Internal Server Error",
+      },
+    });
+  }
+};
 
 exports.deleteLiterature = async (req, res) => {
   try {

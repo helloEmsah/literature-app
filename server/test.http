@@ -125,24 +125,14 @@ Content-Type: application/json
 
 ###
 
-# # @name editPaper
-# PATCH  http://localhost:5000/api/v1/book/4
-# Content-Type: application/json 
-# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjAyNDg4NTUyfQ.YWsOeikkf3-fvwTKRw5OhNLLi4SbzVxZlbd7Zl7WnMA
+# @name editLiterature
+PATCH  http://localhost:5000/api/v1/literature/7
+Content-Type: application/json 
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjA0NzcyMTUxfQ.rmZTVbgxumoDb4bWK_fPDtTOT_-pTrZ8CcnI1QOP6jI
 
-# {
-# 	"title": "How to Install RAM",
-# 	"author": "Pink Guy",
-# 	"publication": "May 2020",
-# 	"categoryId": 5,
-# 	"userId": 4,
-# 	"page": "250",
-# 	"isbn": 123456789,
-# 	"about": "Lorem Ipsum, this is just a dummy. There's nothing to see here, really.",
-# 	"file": "theDominator.epub",
-# 	"thumbnail": "howToInstalRAM.jpg",
-# 	"status": "Waiting"
-# }
+{
+"page": "555"
+}
 
 ###
 

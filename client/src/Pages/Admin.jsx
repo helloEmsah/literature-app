@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Container, Button } from "react-bootstrap";
 import { API } from "../Config/api";
 import { useQuery, useMutation } from "react-query";
-import AdminHeader from "../Components/Utilities/AdminHeader";
+import { HiCheckCircle, HiXCircle } from "react-icons/hi";
 import Header from "../Components/Utilities/Header";
 import Spinner from "../Components/Utilities/Spinner";
 
@@ -25,7 +25,7 @@ function Admin() {
       };
 
       const body = JSON.stringify({
-        status: "Approve",
+        status: "Approved",
       });
 
       const res = await API.patch(`/literature/${id}`, body, config);
@@ -46,7 +46,7 @@ function Admin() {
       };
 
       const body = JSON.stringify({
-        status: "Cancel",
+        status: "Cancelled",
       });
 
       const res = await API.patch(`/literature/${id}`, body, config);
@@ -67,30 +67,30 @@ function Admin() {
       <Header />
       <div id="admin-page">
         <Container style={{ backgroundColor: "white" }}>
-          <h3>
+          <h3 style={{ color: "#161616" }}>
             <strong>Verification</strong>
           </h3>
           <div className="admin-bg">
-            <Table borderless hover>
+            <Table hover>
               <thead>
                 <tr>
-                  <th className="text-center">
+                  <th className="bold-text">
                     <strong>No</strong>
                   </th>
 
-                  <th className="text-center">
+                  <th className="bold-text">
                     <strong>Author</strong>
                   </th>
-                  <th className="text-center">
+                  <th className="bold-text">
                     <strong>ISBN</strong>
                   </th>
-                  <th className="text-center">
+                  <th className="bold-text">
                     <strong>Literature</strong>
                   </th>
-                  <th className="text-center">
+                  <th className="bold-text">
                     <strong>Status</strong>
                   </th>
-                  <th className="text-center">
+                  <th className="bold-text">
                     <strong>Action</strong>
                   </th>
                 </tr>
@@ -99,12 +99,13 @@ function Admin() {
               {literatureData.data.data.literature.map((literature, index) => (
                 <tbody striped>
                   <tr>
-                    <td>{index + 1}</td>
-                    <td>{literature.author}</td>
-                    <td>{literature.isbn}</td>
-                    <td>{literature.title}</td>
+                    <td className="regular-text">{index + 1}</td>
+                    <td className="regular-text">{literature.author}</td>
+                    <td className="regular-text">{literature.isbn}</td>
+                    <td className="regular-text">{literature.title}</td>
                     <td
                       style={{
+                        textAlign: "center",
                         color:
                           literature.status === "Approved"
                             ? "#0ACF83"
@@ -115,14 +116,38 @@ function Admin() {
                     >
                       <strong>
                         {literature.status === "Approved"
-                          ? "Approve"
+                          ? "Approved"
                           : literature.status === "Cancelled"
                           ? "Cancelled"
                           : "Waiting"}
                       </strong>
                     </td>
-                    <td className="d-flex">
-                      <Button
+                    <td style={{ textAlign: "center" }}>
+                      {literature.status === "Approved" ? (
+                        <HiCheckCircle size={40} color="#3BB54A" />
+                      ) : literature.status === "Cancelled" ? (
+                        <HiXCircle size={40} color="#FF0742" />
+                      ) : (
+                        <>
+                          <Button
+                            variant="danger"
+                            size="sm"
+                            style={{ marginRight: 10 }}
+                            onClick={() => cancelLiterature(literature.id)}
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            variant="success"
+                            size="sm"
+                            onClick={() => approveLiterature(literature.id)}
+                          >
+                            Approve
+                          </Button>
+                        </>
+                      )}
+
+                      {/* <Button
                         variant="primary"
                         size="sm"
                         onClick={() => approveLiterature(literature.id)}
@@ -139,7 +164,7 @@ function Admin() {
                         onClick={() => cancelLiterature(literature.id)}
                       >
                         Cancelled
-                      </Button>
+                      </Button> */}
                     </td>
                   </tr>
                 </tbody>

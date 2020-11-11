@@ -24,7 +24,7 @@ const {
   deleteLiterature,
   getLiteratureByTitle,
   getLiteratureByTitleAndYear,
-  getYear,
+  getYear, updateLiterature
 } = require("../controllers/literature");
 
 const {
@@ -59,6 +59,7 @@ router.get(
 );
 router.get("/literature/:id", authentication, getLiterature);
 router.post("/literature", authentication, uploadPDF("file"), addLiterature);
+router.patch("/literature/:id", authentication, updateLiterature);
 router.delete("/literature/:id", authentication, authAdmin, deleteLiterature);
 
 // COLLECTION ROUTE
