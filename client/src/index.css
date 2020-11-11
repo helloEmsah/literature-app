@@ -387,7 +387,28 @@
   border-radius: 5px;
 }
 
+/* MY COLLECTION */
+
+#my-collection {
+  color: #ffffff;
+  background-color: #161616;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
 /* COLLECTION */
+
+#collection {
+  color: #ffffff;
+  background-color: #161616;
+  overflow-x: hidden;
+}
+
+#collection .literature-not-found {
+  color: #ffffff;
+  background-color: #161616;
+  overflow-x: hidden;
+}
 
 #collection .section-title {
   font-family: "Times New Roman", Times, serif;

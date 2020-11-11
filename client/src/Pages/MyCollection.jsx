@@ -8,11 +8,15 @@ import ListLiterature from "../Components/Literature/ListLiterature";
 import CardLiterature from "../Components/Literature/CardLiterature";
 import Collection from "../Components/MyCollection/Collection";
 import Spinner from "../Components/Utilities/Spinner";
+import Header from "../Components/Utilities/Header";
 
 function MyCollection() {
   return (
     <>
-      <Collection />
+      <div id="my-collection">
+        <Header />
+        <Collection />
+      </div>
     </>
   );
 }

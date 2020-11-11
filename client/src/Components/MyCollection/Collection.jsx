@@ -26,10 +26,7 @@ function Collection() {
         {isLoading ? (
           <Spinner />
         ) : collectionData.data.data.collection.toString() === "" ? (
-          <div
-            className="alert ml-auto mr-auto w-100 text-center mt-5 text-white"
-            role="alert"
-          >
+          <div className=" literature-not-found alert ml-auto mr-auto w-100 text-center mt-5 text-white">
             <h3>No Literatures Found</h3>
           </div>
         ) : (
