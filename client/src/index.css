@@ -477,6 +477,13 @@
 
 /* SEARCH LITERATURE */
 
+#search-literature {
+  color: #ffffff;
+  background-color: #161616;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
 #search-literature .searchBar {
   position: relative;
   top: 30px;
