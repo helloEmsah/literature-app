@@ -1,80 +1,53 @@
 import React, { useState, useContext } from "react";
-import {
-  Button,
-  Container,
-  DropdownButton,
-  Form,
-  Modal,
-} from "react-bootstrap";
+import { Button, Container, Form, Modal } from "react-bootstrap";
 import { TiDocumentAdd } from "react-icons/ti";
-import { useQuery, useMutation } from "react-query";
+import { useMutation } from "react-query";
 import { API } from "../../Config/api";
-import Spinner from "../Utilities/Spinner";
 import { GlobalContext } from "../../Context/GlobalContext";
 
-function AddForm({ type }) {
+function AddForm() {
   const [state, dispatch] = useContext(GlobalContext);
-  const [show, setShow] = useState(false);
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const [loading, setLoading] = useState(false);
-
-  const userStateId = localStorage.getItem("id");
-
-  // Modal Handle
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const [formData, setFormData] = useState({
+    userId: `${state.user.id}`,
     title: "",
     author: "",
     publication: "",
     page: "",
     isbn: "",
     file: "",
-    status: "Waiting",
-    thumbnail: "",
   });
 
-  const [fileName, setFileName] = useState("");
-
-  const { title, author, publication, page, isbn, file, thumbnail } = formData;
+  const { userId, title, author, publication, page, isbn, file } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const [addLiterature] = useMutation(async () => {
-    setShowErrorAlert(false);
-
-    const formData = new FormData();
-
-    formData.append("title", title);
-    formData.append("publication", publication);
-    formData.append("page", page);
-    formData.append("author", author);
-    formData.append("isbn", isbn);
-    formData.append("thumbnail", thumbnail);
-    formData.append("file", file);
-    formData.append(
-      "status",
-      state.user.isAdmin === 1 ? "Approved" : "Waiting"
-    );
-
     try {
-      setLoading(true);
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       };
 
-      const { data } = await API.post("/literature", formData, config);
-      setLoading(false);
-      setShowSuccessAlert(true);
+      const body = JSON.stringify({
+        userId,
+        title,
+        author,
+        publication,
+        page,
+        isbn,
+        file,
+      });
+
+      const res = await API.post("/literature", body, config);
+
       setFormData({
+        userId: `${state.user.id}`,
         title: "",
         author: "",
         publication: "",
@@ -82,27 +55,26 @@ function AddForm({ type }) {
         isbn: "",
         file: "",
       });
-      setShowErrorAlert(false);
-    } catch (error) {
-      console.log(error.response.data.message);
-      console.log(error);
-      setErrorMessage(error.response.data.message);
-      setShowErrorAlert(true);
-    }
-    setLoading(false);
-  });
 
-  const handleSubmit = (e) => {
-    setLoading(false);
-    e.preventDefault();
-    addLiterature();
-  };
+      setShowAddModal(true);
+
+      console.log(res);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   return (
     <>
       <Container id="addForm">
         <h1>Add Literature</h1>
-        <Form onsubmit={(e) => handleSubmit(e)}>
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            addLiterature();
+          }}
+        >
           <br />
           <Form.Group>
             <Form.Control
@@ -155,7 +127,18 @@ function AddForm({ type }) {
               required
             />
           </Form.Group>
+
           <Form.Group>
+            <Form.Control
+              type="text"
+              placeholder="File"
+              name="file"
+              value={file}
+              onChange={(e) => handleChange(e)}
+            />
+          </Form.Group>
+
+          {/* <Form.Group> Multer Here
             <div
               className="form-control"
               onClick={() => document.getElementsByName("file")[0].click()}
@@ -182,25 +165,30 @@ function AddForm({ type }) {
               }}
               style={{ display: "none" }}
             />
+          </Form.Group> */}
+
+          <Form.Group>
+            <Form.Control
+              type="text"
+              placeholder="User Id"
+              name="userId"
+              value={userId}
+              onChange={(e) => handleChange(e)}
+              hidden
+            />
           </Form.Group>
 
           <div className="d-flex justify-content-between">
-            <Button type="submit">
-              {loading ? (
-                <h1>Loading...</h1>
-              ) : (
-                <>
-                  Add Literature <TiDocumentAdd />
-                </>
-              )}
+            <Button type="submit" onClick={() => setShowAddModal(true)}>
+              Add Literature <TiDocumentAdd />
             </Button>
           </div>
         </Form>
         <Modal
           centered
           size="lg"
-          show={showSuccessAlert}
-          onHide={() => setShowSuccessAlert(false)}
+          show={showAddModal}
+          onHide={() => setShowAddModal(false)}
         >
           <Modal.Body>
             <div

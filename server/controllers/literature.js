@@ -418,6 +418,7 @@ exports.addLiterature = async (req, res) => {
       ...req.body,
       userId,
       status: "Waiting",
+      thumbnail: "dummy.png"
     
     });
 
