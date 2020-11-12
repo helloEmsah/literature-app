@@ -18,6 +18,7 @@ import Literature from "./Pages/Literature";
 import Admin from "./Pages/Admin";
 import Header from "./Components/Utilities/Header";
 import AdminHeader from "./Components/Utilities/AdminHeader";
+import AdminAddLiterature from "./Pages/AdminAddLiterature";
 import NotFound from "./Pages/NotFound";
 import TestForm from "./Pages/TestForm";
 
@@ -84,6 +85,11 @@ function App() {
           component={DetailLiterature}
         />
         <AdminRoute exact path="/admin-dashboard" component={Admin} />
+        <AdminRoute
+          exact
+          path="/admin-add-literature"
+          component={AdminAddLiterature}
+        />
       </Switch>
     </Router>
   );

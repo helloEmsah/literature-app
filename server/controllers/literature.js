@@ -417,7 +417,7 @@ exports.addLiterature = async (req, res) => {
     const literature = await literatures.create({
       ...req.body,
       userId,
-      status: "Waiting",
+      // status: "Waiting",
       thumbnail: "dummy.png"
     
     });

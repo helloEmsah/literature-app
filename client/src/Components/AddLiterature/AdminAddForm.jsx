@@ -5,7 +5,7 @@ import { useMutation } from "react-query";
 import { API } from "../../Config/api";
 import { GlobalContext } from "../../Context/GlobalContext";
 
-function AddForm() {
+function AdminAddForm() {
   const [state, dispatch] = useContext(GlobalContext);
 
   const [showAddModal, setShowAddModal] = useState(false);
@@ -18,7 +18,7 @@ function AddForm() {
     page: "",
     isbn: "",
     file: "",
-    status: "Waiting",
+    status: "Approved",
   });
 
   const {
@@ -188,9 +188,9 @@ function AddForm() {
               onChange={(e) => handleChange(e)}
               hidden
             />
-          </Form.Group> */}
+          </Form.Group>
 
-          {/* <Form.Group>
+          <Form.Group>
             <Form.Control
               type="text"
               placeholder="Status"
@@ -221,8 +221,7 @@ function AddForm() {
                 textAlign: "center",
               }}
             >
-              <p>Thank you for adding your paperwork</p>
-              <p>please wait 1 x 24 hours for our admin to verify </p>
+              <p>Literature added successfully!</p>
             </div>
           </Modal.Body>
         </Modal>
@@ -230,4 +229,4 @@ function AddForm() {
     </>
   );
 }
-export default AddForm;
+export default AdminAddForm;

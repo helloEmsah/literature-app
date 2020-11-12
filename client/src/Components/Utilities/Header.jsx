@@ -91,7 +91,7 @@ function Header() {
           <Dropdown.Menu alignRight>
             <Dropdown.Item
               as={Link}
-              to="/admin/add-book"
+              to="/admin-add-literature"
               style={{
                 marginBottom: ".5rem",
                 fontSize: 18,
