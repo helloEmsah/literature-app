@@ -110,7 +110,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0Nzcx
 # @name addLiterature
 POST http://localhost:5000/api/v1/literature
 Content-Type: application/json 
-//Authorization: 
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
+
 
 {
 	"title": "Little Child",

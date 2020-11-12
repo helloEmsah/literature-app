@@ -357,6 +357,59 @@ exports.getLiteratureByTitleAndYear = async (req, res) => {
   }
 };
 
+// Add Literature with Multer
+// exports.addLiterature = async (req, res) => {
+//   try {
+//     const { title, author, publication, userId, page, isbn } = req.body;
+
+//     const literature = await literatures.create({
+//       ...req.body,
+//       userId,
+//       file: req.file.filename,
+//     });
+
+//     if (literature) {
+//       const literatureResult = await literatures.findOne({
+//         where: {
+//           id: literature.id,
+//         },
+//         include: [
+//           {
+//             model: users,
+//             as: "user",
+//             attributes: {
+//               exclude: [
+//                 "createdAt",
+//                 "updatedAt",
+//                 "password",
+//                 "phone",
+//                 "address",
+//                 "gender",
+//                 "picture",
+//                 "role",
+//               ],
+//             },
+//           },
+//         ],
+//         attributes: {
+//           exclude: ["createdAt", "updatedAt"],
+//         },
+//       });
+//       return res.status(200).send({
+//         message: "Literature has been added successfully",
+//         data: { literatureResult },
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).send({
+//       error: {
+//         message: "Internal Server Error",
+//       },
+//     });
+//   }
+// };
+
 exports.addLiterature = async (req, res) => {
   try {
     const { title, author, publication, userId, page, isbn } = req.body;
@@ -364,7 +417,8 @@ exports.addLiterature = async (req, res) => {
     const literature = await literatures.create({
       ...req.body,
       userId,
-      file: req.file.filename,
+      status: "Waiting",
+    
     });
 
     if (literature) {
