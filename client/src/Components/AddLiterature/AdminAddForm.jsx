@@ -40,9 +40,20 @@ function AdminAddForm() {
     try {
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       };
+
+      const formData = new FormData();
+
+      formData.append("userId", userId);
+      formData.append("title", title);
+      formData.append("author", author);
+      formData.append("publication", publication);
+      formData.append("page", page);
+      formData.append("isbn", isbn);
+      formData.append("file", file);
+      formData.append("status", status);
 
       const body = JSON.stringify({
         userId,
@@ -55,7 +66,7 @@ function AdminAddForm() {
         status,
       });
 
-      const res = await API.post("/literature", body, config);
+      const res = await API.post("/literature", formData, config);
 
       setFormData({
         userId: `${state.user.id}`,
@@ -95,7 +106,6 @@ function AdminAddForm() {
               name="title"
               value={title}
               onChange={(e) => handleChange(e)}
-              required
             />
           </Form.Group>
           <Form.Group>
@@ -105,7 +115,6 @@ function AdminAddForm() {
               name="publication"
               value={publication}
               onChange={(e) => handleChange(e)}
-              required
             />
           </Form.Group>
           <Form.Group>
@@ -115,7 +124,6 @@ function AdminAddForm() {
               name="page"
               value={page}
               onChange={(e) => handleChange(e)}
-              required
             />
           </Form.Group>
           <Form.Group>
@@ -125,7 +133,6 @@ function AdminAddForm() {
               name="isbn"
               value={isbn}
               onChange={(e) => handleChange(e)}
-              required
             />
           </Form.Group>
 
@@ -136,11 +143,39 @@ function AdminAddForm() {
               name="author"
               value={author}
               onChange={(e) => handleChange(e)}
-              required
             />
           </Form.Group>
 
           <Form.Group>
+            <div
+              className="form-control"
+              onClick={() => document.getElementsByName("file")[0].click()}
+              style={{ width: "max-content", cursor: "pointer" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {file ? file.name : "Attach File"}
+                <TiDocumentAdd size="20px" className="ml-1" />
+              </div>
+            </div>
+            <Form.File
+              name="file"
+              accept=".pdf"
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  file: !e.target.files[0] ? file : e.target.files[0],
+                });
+              }}
+              style={{ display: "none" }}
+            />
+          </Form.Group>
+
+          {/* <Form.Group>
             <Form.Control
               type="text"
               placeholder="File"
@@ -148,7 +183,7 @@ function AdminAddForm() {
               value={file}
               onChange={(e) => handleChange(e)}
             />
-          </Form.Group>
+          </Form.Group> */}
 
           {/* <Form.Group> Multer Here
             <div

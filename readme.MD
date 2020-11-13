@@ -16,7 +16,6 @@
 - Implement bookmark function
 - Search Literature with year
 - Return response when literature is not found
-- Implement Multer on Admin Literature
 - Sort admin literature verification by the latest
 - Fix bug when changing profile picture
 - Filter by Year

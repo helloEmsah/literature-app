@@ -66,9 +66,8 @@ function AddForm() {
         status,
       });
 
-      console.log("sebelum request");
       const res = await API.post("/literature", formData, config);
-      console.log("setelah request");
+
       setFormData({
         userId: `${state.user.id}`,
         title: "",
@@ -77,7 +76,7 @@ function AddForm() {
         page: "",
         isbn: "",
         file: "",
-        status: "Approved",
+        status: "Waiting",
       });
 
       setShowAddModal(true);
