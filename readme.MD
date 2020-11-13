@@ -12,18 +12,20 @@
 
 ##### Frontend
 
-- Fix Search bar functionality
+- Fix download on detail literature
+- Implement bookmark function
 - Search Literature with year
 - Return response when literature is not found
-- Fix UI on search for Literature
+- Implement Multer on Admin Literature
+- Sort admin literature verification by the latest
 - Fix bug when changing profile picture
-- Multer if possible
+- Filter by Year
 - Search for potential bug
 - Do as needed and act accordingly
 
 ##### Backend
 
-- Fix Multer for upload PDF
+- fix blank thumbnail on database
 - Search for potential bug
 - Do as needed and act accordingly
 
@@ -32,3 +34,8 @@
 MIT
 
 **Free Software, Hell Yeah!**
+
+manajemen waktu > 10 jam
+effort maksimum 2x
+kalau ada error tanya ke mas Fadil
+Task 1 - 3

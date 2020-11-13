@@ -24,7 +24,8 @@ const {
   deleteLiterature,
   getLiteratureByTitle,
   getLiteratureByTitleAndYear,
-  getYear, updateLiterature
+  getYear,
+  updateLiterature,
 } = require("../controllers/literature");
 
 const {
@@ -58,8 +59,8 @@ router.get(
   getLiteratureByTitleAndYear
 );
 router.get("/literature/:id", authentication, getLiterature);
-// router.post("/literature", authentication, uploadPDF("file"), addLiterature);
-router.post("/literature", authentication, addLiterature);
+router.post("/literature", authentication, uploadPDF("file"), addLiterature);
+// router.post("/literature", authentication, addLiterature);
 router.patch("/literature/:id", authentication, updateLiterature);
 router.delete("/literature/:id", authentication, authAdmin, deleteLiterature);
 

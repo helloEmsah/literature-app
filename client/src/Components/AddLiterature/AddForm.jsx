@@ -40,9 +40,20 @@ function AddForm() {
     try {
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       };
+
+      const formData = new FormData();
+
+      formData.append("userId", userId);
+      formData.append("title", title);
+      formData.append("author", author);
+      formData.append("publication", publication);
+      formData.append("page", page);
+      formData.append("isbn", isbn);
+      formData.append("file", file);
+      formData.append("status", status);
 
       const body = JSON.stringify({
         userId,
@@ -55,8 +66,9 @@ function AddForm() {
         status,
       });
 
-      const res = await API.post("/literature", body, config);
-
+      console.log("sebelum request");
+      const res = await API.post("/literature", formData, config);
+      console.log("setelah request");
       setFormData({
         userId: `${state.user.id}`,
         title: "",
@@ -95,7 +107,6 @@ function AddForm() {
               name="title"
               value={title}
               onChange={(e) => handleChange(e)}
-              required
             />
           </Form.Group>
           <Form.Group>
@@ -105,7 +116,6 @@ function AddForm() {
               name="publication"
               value={publication}
               onChange={(e) => handleChange(e)}
-              required
             />
           </Form.Group>
           <Form.Group>
@@ -115,7 +125,6 @@ function AddForm() {
               name="page"
               value={page}
               onChange={(e) => handleChange(e)}
-              required
             />
           </Form.Group>
           <Form.Group>
@@ -125,7 +134,6 @@ function AddForm() {
               name="isbn"
               value={isbn}
               onChange={(e) => handleChange(e)}
-              required
             />
           </Form.Group>
 
@@ -136,11 +144,10 @@ function AddForm() {
               name="author"
               value={author}
               onChange={(e) => handleChange(e)}
-              required
             />
           </Form.Group>
 
-          <Form.Group>
+          {/* <Form.Group>
             <Form.Control
               type="text"
               placeholder="File"
@@ -148,9 +155,9 @@ function AddForm() {
               value={file}
               onChange={(e) => handleChange(e)}
             />
-          </Form.Group>
+          </Form.Group> */}
 
-          {/* <Form.Group> Multer Here
+          <Form.Group>
             <div
               className="form-control"
               onClick={() => document.getElementsByName("file")[0].click()}
@@ -177,7 +184,7 @@ function AddForm() {
               }}
               style={{ display: "none" }}
             />
-          </Form.Group> */}
+          </Form.Group>
 
           {/* <Form.Group>
             <Form.Control
