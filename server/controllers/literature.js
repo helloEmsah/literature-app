@@ -6,6 +6,7 @@ const joi = require("@hapi/joi");
 exports.getLiteratures = async (req, res) => {
   try {
     const literature = await literatures.findAll({
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: users,
@@ -47,6 +48,7 @@ exports.getLiterature = async (req, res) => {
   try {
     const { id } = req.params;
     const literature = await literatures.findOne({
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: users,
