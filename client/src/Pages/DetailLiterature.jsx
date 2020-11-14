@@ -118,12 +118,22 @@ const DetailLiterature = () => {
                   <br />
                   <br />
                   <br />
-                  <Link to={`../Assets/PDF/dummy.pdf`} target="_blank" download>
-                    <Button>
-                      Download{" "}
-                      <BiCloudDownload style={{ width: 25, height: 25 }} />
-                    </Button>
-                  </Link>
+                  {/* <Link
+                    to={`http://localhost:5000/uploads/pdf/${detailLiterature.data.data.literature.file}`}
+                    target="_blank"
+                    download
+                  > */}
+                  <Button
+                    // href={`http://localhost:5000/uploads/pdf/${detailLiterature.data.data.literature.file}`}
+                    href={
+                      urlAsset.pdf + detailLiterature.data.data.literature.file
+                    }
+                    target="_blank"
+                  >
+                    Download{" "}
+                    <BiCloudDownload style={{ width: 25, height: 25 }} />
+                  </Button>
+                  {/* </Link> */}
                 </div>
               </div>
             </Col>
