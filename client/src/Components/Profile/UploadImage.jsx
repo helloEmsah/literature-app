@@ -22,17 +22,20 @@ const UploadImage = (props) => {
       const formData = new FormData();
       formData.append("picture", image, image.name);
 
-      const res = await API.patch(`/user/${id}`, formData, config);
+      const res = await API.patch(`/user/${state.user.id}`, formData, config);
       setSuccess(res.data.message);
       dispatch({
         type: "UPLOAD_IMAGE",
-        payload: res.data.data.user,
+        payload: res.data.data,
       });
+
       props.refetch();
     } catch (error) {
       console.log(error.message);
     }
   });
+
+  console.log(state.isLogin);
 
   const fileData = () => {
     if (image)

@@ -1,34 +1,44 @@
 import React, { useState, useContext } from "react";
-import {
-  Container,
-  Col,
-  Row,
-  DropdownButton,
-  Button,
-  Modal,
-} from "react-bootstrap";
+import { Container, Col, Row, Button, Modal, Form } from "react-bootstrap";
 import { MdEmail, MdLocationOn } from "react-icons/md";
 import { FaTransgender, FaPhoneAlt } from "react-icons/fa";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import { API, urlAsset } from "../../Config/api";
-import UploadImage from "./UploadImage";
 import Spinner from "../Utilities/Spinner";
 import { GlobalContext } from "../../Context/GlobalContext";
 
 function UserInfo() {
-  const [showModal, setShowModal] = useState(false);
-  const id = localStorage.getItem("id");
   const [state, dispatch] = useContext(GlobalContext);
+  const [image, setImage] = useState(null);
 
-  const handleShow = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
 
   const {
     isLoading,
     error,
     data: profileData,
     refetch,
-  } = useQuery("getUserById", () => API.get(`/user/${id}`));
+  } = useQuery("getUserById", () => API.get(`/user/${state.user.id}`));
+
+  const [uploadImage] = useMutation(async () => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const formData = new FormData();
+      formData.append("picture", image, image.name);
+
+      setShowUploadModal(false);
+      const res = await API.patch(`/user/${state.user.id}`, formData, config);
+      refetch();
+      return res;
+    } catch (error) {
+      refetch();
+      console.log(error);
+    }
+  });
 
   return isLoading || !profileData ? (
     <Spinner />
@@ -63,15 +73,36 @@ function UserInfo() {
                   src={urlAsset.img + profileData.data.data.picture}
                   alt=""
                 />
-                <Button onClick={handleShow}>Change Picture</Button>
+                <Button onClick={() => setShowUploadModal(true)}>
+                  Change Picture
+                </Button>
               </div>
               <br />
               <Modal
                 centered
-                show={showModal}
-                onHide={() => setShowModal(false)}
+                show={showUploadModal}
+                onHide={() => setShowUploadModal(false)}
               >
-                <UploadImage refetch={() => refetch()} />
+                <Modal.Body>
+                  <Form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      uploadImage();
+                    }}
+                  >
+                    <Form.Group>
+                      <Form.Control
+                        type="file"
+                        placeholder="Profile Image"
+                        name="picture"
+                        onChange={(e) => setImage(e.target.files[0])}
+                      />
+                    </Form.Group>
+                    <Button type="submit" variant="danger">
+                      Submit
+                    </Button>
+                  </Form>
+                </Modal.Body>
               </Modal>
             </Col>
           </Row>

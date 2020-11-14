@@ -13,8 +13,9 @@ function Header() {
   const [state, dispatch] = useContext(GlobalContext);
   const id = localStorage.getItem("id");
 
-  const { isLoading, error, data: userData } = useQuery("getName", () =>
-    API.get(`/user/${id}`)
+  const { isLoading, error, data: userData, refetch } = useQuery(
+    "getName",
+    () => API.get(`/user/${state.user.id}`)
   );
 
   return isLoading || !userData ? (
