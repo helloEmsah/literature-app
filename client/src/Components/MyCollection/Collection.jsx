@@ -10,6 +10,7 @@ import ListLiterature from "../Literature/ListLiterature";
 function Collection() {
   const [state, dispatch] = useContext(GlobalContext);
   const history = useHistory();
+  const [message, setMessage] = useState("");
   const userId = localStorage.getItem("id");
 
   const {
@@ -17,52 +18,43 @@ function Collection() {
     error,
     data: collectionData,
     refetch,
-  } = useQuery("getCollection", () => API.get(`/collection/${userId}`));
+  } = useQuery("getCollection", () => API.get(`/collection/${state.user.id}`));
 
-  return (
+  return isLoading || !collectionData ? (
+    <Spinner />
+  ) : (
     <Container id="collection">
       <p className="section-title">My Collection</p>
       <Row>
-        {isLoading ? (
-          <Spinner />
-        ) : collectionData.data.data.collection.toString() === "" ? (
-          <div className=" literature-not-found alert ml-auto mr-auto w-100 text-center mt-5 text-white">
-            <h3>No Literatures Found</h3>
-          </div>
-        ) : (
-          collectionData.data.data.collection.map((literature, index) => {
-            return literature.literature.status === "Approved" ? (
-              <Col lg={3}>
-                <Link
-                  style={{ textDecoration: "none" }}
-                  // Fix Link later
-                  onClick={() =>
-                    history.push(`detail-literature/${literature.id}`)
-                  }
-                >
-                  <div>
-                    <div className="image-container">
-                      <img
-                        className="image"
-                        src={require(`../../Assets/Images/pdfCover.png`)}
-                        alt=""
-                      />
-                    </div>
-                    <div className="description">
-                      <p className="title">{literature.literature.title}</p>
-                      <div className="subtext-wrapper">
-                        <p className="author">{literature.literature.author}</p>
-                        <p className="publication">
-                          {literature.literature.publication.split(" ")[1]}
-                        </p>
-                      </div>
-                    </div>
+        {collectionData.data.data.collection.map((mark) => (
+          <Col lg={3}>
+            <Link
+              style={{ textDecoration: "none" }}
+              onClick={() =>
+                history.push(`detail-literature/${mark.literature.id}`)
+              }
+            >
+              <div>
+                <div className="image-container">
+                  <img
+                    className="image"
+                    src={require(`../../Assets/Images/pdfCover.png`)}
+                    alt=""
+                  />
+                </div>
+                <div className="description">
+                  <p className="title">{mark.literature.title}</p>
+                  <div className="subtext-wrapper">
+                    <p className="author">{mark.literature.author}</p>
+                    <p className="publication">
+                      {mark.literature.publication.split(" ")[1]}
+                    </p>
                   </div>
-                </Link>
-              </Col>
-            ) : null;
-          })
-        )}
+                </div>
+              </div>
+            </Link>
+          </Col>
+        ))}
       </Row>
     </Container>
   );

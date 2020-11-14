@@ -12,6 +12,8 @@ import Header from "../Components/Utilities/Header";
 const DetailLiterature = () => {
   const history = useHistory();
 
+  const [show, setShow] = useState(false);
+
   const [state, dispatch] = useContext(GlobalContext);
 
   const [showAddModal, setShowAddModal] = useState(false);
@@ -27,6 +29,7 @@ const DetailLiterature = () => {
   const [bookmarkId, setBookmarkId] = useState(null);
 
   const { id } = useParams();
+
   const {
     isLoading,
     error,
@@ -34,46 +37,63 @@ const DetailLiterature = () => {
     refetch,
   } = useQuery("getDetail", () => API.get(`/literature/${id}`));
 
-  // function checkBookmark() {
-  //   const bookmark = detailLiterature.data.data.literature.some(
-  //     (bookmark) =>
-  //       detailLiterature.data.data.id === bookmark.LiteratureId &&
-  //       state.user.id === bookmark.userId
-  //   );
-  //   console.log(bookmark);
-  //   return bookmark;
-  // }
+  function checkBookmark() {
+    const bookmark = detailLiterature.data.data.literature.Libraries.some(
+      (bookmark) =>
+        detailLiterature.data.data.id === bookmark.LiteratureId &&
+        state.user.id === bookmark.userId
+    );
+    console.log(bookmark);
+    return bookmark;
+  }
 
-  // const [addBookmark] = useMutation(async () => {
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     };
+  const [addBookmark] = useMutation(async () => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-  //     const body = JSON.stringify({
-  //       literatureId: `${literatureId}`,
-  //       userId: `${userId}`,
-  //     });
-  //     const res = await API.post("collection/", body, config);
-  //     refetch();
-  //     return res;
-  //   } catch (error) {
-  //     console.log(error);
-  //     setMessage(error.response.data.error.message);
-  //   }
-  // });
+      const body = JSON.stringify({
+        literatureId: `${literatureId}`,
+        userId: `${userId}`,
+      });
+      const res = await API.post("collection/", body, config);
+      refetch();
+      return res;
+    } catch (error) {
+      console.log(error);
+      setMessage(error.response.data.error.message);
+    }
+  });
 
-  // const [deleteBookmark] = useMutation(async () => {
-  //   try {
-  //     const res = await API.delete(`/collection/${bookmarkId}`);
-  //     refetch();
-  //   } catch (error) {
-  //     refetch();
-  //     console.log(error);
-  //   }
-  // });
+  const [deleteBookmark] = useMutation(async () => {
+    try {
+      const res = await API.delete(`/collection/${bookmarkId}`);
+      refetch();
+    } catch (error) {
+      refetch();
+      console.log(error);
+    }
+  });
+
+  const [addCollection] = useMutation(async (literatureId) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const body = JSON.stringify({ literatureId: literatureId });
+
+      const res = await API.post(`/collection/`, body, config);
+      setMessage(res.data.message);
+    } catch (err) {
+      console.log(err);
+      setMessage(err.response.data.error.message);
+    }
+  });
 
   return isLoading || !detailLiterature ? (
     <Spinner />
@@ -138,6 +158,40 @@ const DetailLiterature = () => {
               </div>
             </Col>
             <Col lg={2}>
+              {/* {detailLiterature.data.data.literature.user.id !=
+              state.user.id ? (
+                <div>
+                  {checkBookmark() === true ? (
+                    <Button
+                      onClick={() => {
+                        setBookmarkId(
+                          detailLiterature.data.data.literature.Libraries[0].id
+                        );
+                        deleteBookmark();
+                        setShowDeleteModal(true);
+                      }}
+                    >
+                      <p>Delete</p>
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        setLiteratureId(
+                          detailLiterature.data.data.literature.id
+                        );
+                        setUserId(state.user.id);
+                        addBookmark();
+                        setShowAddModal(true);
+                      }}
+                    >
+                      <p>Add</p>
+                    </Button>
+                  )}
+                </div>
+              ) : (
+                ""
+              )} */}
+
               {/* {checkBookmark() === true ? (
                 <Button style={{ width: 200, float: "right" }}>
                   Add to Collection <FaRegBookmark />
@@ -146,15 +200,30 @@ const DetailLiterature = () => {
                 <Button style={{ width: 200, float: "right" }}>
                   Add to Collection <FaRegBookmark />
                 </Button>
-              )} */}
+              )}
               <Button style={{ width: 200, float: "right" }}>
                 Add to Collection <FaRegBookmark />
+              </Button> */}
+
+              <Button
+                onClick={() => {
+                  addCollection(detailLiterature.data.data.literature.id);
+                  setShowAddModal(true);
+                }}
+                style={{ width: 200, float: "right" }}
+              >
+                Add to Collection <FaRegBookmark />
               </Button>
+
+              {/* <Button style={{ width: 200, float: "right" }}>
+                Add to Collection <FaRegBookmark />
+              </Button> */}
             </Col>
 
-            {/* <Button style={{ width: 200, float: "right" }}>
-              Add to Collection <FaRegBookmark />
-            </Button> */}
+            {/* MODAL ADD BOOKMARK */}
+            <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
+              <Modal.Body>Test</Modal.Body>
+            </Modal>
           </Row>
         </Container>
       </div>

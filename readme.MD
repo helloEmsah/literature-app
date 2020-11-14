@@ -12,13 +12,9 @@
 
 ##### Frontend
 
-- Fix download on detail literature
-- Implement bookmark function
-- Search Literature with year
+- Implement bookmark function // PRIORITY
+- Search Literature with year // PRIORITY
 - Return response when literature is not found
-- Sort admin literature verification by the latest
-- Fix bug when changing profile picture
-- Filter by Year
 - Search for potential bug
 - Do as needed and act accordingly
 
