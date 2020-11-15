@@ -51,11 +51,10 @@ router.get("/literatures", authentication, getLiteratures);
 router.get("/literature", authentication, searchLiterature);
 router.get("/user-literature/:id", authentication, getUserLiterature);
 router.get("/literature/:id", authentication, getLiterature);
-router.get("/approved-literature/:title", authentication, getLiteratureByTitle);
-router.get("/year", authentication, getYear);
+router.get("/approved-literature/:title/", getLiteratureByTitle);
+router.get("/year", getYear);
 router.get(
-  "/approved-literature/:title/:pub",
-  authentication,
+  "/approved-literature/:title/:publication",
   getLiteratureByTitleAndYear
 );
 router.get("/literature/:id", authentication, getLiterature);
@@ -66,7 +65,7 @@ router.delete("/literature/:id", authentication, authAdmin, deleteLiterature);
 
 // COLLECTION ROUTE
 router.get("/collection/:id", authentication, getCollection);
-router.post("/collection", authentication, addCollection);
+router.post("/collection/", authentication, addCollection);
 router.delete("/collection/:id", authentication, deleteCollection);
 // router.delete(
 //   "/remove-collection/:literatureId",

@@ -57,7 +57,7 @@ function App() {
         <Route exact path="/" component={Landing} />
         <Route exact path="/test" component={TestForm} />
 
-        <PrivateRoute exact path="/search-literatures" component={Literature} />
+        {/* <PrivateRoute exact path="/search-literatures" component={Literature} /> */}
         <PrivateRoute
           exact
           path="/search-literatures/:title"
@@ -65,18 +65,18 @@ function App() {
         />
         <PrivateRoute
           exact
-          path="/search-literatures/:title/:year"
+          path="/search-literatures/:title/:publication"
           component={Literature}
         />
         <PrivateRoute exact path="/home" component={Home} />
         <PrivateRoute exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/my-collection" component={MyCollection} />
-        <PrivateRoute exact path="/search/:title" component={SearchPage} />
+        {/* <PrivateRoute exact path="/search/:title" component={SearchPage} />
         <PrivateRoute
           exact
-          path="/search/:title/:year"
+          path="/search/:title/:Year"
           component={SearchPage}
-        />
+        /> */}
 
         <PrivateRoute exact path="/add-literature" component={AddLiterature} />
         <PrivateRoute

@@ -87,7 +87,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0Nzcx
 ###  
 
 # @name searchLiteratureByTitle
-GET http://localhost:5000/api/v1/approved-literature/si
+GET http://localhost:5000/api/v1/approved-literature/si/
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
 
@@ -101,7 +101,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0Nzcx
 ###
 
 # @name getLiteratureByYear
-GET http://localhost:5000/api/v1/approved-literature/si/2019
+GET http://localhost:5000/api/v1/approved-literature/si/2015
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc
 
@@ -166,6 +166,6 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0Nzcx
 ###
 
 # @name deleteCollection
-DELETE  http://localhost:5000/api/v1/collection/6
+DELETE  http://localhost:5000/api/v1/collection/2
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjA0NzcxMTYzfQ.C8s-fCKJLB11rC6gscYprBc3RMPjYI2ngXQ5bdtXvHc

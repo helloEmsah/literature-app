@@ -99,9 +99,11 @@ exports.getYear = async (req, res) => {
     const { title } = req.params;
     const Op = sequelize.Op;
     const approvedLiterature = await literatures.findAll({
+      order: [["publication", "DESC"]],
       where: {
         status: "Approved",
       },
+      group: ["publication"],
       attributes: {
         exclude: ["userId", "createdAt", "updatedAt"],
       },
@@ -269,52 +271,6 @@ exports.getLiteratureByTitle = async (req, res) => {
   }
 };
 
-exports.readYear = async (req, res) => {
-  try {
-    const { title } = req.params;
-    const Op = Sequelize.Op;
-    const aprovedBooks = await Books.findAll({
-      order: [["publication", "DESC"]],
-      where: {
-        status: "Approved",
-      },
-      group: ["publication"],
-      attributes: {
-        exclude: [
-          "createdAt",
-          "updatedAt",
-          ,
-          "userId",
-          "categoryId",
-          "UserId",
-          "CategoryId",
-        ],
-      },
-      include: [
-        {
-          model: users,
-          as: "bookUser",
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-      ],
-    });
-
-    res.send({
-      message: "Response Successfuly Loaded",
-      data: { all: aprovedBooks },
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({
-      error: {
-        message: "Internal Server Error",
-      },
-    });
-  }
-};
-
 exports.getLiteratureByTitleAndYear = async (req, res) => {
   try {
     let { title, publication } = req.params;
@@ -328,7 +284,7 @@ exports.getLiteratureByTitleAndYear = async (req, res) => {
           [Op.like]: "%" + title + "%",
         },
         publication: {
-          [Op.gt]: publication + "March",
+          [Op.like]: "%" + publication + "%",
         },
       },
       attributes: {

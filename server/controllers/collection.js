@@ -167,57 +167,15 @@ exports.getCollection = async (req, res) => {
 //   }
 // };
 
-exports.addCollection = async (req, res) => {
-  try {
-    const collection = await collections.create(req.body);
-
-    res.status(200).send({
-      message: "Collection added",
-      data: {
-        collection,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      error: {
-        message: "Internal Server Error",
-      },
-    });
-  }
-};
-
 // exports.addCollection = async (req, res) => {
 //   try {
-//     const { id } = req.user;
+//     const collection = await collections.create(req.body);
 
-//     //check if books already in library
-//     const check = await collections.findOne({
-//       where: {
-//         userId: req.user.id,
-//         literatureId: req.body.literatureId,
+//     res.status(200).send({
+//       message: "Collection added",
+//       data: {
+//         collection,
 //       },
-//       attributes: {
-//         exclude: ["createdAt", "updatedAt", "password"],
-//       },
-//     });
-
-//     //if already then
-//     if (check) {
-//       return res.status(400).send({
-//         error: {
-//           message: "Literature has been already added to library",
-//         },
-//       });
-//     }
-
-//     //if not in library
-//     await collections.create({
-//       userId: req.user.id,
-//       literatureId: req.body.literatureId,
-//     });
-//     res.send({
-//       message: "Your Literature has been added successfully",
 //     });
 //   } catch (error) {
 //     console.log(error);
@@ -228,6 +186,48 @@ exports.addCollection = async (req, res) => {
 //     });
 //   }
 // };
+
+exports.addCollection = async (req, res) => {
+  try {
+    const { id } = req.user;
+
+    //check if books already in library
+    const check = await collections.findOne({
+      where: {
+        userId: req.user.id,
+        literatureId: req.body.literatureId,
+      },
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "password"],
+      },
+    });
+
+    //if already then
+    if (check) {
+      return res.status(400).send({
+        error: {
+          message: "Literature has been already added to library",
+        },
+      });
+    }
+
+    //if not in library
+    await collections.create({
+      userId: req.user.id,
+      literatureId: req.body.literatureId,
+    });
+    res.send({
+      message: "Your Literature has been added successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      error: {
+        message: "Internal Server Error",
+      },
+    });
+  }
+};
 
 // exports.deleteCollection = async (req, res) => {
 //   try {
@@ -264,38 +264,16 @@ exports.addCollection = async (req, res) => {
 //   }
 // };
 
-// exports.deleteCollection = async (req, res) => {
-//   try {
-//     //const { id } = req.user;
-//     await collections.destroy({
-//       where: {
-//         id: req.params.id,
-//       },
-//     });
-//     res.send({
-//       message: "Your Literature has been successfully removed from library",
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({
-//       error: {
-//         message: "Internal Server Error",
-//       },
-//     });
-//   }
-// };
 exports.deleteCollection = async (req, res) => {
   try {
-    const { id } = req.params;
-    const deleteCollections = await collections.destroy({
+    //const { id } = req.user;
+    await collections.destroy({
       where: {
-        id,
+        id: req.params.id,
       },
     });
-
     res.send({
-      message: "Delete Data Successfuly",
-      data: { id },
+      message: "Your Literature has been successfully removed from library",
     });
   } catch (error) {
     console.log(error);
@@ -306,3 +284,26 @@ exports.deleteCollection = async (req, res) => {
     });
   }
 };
+
+// exports.deleteCollection = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const deleteCollections = await collections.destroy({
+//       where: {
+//         id,
+//       },
+//     });
+
+//     res.send({
+//       message: "Delete Data Successfuly",
+//       data: { id },
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       error: {
+//         message: "Internal Server Error",
+//       },
+//     });
+//   }
+// };

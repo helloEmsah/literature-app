@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useHistory, useParams, Link } from "react-router-dom";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Dropdown } from "react-bootstrap";
 import { API } from "../Config/api";
 import { BiSearch } from "react-icons/bi";
 import Spinner from "../Components/Utilities/Spinner";
@@ -11,7 +11,7 @@ import { GlobalContext } from "../Context/GlobalContext";
 import { useQuery, useMutation } from "react-query";
 import Header from "../Components/Utilities/Header";
 
-const Literature = (props) => {
+const Literature = () => {
   // const location = useLocation();
 
   // const [query, setQuery] = useState(location.state.query);
@@ -64,12 +64,12 @@ const Literature = (props) => {
   // NEW TEST
   //----------------
 
-  let { title, Year } = useParams();
+  let { title, publication } = useParams();
   const [state, dispatch] = useContext(GlobalContext);
   const [titles, setTitles] = useState("");
   const history = useHistory();
   const date = new Date();
-  const getYear = [2020, 2015, 2010, 2005, 2000];
+  const getYear = [2020, 2019, 2018, 2017, 2016, 2015];
 
   const [year, setYear] = useState("");
 
@@ -104,21 +104,23 @@ const Literature = (props) => {
     error,
     data: literatureData,
     refetch,
-  } = useQuery("getLiterature", () => API.get(`/approved-literature/${title}`));
+  } = useQuery("getLiterature", () =>
+    API.get(`/approved-literature/${title}/${publication}`)
+  );
 
   const { data: yearData } = useQuery("getYear", () => API.get(`/year`));
 
   const [reLoad] = useMutation(async () => {
-    history.push(`/search-literature/${title}/${year}`);
+    history.push(`/search-literatures/${title}/${year}`);
     refetch();
   });
 
   const [handleSearch] = useMutation(async () => {
-    history.push(`/search-literatures/${search}`);
+    history.push(`/search-literatures/${search}/${publication}`);
     refetch();
   });
 
-  return isLoading || !literatureData ? (
+  return isLoading || !literatureData || !yearData ? (
     <Spinner />
   ) : error ? (
     <h1>error: {error.message}</h1>
@@ -156,7 +158,49 @@ const Literature = (props) => {
         </Row>
         <Row>
           <Col lg={2}>
-            <div className="left-component">
+            <Dropdown>
+              <Dropdown.Toggle
+                as={CustomToggle}
+                id="dropdown-custom-components"
+              >
+                <Button
+                  style={{
+                    backgroundColor: "rgba(233, 233, 233, 0.7)",
+                    borderColor: "rgba(233, 233, 233, 0.7)",
+                    color: "black",
+                    marginTop: "3%",
+                  }}
+                >
+                  <p className="filter-label" style={{ display: "unset" }}>
+                    Filter
+                  </p>
+                </Button>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => {
+                    setYear("");
+                    reLoad();
+                  }}
+                >
+                  <p>Anytime</p>
+                </Dropdown.Item>
+
+                {getYear.map((yearList) => (
+                  <Dropdown.Item
+                    onClick={() => {
+                      setYear(yearList);
+                      reLoad();
+                    }}
+                  >
+                    <p>{yearList}</p>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+
+            {/* <div className="left-component">
               <p className="filter-label">Filter</p>
               <select
                 className="filter-btn"
@@ -172,7 +216,7 @@ const Literature = (props) => {
                 <option value="2016">2016</option>
                 <option value="2015">2015</option>
               </select>
-            </div>
+            </div> */}
           </Col>
           <Col lg={10}>
             {isLoading ? (
