@@ -1,5 +1,5 @@
-import React from "react";
-import { Table, Container, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Table, Container, Button, Row, Col, Dropdown } from "react-bootstrap";
 import { API } from "../Config/api";
 import { useQuery, useMutation } from "react-query";
 import { HiCheckCircle, HiXCircle } from "react-icons/hi";
@@ -67,9 +67,11 @@ function Admin() {
       <Header />
       <div id="admin-page">
         <Container style={{ backgroundColor: "white" }}>
-          <h3 style={{ color: "#161616" }}>
-            <strong>Verification</strong>
-          </h3>
+          <div className="d-flex">
+            <h3 style={{ color: "#161616" }}>
+              <strong>Verification</strong>
+            </h3>
+          </div>
           <div className="admin-bg">
             <Table hover>
               <thead>

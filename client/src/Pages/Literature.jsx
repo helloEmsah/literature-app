@@ -104,19 +104,17 @@ const Literature = () => {
     error,
     data: literatureData,
     refetch,
-  } = useQuery("getLiterature", () =>
-    API.get(`/approved-literature/${title}/${publication}`)
-  );
+  } = useQuery("getLiterature", () => API.get(`/approved-literature/${title}`));
 
   const { data: yearData } = useQuery("getYear", () => API.get(`/year`));
 
   const [reLoad] = useMutation(async () => {
-    history.push(`/search-literatures/${title}/${year}`);
+    history.push(`/search-literatures/${title}`);
     refetch();
   });
 
   const [handleSearch] = useMutation(async () => {
-    history.push(`/search-literatures/${search}/${publication}`);
+    history.push(`/search-literatures/${search}`);
     refetch();
   });
 
@@ -158,7 +156,7 @@ const Literature = () => {
         </Row>
         <Row>
           <Col lg={2}>
-            <Dropdown>
+            {/* <Dropdown>
               <Dropdown.Toggle
                 as={CustomToggle}
                 id="dropdown-custom-components"
@@ -198,9 +196,9 @@ const Literature = () => {
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
 
-            {/* <div className="left-component">
+            <div className="left-component">
               <p className="filter-label">Filter</p>
               <select
                 className="filter-btn"
@@ -216,7 +214,7 @@ const Literature = () => {
                 <option value="2016">2016</option>
                 <option value="2015">2015</option>
               </select>
-            </div> */}
+            </div>
           </Col>
           <Col lg={10}>
             {isLoading ? (

@@ -68,7 +68,6 @@ function Collection() {
             >
               X
             </p>
-
             <Link
               style={{ textDecoration: "none" }}
               onClick={() =>
