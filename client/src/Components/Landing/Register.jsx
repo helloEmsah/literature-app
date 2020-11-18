@@ -58,7 +58,7 @@ function Register() {
 
         dispatch({
           type: "USER_LOADED",
-          payload: res.data.data.user,
+          payload: res.data.data,
         });
       } catch (error) {
         dispatch({

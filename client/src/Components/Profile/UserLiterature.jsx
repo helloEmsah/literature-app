@@ -28,8 +28,8 @@ function UserLiterature() {
     <h1>Error: {error.message}</h1>
   ) : (
     <div id="userLiterature">
-      <h1 className="section-title">My Literature</h1>
-      <Container fluid>
+      <Container>
+        <h1 className="section-title">My Literature</h1>
         <br />
         <Row>
           {userLiterature.data.data.map((literature) => (

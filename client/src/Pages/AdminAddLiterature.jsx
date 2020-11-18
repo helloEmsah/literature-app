@@ -1,15 +1,16 @@
 import React from "react";
-import AddForm from "../Components/AddLiterature/AddForm";
+import AdminAddForm from "../Components/AddLiterature/AdminAddForm";
 import Header from "../Components/Utilities/Header";
-function AddLiterature() {
+
+function AdminAddLiterature() {
   return (
     <>
       <div id="addLiterature">
         <Header />
-        <AddForm />
+        <AdminAddForm />
       </div>
     </>
   );
 }
 
-export default AddLiterature;
+export default AdminAddLiterature;

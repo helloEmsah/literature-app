@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useHistory, useParams, Link } from "react-router-dom";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Dropdown } from "react-bootstrap";
 import { API } from "../Config/api";
 import { BiSearch } from "react-icons/bi";
 import Spinner from "../Components/Utilities/Spinner";
@@ -9,8 +9,9 @@ import ListLiterature from "../Components/Literature/ListLiterature";
 import CardLiterature from "../Components/Literature/CardLiterature";
 import { GlobalContext } from "../Context/GlobalContext";
 import { useQuery, useMutation } from "react-query";
+import Header from "../Components/Utilities/Header";
 
-const Literature = (props) => {
+const Literature = () => {
   // const location = useLocation();
 
   // const [query, setQuery] = useState(location.state.query);
@@ -63,12 +64,12 @@ const Literature = (props) => {
   // NEW TEST
   //----------------
 
-  let { title, Year } = useParams();
+  let { title, publication } = useParams();
   const [state, dispatch] = useContext(GlobalContext);
   const [titles, setTitles] = useState("");
   const history = useHistory();
   const date = new Date();
-  const getYear = [2020, 2015, 2010, 2005, 2000];
+  const getYear = [2020, 2019, 2018, 2017, 2016, 2015];
 
   const [year, setYear] = useState("");
 
@@ -103,14 +104,12 @@ const Literature = (props) => {
     error,
     data: literatureData,
     refetch,
-  } = useQuery("getLiterature", () =>
-    API.get(`/approved-literature/${title}`)
-  );
+  } = useQuery("getLiterature", () => API.get(`/approved-literature/${title}`));
 
-  const { data: yearData } = useQuery('getYear', () => API.get(`/year`));
+  const { data: yearData } = useQuery("getYear", () => API.get(`/year`));
 
   const [reLoad] = useMutation(async () => {
-    history.push(`/search-literature/${title}/${year}`);
+    history.push(`/search-literatures/${title}`);
     refetch();
   });
 
@@ -119,12 +118,13 @@ const Literature = (props) => {
     refetch();
   });
 
-  return isLoading || !literatureData ? (
+  return isLoading || !literatureData || !yearData ? (
     <Spinner />
   ) : error ? (
     <h1>error: {error.message}</h1>
   ) : (
     <>
+      <Header />
       <Container fluid id="search-literature">
         <Row>
           <Col lg={12}>
@@ -156,6 +156,48 @@ const Literature = (props) => {
         </Row>
         <Row>
           <Col lg={2}>
+            {/* <Dropdown>
+              <Dropdown.Toggle
+                as={CustomToggle}
+                id="dropdown-custom-components"
+              >
+                <Button
+                  style={{
+                    backgroundColor: "rgba(233, 233, 233, 0.7)",
+                    borderColor: "rgba(233, 233, 233, 0.7)",
+                    color: "black",
+                    marginTop: "3%",
+                  }}
+                >
+                  <p className="filter-label" style={{ display: "unset" }}>
+                    Filter
+                  </p>
+                </Button>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => {
+                    setYear("");
+                    reLoad();
+                  }}
+                >
+                  <p>Anytime</p>
+                </Dropdown.Item>
+
+                {getYear.map((yearList) => (
+                  <Dropdown.Item
+                    onClick={() => {
+                      setYear(yearList);
+                      reLoad();
+                    }}
+                  >
+                    <p>{yearList}</p>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown> */}
+
             <div className="left-component">
               <p className="filter-label">Filter</p>
               <select
@@ -189,32 +231,21 @@ const Literature = (props) => {
                       }
                     >
                       <div>
-                        <div className="imageContainer">
+                        <div className="image-container">
                           <img
                             className="image"
                             src={require("../Assets/Images/pdfCover.png")}
                           />
                         </div>
-                        <p className="txt-title">{literature.title}</p>
-                        <p className="txt-author">
-                          <div
-                            className="col col-md-8"
-                            style={{ padding: "0", display: "inline-block" }}
-                          >
-                            {literature.author}
+                        <div className="description">
+                          <p className="title">{literature.title}</p>
+                          <div className="subtext-wrapper">
+                            <p className="author">{literature.author}</p>
+                            <p className="publication">
+                              {literature.publication.split(" ")[1]}
+                            </p>
                           </div>
-
-                          <div
-                            className="col col-md-4"
-                            style={{
-                              textAlign: "right",
-                              padding: "0",
-                              display: "inline-block",
-                            }}
-                          >
-                            {literature.publication.split(" ")[1]}
-                          </div>
-                        </p>
+                        </div>
                       </div>
                     </Link>
                   </div>

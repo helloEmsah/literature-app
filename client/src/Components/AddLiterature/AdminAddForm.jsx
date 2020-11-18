@@ -5,7 +5,7 @@ import { useMutation } from "react-query";
 import { API } from "../../Config/api";
 import { GlobalContext } from "../../Context/GlobalContext";
 
-function AddForm() {
+function AdminAddForm() {
   const [state, dispatch] = useContext(GlobalContext);
 
   const [showAddModal, setShowAddModal] = useState(false);
@@ -18,7 +18,7 @@ function AddForm() {
     page: "",
     isbn: "",
     file: "",
-    status: "Waiting",
+    status: "Approved",
   });
 
   const {
@@ -76,7 +76,7 @@ function AddForm() {
         page: "",
         isbn: "",
         file: "",
-        status: "Waiting",
+        status: "Approved",
       });
 
       setShowAddModal(true);
@@ -146,16 +146,6 @@ function AddForm() {
             />
           </Form.Group>
 
-          {/* <Form.Group>
-            <Form.Control
-              type="text"
-              placeholder="File"
-              name="file"
-              value={file}
-              onChange={(e) => handleChange(e)}
-            />
-          </Form.Group> */}
-
           <Form.Group>
             <div
               className="form-control"
@@ -188,15 +178,54 @@ function AddForm() {
           {/* <Form.Group>
             <Form.Control
               type="text"
+              placeholder="File"
+              name="file"
+              value={file}
+              onChange={(e) => handleChange(e)}
+            />
+          </Form.Group> */}
+
+          {/* <Form.Group> Multer Here
+            <div
+              className="form-control"
+              onClick={() => document.getElementsByName("file")[0].click()}
+              style={{ width: "max-content", cursor: "pointer" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {file ? file.name : "Attach File"}
+                <TiDocumentAdd size="20px" className="ml-1" />
+              </div>
+            </div>
+            <Form.File
+              name="file"
+              accept=".pdf"
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  file: !e.target.files[0] ? file : e.target.files[0],
+                });
+              }}
+              style={{ display: "none" }}
+            />
+          </Form.Group> */}
+
+          {/* <Form.Group>
+            <Form.Control
+              type="text"
               placeholder="User Id"
               name="userId"
               value={userId}
               onChange={(e) => handleChange(e)}
               hidden
             />
-          </Form.Group> */}
+          </Form.Group>
 
-          {/* <Form.Group>
+          <Form.Group>
             <Form.Control
               type="text"
               placeholder="Status"
@@ -227,8 +256,7 @@ function AddForm() {
                 textAlign: "center",
               }}
             >
-              <p>Thank you for adding your paperwork</p>
-              <p>please wait 1 x 24 hours for our admin to verify </p>
+              <p>Literature added successfully!</p>
             </div>
           </Modal.Body>
         </Modal>
@@ -236,4 +264,4 @@ function AddForm() {
     </>
   );
 }
-export default AddForm;
+export default AdminAddForm;

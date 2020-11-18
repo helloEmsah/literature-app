@@ -6,6 +6,7 @@ const joi = require("@hapi/joi");
 exports.getLiteratures = async (req, res) => {
   try {
     const literature = await literatures.findAll({
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: users,
@@ -47,6 +48,7 @@ exports.getLiterature = async (req, res) => {
   try {
     const { id } = req.params;
     const literature = await literatures.findOne({
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: users,
@@ -97,9 +99,11 @@ exports.getYear = async (req, res) => {
     const { title } = req.params;
     const Op = sequelize.Op;
     const approvedLiterature = await literatures.findAll({
+      order: [["publication", "DESC"]],
       where: {
         status: "Approved",
       },
+      group: ["publication"],
       attributes: {
         exclude: ["userId", "createdAt", "updatedAt"],
       },
@@ -267,52 +271,6 @@ exports.getLiteratureByTitle = async (req, res) => {
   }
 };
 
-exports.readYear = async (req, res) => {
-  try {
-    const { title } = req.params;
-    const Op = Sequelize.Op;
-    const aprovedBooks = await Books.findAll({
-      order: [["publication", "DESC"]],
-      where: {
-        status: "Approved",
-      },
-      group: ["publication"],
-      attributes: {
-        exclude: [
-          "createdAt",
-          "updatedAt",
-          ,
-          "userId",
-          "categoryId",
-          "UserId",
-          "CategoryId",
-        ],
-      },
-      include: [
-        {
-          model: users,
-          as: "bookUser",
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-      ],
-    });
-
-    res.send({
-      message: "Response Successfuly Loaded",
-      data: { all: aprovedBooks },
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({
-      error: {
-        message: "Internal Server Error",
-      },
-    });
-  }
-};
-
 exports.getLiteratureByTitleAndYear = async (req, res) => {
   try {
     let { title, publication } = req.params;
@@ -326,7 +284,7 @@ exports.getLiteratureByTitleAndYear = async (req, res) => {
           [Op.like]: "%" + title + "%",
         },
         publication: {
-          [Op.gt]: publication + "March",
+          [Op.like]: "%" + publication + "%",
         },
       },
       attributes: {
@@ -409,60 +367,48 @@ exports.addLiterature = async (req, res) => {
   }
 };
 
-// exports.updateBook = async (req, res) => {
+// exports.addLiterature = async (req, res) => {
 //   try {
-//     const book = await Book.update(req.body, {
-//       where: {
-//         id: req.params.id,
-//       },
+//     const { title, author, publication, userId, page, isbn } = req.body;
+
+//     const literature = await literatures.create({
+//       ...req.body,
+//       userId,
+//       // status: "Waiting",
+//       thumbnail: "dummy.png"
+
 //     });
 
-//     if (book) {
-//       const updatedBook = await Book.findOne({
+//     if (literature) {
+//       const literatureResult = await literatures.findOne({
 //         where: {
-//           id: req.params.id,
+//           id: literature.id,
 //         },
 //         include: [
 //           {
-//             model: Category,
-//             as: "category",
-//             attributes: {
-//               exclude: ["createdAt", "updatedAt"],
-//             },
-//           },
-//           {
-//             model: User,
+//             model: users,
 //             as: "user",
 //             attributes: {
 //               exclude: [
 //                 "createdAt",
 //                 "updatedAt",
+//                 "password",
+//                 "phone",
+//                 "address",
 //                 "gender",
 //                 "picture",
 //                 "role",
-//                 "password",
 //               ],
 //             },
 //           },
 //         ],
 //         attributes: {
-//           exclude: [
-//             "createdAt",
-//             "updatedAt",
-//             "userId",
-//             "UserId",
-//             "categoryId",
-//             "CategoryId",
-//           ],
+//           exclude: ["createdAt", "updatedAt"],
 //         },
 //       });
 //       return res.status(200).send({
-//         message: "Book has been updated",
-//         data: { updatedBook },
-//       });
-//     } else {
-//       return res.status(404).send({
-//         message: "Book didn't exists",
+//         message: "Literature has been added successfully",
+//         data: { literatureResult },
 //       });
 //     }
 //   } catch (error) {
@@ -474,6 +420,58 @@ exports.addLiterature = async (req, res) => {
 //     });
 //   }
 // };
+
+exports.updateLiterature = async (req, res) => {
+  try {
+    const literature = await literatures.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (literature) {
+      const updatedLiterature = await literatures.findOne({
+        where: {
+          id: req.params.id,
+        },
+        include: [
+          {
+            model: users,
+            as: "user",
+            attributes: {
+              exclude: [
+                "createdAt",
+                "updatedAt",
+                "gender",
+                "picture",
+                "role",
+                "password",
+              ],
+            },
+          },
+        ],
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      });
+      return res.status(200).send({
+        message: `Literature has been successfully updated!`,
+        data: { updatedLiterature },
+      });
+    } else {
+      return res.status(404).send({
+        message: "Literature didn't exists",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      error: {
+        message: "Internal Server Error",
+      },
+    });
+  }
+};
 
 exports.deleteLiterature = async (req, res) => {
   try {
