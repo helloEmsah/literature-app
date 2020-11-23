@@ -319,6 +319,32 @@ exports.addLiterature = async (req, res) => {
   try {
     const { title, author, publication, userId, page, isbn } = req.body;
 
+    const checkIsbn = await literatures.findOne({
+      include: [
+        {
+          model: users,
+          as: "user",
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        },
+      ],
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+      where: {
+        isbn: req.body.isbn,
+      },
+    });
+
+    if (checkIsbn) {
+      return res.status(500).send({
+        error: {
+          message: "ISBN already exists!",
+        },
+      });
+    }
+
     const literature = await literatures.create({
       ...req.body,
       userId,
