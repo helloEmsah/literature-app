@@ -22,8 +22,8 @@ module.exports = {
         password:
           "$2b$10$l8ThXlcy63WQnCy1YI2LMOVyfOKdai.IvCd/pHkj7B/bEdnZaPczi",
         phone: "08223456789",
-        address: "Jl Dipatiukur no 112 - 116 Bandung",
-        gender: "Female",
+        address: "Jl Bangbayang no 37 Bandung",
+        gender: "Male",
         picture: "default-avatar.png",
         role: "user",
         createdAt: new Date(),
