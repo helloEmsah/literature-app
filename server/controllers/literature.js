@@ -3,6 +3,14 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const joi = require("@hapi/joi");
 
+const schema = joi.object({
+  title: joi.string().min(3).required(),
+  publication: joi.string().required(),
+  page: joi.number().required(),
+  isbn: joi.number().required(),
+  author: joi.string().min(3).required(),
+});
+
 exports.getLiteratures = async (req, res) => {
   try {
     const literature = await literatures.findAll({
@@ -317,6 +325,16 @@ exports.getLiteratureByTitleAndYear = async (req, res) => {
 
 exports.addLiterature = async (req, res) => {
   try {
+    const { error } = await schema.validate(re.body);
+
+    if (error) {
+      return res.status(400).send({
+        error: {
+          message: error.details[0].message,
+        },
+      });
+    }
+
     const { title, author, publication, userId, page, isbn } = req.body;
 
     const checkIsbn = await literatures.findOne({
