@@ -325,7 +325,7 @@ exports.getLiteratureByTitleAndYear = async (req, res) => {
 
 exports.addLiterature = async (req, res) => {
   try {
-    const { error } = await schema.validate(re.body);
+    const { error } = await schema.validate(req.body);
 
     if (error) {
       return res.status(400).send({
@@ -365,7 +365,7 @@ exports.addLiterature = async (req, res) => {
 
     const literature = await literatures.create({
       ...req.body,
-      userId,
+      userId: req.user.id,
       file: req.file.filename,
     });
 

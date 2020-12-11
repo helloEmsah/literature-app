@@ -26,21 +26,6 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  // const [formRegister, setFormRegister] = useState({
-  //   email: "",
-  //   password: "",
-  //   fullName: "",
-  //   gender: "",
-  //   phone: "",
-  //   address: "",
-  // });
-
-  // const { email, password, fullName, gender, phone, address } = formRegister;
-
-  // const handleChange = (e) => {
-  //   setFormRegister({ ...formRegister, [e.target.name]: e.target.value });
-  // };
-
   const [register] = useMutation(async (values) => {
     setExist("");
     try {
