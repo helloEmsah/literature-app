@@ -45,7 +45,7 @@ router.get("/auth", authentication, checkAuth);
 router.get("/user", authentication, getUsers);
 router.get("/user/:id", authentication, getUser);
 // router.get("/user/:id/literature", authentication, getUserLiterature);
-router.patch("/user/:id", authentication, upload("picture"), updateUser);
+router.patch("/user/:id", authentication, uploadImage("picture"), updateUser);
 router.delete("/user/:id", authentication, authAdmin, deleteUser);
 
 // LITERATURE ROUTE
