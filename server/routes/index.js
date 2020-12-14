@@ -4,7 +4,9 @@ const { authentication, authAdmin } = require("../middlewares/auth");
 
 const { uploadImage } = require("../middlewares/uploadImage");
 
-const { uploadPDF } = require("../middlewares/uploadPDF");
+// const { upload } = require("../middlewares/uploadPDF");
+
+const { upload } = require("../middlewares/uploadFile");
 
 const { Register, Login, checkAuth } = require("../controllers/auth");
 
@@ -58,7 +60,7 @@ router.get(
   getLiteratureByTitleAndYear
 );
 router.get("/literature/:id", authentication, getLiterature);
-router.post("/literature", authentication, uploadPDF("file"), addLiterature);
+router.post("/literature", authentication, upload("literature"), addLiterature);
 // router.post("/literature", authentication, addLiterature);
 router.patch("/literature/:id", authentication, updateLiterature);
 router.delete("/literature/:id", authentication, authAdmin, deleteLiterature);

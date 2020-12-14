@@ -4,6 +4,7 @@ import { TiDocumentAdd } from "react-icons/ti";
 import { useMutation } from "react-query";
 import { API } from "../../Config/api";
 import { GlobalContext } from "../../Context/GlobalContext";
+import Spinner from "../Utilities/Spinner";
 
 function AddForm() {
   const [state, dispatch] = useContext(GlobalContext);
@@ -11,7 +12,6 @@ function AddForm() {
   const [showAddModal, setShowAddModal] = useState(false);
 
   const [formData, setFormData] = useState({
-    userId: `${state.user.id}`,
     title: "",
     author: "",
     publication: "",
@@ -21,16 +21,7 @@ function AddForm() {
     status: "Waiting",
   });
 
-  const {
-    userId,
-    title,
-    author,
-    publication,
-    page,
-    isbn,
-    file,
-    status,
-  } = formData;
+  const { title, author, publication, page, isbn, file, status } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,7 +37,6 @@ function AddForm() {
 
       const formData = new FormData();
 
-      formData.append("userId", userId);
       formData.append("title", title);
       formData.append("author", author);
       formData.append("publication", publication);
@@ -56,7 +46,6 @@ function AddForm() {
       formData.append("status", status);
 
       const body = JSON.stringify({
-        userId,
         title,
         author,
         publication,
@@ -69,7 +58,6 @@ function AddForm() {
       const res = await API.post("/literature", formData, config);
 
       setFormData({
-        userId: `${state.user.id}`,
         title: "",
         author: "",
         publication: "",

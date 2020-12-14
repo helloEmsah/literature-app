@@ -3,6 +3,14 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const joi = require("@hapi/joi");
 
+const schema = joi.object({
+  title: joi.string().min(3).required(),
+  publication: joi.string().required(),
+  page: joi.number().required(),
+  isbn: joi.number().required(),
+  author: joi.string().min(3).required(),
+});
+
 exports.getLiteratures = async (req, res) => {
   try {
     const literature = await literatures.findAll({
@@ -347,7 +355,7 @@ exports.addLiterature = async (req, res) => {
 
     const literature = await literatures.create({
       ...req.body,
-      userId,
+      userId: req.user.id,
       file: req.file.filename,
     });
 
